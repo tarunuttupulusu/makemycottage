@@ -46,8 +46,10 @@ const Navbar = () => {
     }
   }, [location]);
 
-  const isDarkHeroPage = location.pathname === '/' || location.pathname === '/projects';
-  const isDarkTheme = isDarkHeroPage;
+  const isHomePage = location.pathname === '/';
+  const isGalleryPage = location.pathname === '/gallery';
+  const isDarkHeroPage = isHomePage || location.pathname === '/projects';
+  const isDarkTheme = isDarkHeroPage || (isGalleryPage && !isScrolled);
 
   if (location.pathname === '/services') {
     return null;
