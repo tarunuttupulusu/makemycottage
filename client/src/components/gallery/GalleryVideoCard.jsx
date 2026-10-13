@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState, useCallback } from 'react';
-import { Play, Pause, Volume2, VolumeX } from 'lucide-react';
+import { Play, Pause, Volume2, VolumeX, Maximize2 } from 'lucide-react';
 import {
   registerGalleryVideo,
   notifyVideoStartedPlaying,
@@ -10,6 +10,7 @@ import {
  * Strictly for MakeMyCottage Gallery Section.
  * - Embeds YouTube videos with all native YouTube controls & branding suppressed (controls=0).
  * - Custom minimalist controls: Play/Pause button and Mute/Unmute button.
+ * - Fullscreen lightbox button for enlarged viewing.
  * - Single-active playback: strictly only ONE video can play at a time.
  *   If any video starts playing, all other gallery videos are instantly paused.
  * - Plays muted by default; user can freely toggle mute/unmute via custom volume button.
@@ -18,6 +19,7 @@ const GalleryVideoCard = ({
   id,
   videoId,
   title = 'MakeMyCottage Video Tour',
+  onOpenLightbox,
   className = '',
 }) => {
   const containerRef = useRef(null);
@@ -308,20 +310,38 @@ const GalleryVideoCard = ({
           </span>
         </div>
 
-        {/* Mute / Unmute Toggle Button */}
-        <button
-          type="button"
-          onClick={handleToggleMute}
-          className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/20 hover:bg-white/35 text-white backdrop-blur-md flex items-center justify-center transition-transform hover:scale-105 active:scale-95 border border-white/25 cursor-pointer"
-          aria-label={isMuted ? 'Unmute audio' : 'Mute audio'}
-          title={isMuted ? 'Unmute' : 'Mute'}
-        >
-          {isMuted ? (
-            <VolumeX className="w-4 h-4 sm:w-5 sm:h-5" />
-          ) : (
-            <Volume2 className="w-4 h-4 sm:w-5 sm:h-5" />
+        <div className="flex items-center gap-2">
+          {/* Mute / Unmute Toggle Button */}
+          <button
+            type="button"
+            onClick={handleToggleMute}
+            className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/20 hover:bg-white/35 text-white backdrop-blur-md flex items-center justify-center transition-transform hover:scale-105 active:scale-95 border border-white/25 cursor-pointer"
+            aria-label={isMuted ? 'Unmute audio' : 'Mute audio'}
+            title={isMuted ? 'Unmute' : 'Mute'}
+          >
+            {isMuted ? (
+              <VolumeX className="w-4 h-4 sm:w-5 sm:h-5" />
+            ) : (
+              <Volume2 className="w-4 h-4 sm:w-5 sm:h-5" />
+            )}
+          </button>
+
+          {/* Fullscreen / Lightbox Button */}
+          {onOpenLightbox && (
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                onOpenLightbox();
+              }}
+              className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/20 hover:bg-white/35 text-white backdrop-blur-md flex items-center justify-center transition-transform hover:scale-105 active:scale-95 border border-white/25 cursor-pointer"
+              aria-label="View fullscreen video"
+              title="Fullscreen View"
+            >
+              <Maximize2 className="w-4 h-4 sm:w-5 sm:h-5" />
+            </button>
           )}
-        </button>
+        </div>
       </div>
     </div>
   );

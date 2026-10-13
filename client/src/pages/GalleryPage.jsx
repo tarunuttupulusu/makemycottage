@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import { Helmet } from 'react-helmet-async';
-import { SlidersHorizontal, ChevronLeft, ChevronRight, X, ArrowLeftRight, Sparkles, ArrowDown } from 'lucide-react';
+import { SlidersHorizontal, ChevronLeft, ChevronRight, X, ArrowLeftRight, Sparkles, ArrowDown, Play } from 'lucide-react';
 import AnimatedSection from '../components/common/AnimatedSection';
 import SectionLabel from '../components/common/SectionLabel';
 import BeforeAfterSlider from '../components/gallery/BeforeAfterSlider';
@@ -11,7 +11,7 @@ import { pauseAllGalleryVideos } from '../components/gallery/galleryVideoManager
 import GalleryHeroImage from '../components/gallery/GalleryHeroImage';
 import OurProjectsCard from '../components/gallery/OurProjectsCard';
 
-const categories = ['All', 'Homes', 'Cottages', 'Interiors', 'Outdoor', 'Details'];
+const categories = ['All', 'Videos', 'Homes', 'Cottages', 'Interiors', 'Outdoor', 'Details'];
 
 const GalleryPage = () => {
   const [activeCategory, setActiveCategory] = useState('All');
@@ -20,25 +20,21 @@ const GalleryPage = () => {
   const [lightboxDragging, setLightboxDragging] = useState(false);
   const lightboxRef = useRef(null);
 
-  // Responsive hero dimensions: base height and shrunk height (matching ProjectsPage architecture)
-  const [heroDims, setHeroDims] = useState(() => {
-    if (typeof window === 'undefined') return { base: 615, shrunk: 360 };
-    const w = window.innerWidth;
-    if (w < 640) return { base: 500, shrunk: 320 };
-    if (w < 1024) return { base: 560, shrunk: 340 };
-    return { base: 615, shrunk: 360 };
-  });
+  // Responsive hero dimensions: 88% of full screen (viewport height) for base height
+  const getHeroDims = () => {
+    if (typeof window === 'undefined') return { base: 780, shrunk: 360 };
+    const vh = window.innerHeight;
+    const base = Math.round(vh * 0.88);
+    // Keep shrunk height compact and proportional
+    const shrunk = Math.max(300, Math.min(380, Math.round(base * 0.45)));
+    return { base, shrunk };
+  };
+
+  const [heroDims, setHeroDims] = useState(getHeroDims);
 
   useEffect(() => {
     const handleResize = () => {
-      const w = window.innerWidth;
-      if (w < 640) {
-        setHeroDims({ base: 500, shrunk: 320 });
-      } else if (w < 1024) {
-        setHeroDims({ base: 560, shrunk: 340 });
-      } else {
-        setHeroDims({ base: 615, shrunk: 360 });
-      }
+      setHeroDims(getHeroDims());
     };
     window.addEventListener('resize', handleResize, { passive: true });
     return () => window.removeEventListener('resize', handleResize);
@@ -56,7 +52,9 @@ const GalleryPage = () => {
 
   const filteredProjects = activeCategory === 'All'
     ? galleryProjects
-    : galleryProjects.filter((item) => item.category === activeCategory);
+    : activeCategory === 'Videos'
+      ? galleryProjects.filter((item) => item.type === 'video')
+      : galleryProjects.filter((item) => item.category === activeCategory);
 
   const openLightbox = (index) => {
     pauseAllGalleryVideos();
@@ -165,35 +163,38 @@ const GalleryPage = () => {
       </Helmet>
 
       {/* =========================================================================
-          1. HERO SECTION (Locked Pinned Hero Image with Scroll-Over Content)
+          1. HERO SECTION (Classic Handcrafted Timber Cottage Hero with Scroll Animation - 88vh Full Screen Scale)
       ========================================================================= */}
-      {/* Pinned / Locked Hero Image Background Layer (Stays locked in place while content rolls over it) */}
-      <div className="sticky top-3 sm:top-4 md:top-5 z-10 w-full max-w-[1440px] mx-auto px-3 sm:px-4 md:px-5 pointer-events-none">
-        <div className="relative w-full h-[88vh] min-h-[560px] max-h-[720px] rounded-t-[28px] sm:rounded-t-[32px] rounded-br-[32px] sm:rounded-br-[40px] rounded-bl-none overflow-hidden bg-[#1c1d21] shadow-sm">
-          <GalleryHeroImage
-            src="/images/gallery-hero.png"
-            alt="Snow covered modern glass cottage - MakeMyCottage Gallery"
-          />
-        </div>
-      </div>
-
-      {/* Moving Foreground Layer: Card & content move UP over the locked hero image on scroll */}
-      <div className="relative z-20 w-full max-w-[1440px] mx-auto px-3 sm:px-4 md:px-5 -mt-[64px] sm:-mt-[84px] md:-mt-[90px]">
-        {/* Component 2: Our Gallery Cutout Card - Slides in from the side on open */}
-        <motion.div
-          initial={{ x: -100, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          transition={{
-            duration: 0.95,
-            delay: 0.3,
-            ease: [0.16, 1, 0.3, 1],
-          }}
-          className="inline-block pointer-events-auto"
+      <section className="relative w-full p-3 sm:p-4 md:p-5">
+        {/* Pinned Hero Track */}
+        <div 
+          className="relative w-full"
+          style={{ height: `${heroDims.base}px` }}
         >
-          <OurProjectsCard title="Our Gallery" />
-        </motion.div>
+          {/* Shrinking Hero Card (Sticky at top, bottom shrinks upward with rounded-br curve) */}
+          <motion.div
+            style={{ height: cardHeight }}
+            className="sticky top-3 sm:top-4 md:top-5 w-full rounded-t-[28px] sm:rounded-t-[32px] rounded-br-[32px] sm:rounded-br-[40px] rounded-bl-none overflow-hidden bg-[#1c1d21] flex flex-col justify-end shadow-sm"
+          >
+            {/* Background Architectural Photo (Constant base height so image remains locked/stationary at 88% full-screen) */}
+            <div
+              style={{ height: `${heroDims.base}px` }}
+              className="absolute top-0 left-0 w-full overflow-hidden pointer-events-none"
+            >
+              <GalleryHeroImage
+                src="/images/gallery-hero.png"
+                alt="Snow covered modern glass cottage - MakeMyCottage Gallery"
+              />
+            </div>
 
-        {/* Content Sheet with Filters and Continuous Grid smoothly rolling over hero */}
+            {/* Signature Inverted Notch Button (Sitting at bottom-left, glides upwards over image as card shrinks) */}
+            <div className="relative z-10 flex items-end">
+              <OurProjectsCard title="Our Gallery" />
+            </div>
+          </motion.div>
+        </div>
+
+        {/* Content Sheet with Filters and Continuous Grid */}
         <div className="bg-white pt-8 sm:pt-10 px-2 sm:px-4">
           {/* Category Filter Pills - Fades in smoothly on open */}
           <motion.div
@@ -207,10 +208,16 @@ const GalleryPage = () => {
             className="flex items-center gap-2.5 sm:gap-3 overflow-x-auto pb-3 mb-8 sm:mb-10 no-scrollbar border-b border-gray-100/80"
           >
             {categories.map((category) => {
-              const displayName = category === 'All' ? 'All Images' : category;
+              const displayName = category === 'All' 
+                ? 'All Images' 
+                : category === 'Videos'
+                  ? 'Videos'
+                  : category;
               const count = category === 'All' 
                 ? galleryProjects.length 
-                : galleryProjects.filter(p => p.category === category).length;
+                : category === 'Videos'
+                  ? galleryProjects.filter(p => p.type === 'video').length
+                  : galleryProjects.filter(p => p.category === category).length;
 
               return (
                 <button
@@ -222,6 +229,9 @@ const GalleryPage = () => {
                       : 'bg-[#e9ecf2] text-[#555866] hover:bg-[#dfe3ec] hover:text-[#141517]'
                   }`}
                 >
+                  {category === 'Videos' && (
+                    <Play className={`w-3.5 h-3.5 fill-current ${activeCategory === category ? 'text-white' : 'text-[#555866]'}`} />
+                  )}
                   <span>{displayName}</span>
                   <span className={`text-[11px] px-2 py-0.5 rounded-full font-normal ${
                     activeCategory === category ? 'bg-white/20 text-white' : 'bg-black/10 text-[#555866]'
@@ -270,6 +280,7 @@ const GalleryPage = () => {
                       videoId={project.videoId}
                       title={project.title}
                       category={project.category}
+                      onOpenLightbox={() => openLightbox(index)}
                       className="w-full"
                     />
                   ) : (
@@ -303,7 +314,7 @@ const GalleryPage = () => {
         </AnimatedSection>
       </div>
     </div>
-  </div>
+  </section>
 
       {/* Fullscreen Interactive Lightbox Modal */}
       <AnimatePresence>
