@@ -5,19 +5,21 @@ import { HiArrowNarrowRight, HiX, HiExternalLink, HiChevronLeft, HiChevronRight 
 import { FaInstagram, FaYoutube } from 'react-icons/fa';
 import { BUSINESS_INFO } from '../../utils/constants';
 
-// 14 Alternating Media Items: Instagram Reels & YouTube Videos
+// 14 Alternating Media Items with Direct Video MP4 Streams for Automatic Zero-Involvement Autoplay
 export const CURVED_MEDIA_ITEMS = [
   // 1. Instagram Reel
   {
     id: 1,
     platform: 'instagram',
     type: 'reel',
+    isVertical: true,
     title: 'On-Site Heavy Timber Framing & Craftsmanship',
     caption: 'Precision interlocking mortise-and-tenon joints going up on-site in Shamshabad. 100% vacuum-pressure treated pine.',
     views: '32.4K',
     likes: '2.6K',
     location: 'Shamshabad, Hyderabad',
     reelId: 'DCrAQP0zvh1',
+    videoUrl: '/reels/reel-1.mp4',
     url: 'https://www.instagram.com/reel/DCrAQP0zvh1/',
     embedUrl: 'https://www.instagram.com/reel/DCrAQP0zvh1/embed/',
     poster: '/reels/reel-1.jpg',
@@ -27,12 +29,14 @@ export const CURVED_MEDIA_ITEMS = [
     id: 2,
     platform: 'youtube',
     type: 'video',
+    isVertical: false,
     title: 'Film Nagar Project Making Video Part - 1',
     caption: 'Makmycottage Film Nagar Project Making Video Part -1 || Wooden Home Builders || #woodenhome',
     views: '45.1K',
     likes: '3.2K',
     location: 'Film Nagar, Hyderabad',
     videoId: 'tdq5MfOGj1k',
+    videoUrl: '/reels/yt-1.mp4',
     url: 'https://youtu.be/tdq5MfOGj1k',
     embedUrl: 'https://www.youtube.com/embed/tdq5MfOGj1k?autoplay=1&mute=0&controls=1&rel=0&playsinline=1',
     poster: '/reels/yt-1.jpg',
@@ -42,12 +46,14 @@ export const CURVED_MEDIA_ITEMS = [
     id: 3,
     platform: 'instagram',
     type: 'reel',
+    isVertical: true,
     title: 'Architectural Timber Siding & Roof Joinery',
     caption: 'Sunset hitting the hand-rubbed cedar cladding of our Chevella farmstead project. Natural thermal efficiency in full view.',
     views: '28.9K',
     likes: '2.1K',
     location: 'Chevella, Telangana',
     reelId: 'DS2oLBXke0c',
+    videoUrl: '/reels/reel-2.mp4',
     url: 'https://www.instagram.com/reel/DS2oLBXke0c/',
     embedUrl: 'https://www.instagram.com/reel/DS2oLBXke0c/embed/',
     poster: '/reels/reel-2.jpg',
@@ -57,12 +63,14 @@ export const CURVED_MEDIA_ITEMS = [
     id: 4,
     platform: 'youtube',
     type: 'short',
+    isVertical: true,
     title: 'ఇంటి అందం మొత్తం కారిడార్లోనే ఉంది.. Corridor Aesthetics',
     caption: 'ఇంటి అందం మొత్తం కారిడార్లోనే ఉంది.. #home #homedesign #viralshorts #abngruhajyothy',
     views: '82.3K',
     likes: '6.4K',
     location: 'Hyderabad, Telangana',
     videoId: 'EPC0g2MIZBA',
+    videoUrl: '/reels/yt-2.mp4',
     url: 'https://youtube.com/shorts/EPC0g2MIZBA',
     embedUrl: 'https://www.youtube.com/embed/EPC0g2MIZBA?autoplay=1&mute=0&controls=1&rel=0&playsinline=1',
     poster: '/reels/yt-2.jpg',
@@ -72,12 +80,14 @@ export const CURVED_MEDIA_ITEMS = [
     id: 5,
     platform: 'instagram',
     type: 'reel',
+    isVertical: true,
     title: 'Handcrafted Wooden Columns & Verandah Detailing',
     caption: 'Classic verandah pillars and artisan wood craftsmanship for luxury farmhouse cottages.',
     views: '34.7K',
     likes: '2.8K',
     location: 'Vikarabad, Telangana',
     reelId: 'DS2oLBXke0c',
+    videoUrl: '/reels/reel-2.mp4',
     url: 'https://www.instagram.com/reel/DS2oLBXke0c/',
     embedUrl: 'https://www.instagram.com/reel/DS2oLBXke0c/embed/',
     poster: '/reels/reel-2.jpg',
@@ -87,12 +97,14 @@ export const CURVED_MEDIA_ITEMS = [
     id: 6,
     platform: 'youtube',
     type: 'video',
+    isVertical: false,
     title: 'చెట్టినాడ్ శైలి ఒక వైపు..ఇంగ్లీష్ ఎంట్రీ ఒకవైపు.. | One House, Two Doors',
     caption: 'చెట్టినాడ్ శైలి ఒక వైపు..ఇంగ్లీష్ ఎంట్రీ ఒకవైపు..| One House, Two Doors | Wooden House | ABN Digital',
     views: '64.0K',
     likes: '4.9K',
     location: 'Chettinad & English Style Cottage',
     videoId: 'ajJKAf4a4w0',
+    videoUrl: '/reels/yt-3.mp4',
     url: 'https://youtu.be/ajJKAf4a4w0',
     embedUrl: 'https://www.youtube.com/embed/ajJKAf4a4w0?autoplay=1&mute=0&controls=1&rel=0&playsinline=1',
     poster: '/reels/yt-3.jpg',
@@ -102,12 +114,14 @@ export const CURVED_MEDIA_ITEMS = [
     id: 7,
     platform: 'instagram',
     type: 'reel',
+    isVertical: true,
     title: 'Precision Pine Wood Joinery & Prefab Assembly',
     caption: 'Fast-track modular assembly with interlocking Scandinavian timber joinery at Shamirpet.',
     views: '41.2K',
     likes: '3.4K',
     location: 'Shamirpet, Hyderabad',
     reelId: 'DQauKRvD5_Q',
+    videoUrl: '/reels/reel-3.mp4',
     url: 'https://www.instagram.com/reel/DQauKRvD5_Q/',
     embedUrl: 'https://www.instagram.com/reel/DQauKRvD5_Q/embed/',
     poster: '/reels/reel-3.jpg',
@@ -117,12 +131,14 @@ export const CURVED_MEDIA_ITEMS = [
     id: 8,
     platform: 'youtube',
     type: 'short',
+    isVertical: true,
     title: 'ఇది కేవలం టేబుల్ కాదు.. నవ్వులు పంచుకునే ప్రదేశం | Handcrafted Living',
     caption: 'ఇది కేవలం టేబుల్ కాదు.. నవ్వులు పంచుకునే ప్రదేశం | #woodenhouse #shorts #abnshorts #abngruhajyothy',
     views: '51.8K',
     likes: '4.1K',
     location: 'Hyderabad, Telangana',
     videoId: 'a0EGCiFeeKM',
+    videoUrl: '/reels/yt-4.mp4',
     url: 'https://youtube.com/shorts/a0EGCiFeeKM',
     embedUrl: 'https://www.youtube.com/embed/a0EGCiFeeKM?autoplay=1&mute=0&controls=1&rel=0&playsinline=1',
     poster: '/reels/yt-4.jpg',
@@ -132,12 +148,14 @@ export const CURVED_MEDIA_ITEMS = [
     id: 9,
     platform: 'instagram',
     type: 'reel',
+    isVertical: true,
     title: 'Luxury Wooden Cottage Living Experience',
     caption: 'Step inside our bespoke resort cottage with vaulted high wood ceilings and ambient natural lighting.',
     views: '39.5K',
     likes: '3.1K',
     location: 'Ananthagiri Hills',
     reelId: 'DNLZc59TRdf',
+    videoUrl: '/reels/reel-4.mp4',
     url: 'https://www.instagram.com/reel/DNLZc59TRdf/',
     embedUrl: 'https://www.instagram.com/reel/DNLZc59TRdf/embed/',
     poster: '/reels/reel-4.jpg',
@@ -147,12 +165,14 @@ export const CURVED_MEDIA_ITEMS = [
     id: 10,
     platform: 'youtube',
     type: 'video',
+    isVertical: false,
     title: 'గతంలోకి తీసుకెళ్లే మండువా లోగిలి ప్రకృతికి దగ్గరగా.. | Traditional Manduva',
     caption: 'గతంలోకి తీసుకెళ్లే మండువా లోగిలి ప్రకృతికి దగ్గరగా.. | Wooden House | Peaceful House Nature | ABN',
     views: '73.4K',
     likes: '5.8K',
     location: 'Manduva Courtyard Cottage',
     videoId: 'feLxcihSFJQ',
+    videoUrl: '/reels/yt-5.mp4',
     url: 'https://youtu.be/feLxcihSFJQ',
     embedUrl: 'https://www.youtube.com/embed/feLxcihSFJQ?autoplay=1&mute=0&controls=1&rel=0&playsinline=1',
     poster: '/reels/yt-5.jpg',
@@ -162,12 +182,14 @@ export const CURVED_MEDIA_ITEMS = [
     id: 11,
     platform: 'instagram',
     type: 'reel',
+    isVertical: true,
     title: 'Sustainable Treated Pine Cabin Construction',
     caption: 'Eco-friendly vacuum pressure treated pine that naturally resists termites, moisture, and summer heat.',
     views: '26.1K',
     likes: '2.0K',
     location: 'Nagarjuna Sagar',
     reelId: 'DLNYTBsz39-',
+    videoUrl: '/reels/reel-5.mp4',
     url: 'https://www.instagram.com/reel/DLNYTBsz39-/',
     embedUrl: 'https://www.instagram.com/reel/DLNYTBsz39-/embed/',
     poster: '/reels/reel-5.jpg',
@@ -177,12 +199,14 @@ export const CURVED_MEDIA_ITEMS = [
     id: 12,
     platform: 'youtube',
     type: 'video',
+    isVertical: false,
     title: 'Woodhouse Specials : పాతకాలపు మండువా.. కొత్తగా తిరిగొచ్చింది! Lifestyle Home',
     caption: 'Woodhouse Specials : పాతకాలపు మండువా.. కొత్తగా తిరిగొచ్చింది! ఇది ఇల్లు కాదు.. ఒక జీవనశైలి! | ABN',
     views: '91.2K',
     likes: '7.3K',
     location: 'Heritage Wooden Villa',
     videoId: 'Oc3QARdxQqw',
+    videoUrl: '/reels/yt-6.mp4',
     url: 'https://youtu.be/Oc3QARdxQqw',
     embedUrl: 'https://www.youtube.com/embed/Oc3QARdxQqw?autoplay=1&mute=0&controls=1&rel=0&playsinline=1',
     poster: '/reels/yt-6.jpg',
@@ -192,12 +216,14 @@ export const CURVED_MEDIA_ITEMS = [
     id: 13,
     platform: 'instagram',
     type: 'reel',
+    isVertical: true,
     title: 'Eco-Friendly Resort Cottage Handover',
     caption: 'Client walkthrough and handover of custom modular holiday cottage ready in 45 days.',
     views: '30.8K',
     likes: '2.4K',
     location: 'Experience Center, Shamshabad',
     reelId: 'DLNYTBsz39-',
+    videoUrl: '/reels/reel-5.mp4',
     url: 'https://www.instagram.com/reel/DLNYTBsz39-/',
     embedUrl: 'https://www.instagram.com/reel/DLNYTBsz39-/embed/',
     poster: '/reels/reel-5.jpg',
@@ -207,12 +233,14 @@ export const CURVED_MEDIA_ITEMS = [
     id: 14,
     platform: 'youtube',
     type: 'video',
+    isVertical: false,
     title: 'Make My Cottage | Best Wood House Construction at Low Prices in Hyderabad',
     caption: 'Make My Cottage | Best Wood House Construction at Low Prices in Hyderabad | Haritha Talks',
     views: '115.4K',
     likes: '9.6K',
     location: 'Hyderabad Experience Center',
     videoId: 'gdebWSU3Mi0',
+    videoUrl: '/reels/yt-7.mp4',
     url: 'https://youtu.be/gdebWSU3Mi0',
     embedUrl: 'https://www.youtube.com/embed/gdebWSU3Mi0?autoplay=1&mute=0&controls=1&rel=0&playsinline=1',
     poster: '/reels/yt-7.jpg',
@@ -284,177 +312,42 @@ export const InstagramCurvedSection = () => {
     renderer.setSize(width, height);
     renderer.setClearColor(0x000000, 0);
 
-    // 4. Texture Loader with Canvas Compositing (Bespoke Platform Badges & Crisp Posters)
+    // 4. Video Loader for Zero-Involvement Automatic Playback
+    const videoElements = [];
     const textures = CURVED_MEDIA_ITEMS.map((item) => {
-      const offCanvas = document.createElement('canvas');
-      offCanvas.width = 640;
-      offCanvas.height = 910;
-      const ctx = offCanvas.getContext('2d');
+      const video = document.createElement('video');
+      video.src = item.videoUrl;
+      video.crossOrigin = 'anonymous';
+      video.loop = true;
+      video.muted = true;
+      video.playsInline = true;
+      video.setAttribute('playsinline', '');
+      video.setAttribute('webkit-playsinline', '');
+      video.setAttribute('muted', '');
+      video.autoplay = true;
 
-      ctx.fillStyle = '#181b20';
-      ctx.fillRect(0, 0, offCanvas.width, offCanvas.height);
+      // Autoplay immediately without any involvement
+      const playPromise = video.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {
+          // Fallback if browser suspended media prior to initial gesture
+          const startPlayback = () => {
+            video.play().catch(() => {});
+          };
+          window.addEventListener('scroll', startPlayback, { once: true, passive: true });
+          window.addEventListener('touchstart', startPlayback, { once: true, passive: true });
+          window.addEventListener('click', startPlayback, { once: true, passive: true });
+        });
+      }
 
-      const texture = new THREE.CanvasTexture(offCanvas);
-      texture.minFilter = THREE.LinearFilter;
-      texture.magFilter = THREE.LinearFilter;
-      texture.generateMipmaps = false;
+      videoElements.push(video);
 
-      const img = new Image();
-      img.crossOrigin = 'anonymous';
-      img.src = item.poster;
-      img.onload = () => {
-        const imgRatio = img.width / img.height;
-        const canvasRatio = offCanvas.width / offCanvas.height;
-        let sWidth, sHeight, sx, sy;
-        if (imgRatio > canvasRatio) {
-          sHeight = img.height;
-          sWidth = img.height * canvasRatio;
-          sx = (img.width - sWidth) / 2;
-          sy = 0;
-        } else {
-          sWidth = img.width;
-          sHeight = img.width / canvasRatio;
-          sx = 0;
-          sy = (img.height - sHeight) / 2;
-        }
-        ctx.drawImage(img, sx, sy, sWidth, sHeight, 0, 0, offCanvas.width, offCanvas.height);
-
-        // Top vignette gradient
-        const topGrad = ctx.createLinearGradient(0, 0, 0, 150);
-        topGrad.addColorStop(0, 'rgba(0,0,0,0.72)');
-        topGrad.addColorStop(1, 'rgba(0,0,0,0)');
-        ctx.fillStyle = topGrad;
-        ctx.fillRect(0, 0, offCanvas.width, 150);
-
-        // Bottom cinematic gradient
-        const botGrad = ctx.createLinearGradient(0, offCanvas.height - 270, 0, offCanvas.height);
-        botGrad.addColorStop(0, 'rgba(0,0,0,0)');
-        botGrad.addColorStop(0.5, 'rgba(0,0,0,0.65)');
-        botGrad.addColorStop(1, 'rgba(0,0,0,0.92)');
-        ctx.fillStyle = botGrad;
-        ctx.fillRect(0, offCanvas.height - 270, offCanvas.width, 270);
-
-        // Platform Badge (Top Left)
-        const isInsta = item.platform === 'instagram';
-        const pillX = 28;
-        const pillY = 28;
-        const pillH = 40;
-        const pillText = isInsta ? 'REEL' : (item.type === 'short' ? 'SHORT' : 'YOUTUBE');
-        ctx.font = '700 18px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
-        const textW = ctx.measureText(pillText).width;
-        const pillW = textW + (isInsta ? 64 : 58);
-        const radius = 20;
-
-        ctx.save();
-        ctx.beginPath();
-        if (ctx.roundRect) {
-          ctx.roundRect(pillX, pillY, pillW, pillH, radius);
-        } else {
-          ctx.rect(pillX, pillY, pillW, pillH);
-        }
-        if (isInsta) {
-          const g = ctx.createLinearGradient(pillX, pillY, pillX + pillW, pillY + pillH);
-          g.addColorStop(0, '#f09433');
-          g.addColorStop(0.35, '#e6683c');
-          g.addColorStop(0.7, '#dc2743');
-          g.addColorStop(1, '#bc1888');
-          ctx.fillStyle = g;
-        } else {
-          ctx.fillStyle = '#E62117';
-        }
-        ctx.fill();
-
-        // Icon & text in badge
-        ctx.fillStyle = '#FFFFFF';
-        ctx.textBaseline = 'middle';
-        if (isInsta) {
-          ctx.beginPath();
-          ctx.arc(pillX + 20, pillY + pillH / 2, 6, 0, Math.PI * 2);
-          ctx.fillStyle = '#ffffff';
-          ctx.fill();
-          ctx.beginPath();
-          ctx.arc(pillX + 20, pillY + pillH / 2, 3.5, 0, Math.PI * 2);
-          ctx.fillStyle = '#dc2743';
-          ctx.fill();
-          ctx.fillStyle = '#ffffff';
-          ctx.fillText(pillText, pillX + 36, pillY + pillH / 2 + 1);
-        } else {
-          ctx.beginPath();
-          ctx.moveTo(pillX + 16, pillY + pillH / 2 - 6);
-          ctx.lineTo(pillX + 26, pillY + pillH / 2);
-          ctx.lineTo(pillX + 16, pillY + pillH / 2 + 6);
-          ctx.closePath();
-          ctx.fillStyle = '#ffffff';
-          ctx.fill();
-          ctx.fillText(pillText, pillX + 34, pillY + pillH / 2 + 1);
-        }
-        ctx.restore();
-
-        // Views count (Top Right)
-        if (item.views) {
-          ctx.save();
-          ctx.font = '600 16px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
-          const vw = ctx.measureText(item.views).width;
-          const vPillW = vw + 24;
-          const vPillX = offCanvas.width - 28 - vPillW;
-          ctx.beginPath();
-          if (ctx.roundRect) {
-            ctx.roundRect(vPillX, pillY, vPillW, pillH, radius);
-          } else {
-            ctx.rect(vPillX, pillY, vPillW, pillH);
-          }
-          ctx.fillStyle = 'rgba(0, 0, 0, 0.55)';
-          ctx.fill();
-          ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
-          ctx.textBaseline = 'middle';
-          ctx.fillText(item.views, vPillX + 12, pillY + pillH / 2);
-          ctx.restore();
-        }
-
-        // Center Frosted Play Icon
-        ctx.save();
-        const cx = offCanvas.width / 2;
-        const cy = offCanvas.height / 2;
-        ctx.beginPath();
-        ctx.arc(cx, cy, 46, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(0, 0, 0, 0.42)';
-        ctx.fill();
-        ctx.lineWidth = 2.5;
-        ctx.strokeStyle = 'rgba(255, 255, 255, 0.7)';
-        ctx.stroke();
-
-        ctx.beginPath();
-        ctx.moveTo(cx - 11, cy - 16);
-        ctx.lineTo(cx + 18, cy);
-        ctx.lineTo(cx - 11, cy + 16);
-        ctx.closePath();
-        ctx.fillStyle = '#FFFFFF';
-        ctx.fill();
-        ctx.restore();
-
-        // Bottom Info
-        ctx.save();
-        ctx.font = 'bold 22px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
-        ctx.fillStyle = '#FFFFFF';
-        ctx.textBaseline = 'bottom';
-        let t = item.title;
-        if (ctx.measureText(t).width > offCanvas.width - 56) {
-          while (t.length > 3 && ctx.measureText(t + '...').width > offCanvas.width - 56) {
-            t = t.slice(0, -1);
-          }
-          t += '...';
-        }
-        ctx.fillText(t, 28, offCanvas.height - 48);
-
-        ctx.font = '400 16px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.75)';
-        ctx.fillText(item.location, 28, offCanvas.height - 22);
-        ctx.restore();
-
-        texture.needsUpdate = true;
-      };
-
-      return texture;
+      const videoTex = new THREE.VideoTexture(video);
+      videoTex.minFilter = THREE.LinearFilter;
+      videoTex.magFilter = THREE.LinearFilter;
+      videoTex.generateMipmaps = false;
+      videoTex.format = THREE.RGBAFormat;
+      return videoTex;
     });
 
     // 5. 3D Cylindrical Geometry
@@ -469,7 +362,7 @@ export const InstagramCurvedSection = () => {
     const numMeshes = 28; // 2 loops of 14 items
     const centerIndex = Math.floor(numMeshes / 2);
 
-    // 6. Shader Material with Card Curvature and Rounded Corners
+    // 6. Shader Material with Card Curvature, Rounded Corners & Crop-Cover UV Mapping
     const vertexShader = `
       varying vec2 vUv;
       uniform float uRadius;
@@ -491,7 +384,7 @@ export const InstagramCurvedSection = () => {
     const fragmentShader = `
       varying vec2 vUv;
       uniform sampler2D uTexture;
-      uniform float uIsVideo;
+      uniform float uAspectCover;
 
       float roundedBox(vec2 p, vec2 b, float r) {
         vec2 q = abs(p) - b + r;
@@ -499,14 +392,20 @@ export const InstagramCurvedSection = () => {
       }
 
       void main() {
-        vec4 color = texture2D(uTexture, vUv);
+        // Crop-cover mapping for horizontal 16:9 vs vertical 9:16 videos on 0.705 card
+        vec2 uv = vUv;
+        if (uAspectCover > 1.0) {
+          uv.x = (uv.x - 0.5) / uAspectCover + 0.5;
+        }
+
+        vec4 color = texture2D(uTexture, uv);
         
         // Correct for plane aspect ratio (1.55 / 2.2 = 0.705)
         vec2 p = (vUv - 0.5) * vec2(0.705, 1.0) * 2.0;
         float d = roundedBox(p, vec2(0.705 - 0.075, 1.0 - 0.075), 0.075);
         if (d > 0.0) discard;
 
-        // Subtle gradient vignette on bottom for reel aesthetic
+        // Subtle gradient vignette on bottom for cinematic depth
         float bottomGrad = smoothstep(0.35, 0.0, vUv.y) * 0.40;
         color.rgb = mix(color.rgb, color.rgb * 0.4, bottomGrad);
 
@@ -518,11 +417,15 @@ export const InstagramCurvedSection = () => {
 
     for (let i = 0; i < numMeshes; i++) {
       const itemIdx = i % CURVED_MEDIA_ITEMS.length;
+      const item = CURVED_MEDIA_ITEMS[itemIdx];
+      // Horizontal 16:9 videos on a 0.705 vertical card need uAspectCover = 1.777 / 0.705 = ~2.52
+      const aspectCover = item.isVertical ? 1.0 : 2.52;
+
       const material = new THREE.ShaderMaterial({
         uniforms: {
           uTexture: { value: textures[itemIdx] },
           uRadius: { value: radius },
-          uIsVideo: { value: 1.0 },
+          uAspectCover: { value: aspectCover },
         },
         vertexShader,
         fragmentShader,
@@ -660,10 +563,17 @@ export const InstagramCurvedSection = () => {
 
     window.addEventListener('resize', onResize);
 
-    // 9. Animation Loop
+    // 9. Animation Loop (Continuous video rendering & carousel motion)
     let animId;
     const animate = () => {
       animId = requestAnimationFrame(animate);
+
+      // Keep all video textures updating on every frame
+      for (let i = 0; i < textures.length; i++) {
+        if (textures[i] && videoElements[i] && videoElements[i].readyState >= 2) {
+          textures[i].needsUpdate = true;
+        }
+      }
 
       if (autoSlide.enabled && !mouse.isDown) {
         if (autoSlide.isPaused) {
@@ -717,6 +627,12 @@ export const InstagramCurvedSection = () => {
       el.removeEventListener('touchstart', onTouchStart);
       el.removeEventListener('touchmove', onTouchMove);
       el.removeEventListener('touchend', onTouchEnd);
+
+      videoElements.forEach((v) => {
+        v.pause();
+        v.removeAttribute('src');
+        v.load();
+      });
 
       meshes.forEach((m) => {
         m.geometry.dispose();
@@ -773,7 +689,7 @@ export const InstagramCurvedSection = () => {
         </div>
       </div>
 
-      {/* 2. Interactive 3D Cylindrical Perspective Carousel Slider (Edge-to-Edge Bleed) */}
+      {/* 2. Interactive 3D Cylindrical Perspective Carousel Slider with Live Autoplaying Videos */}
       <div className="relative w-full overflow-hidden">
         <div 
           ref={containerRef} 
@@ -784,11 +700,11 @@ export const InstagramCurvedSection = () => {
 
         {/* Drag Hint & Navigation */}
         <div className="flex items-center justify-center gap-2 mt-4 text-xs text-[#888] font-light uppercase tracking-widest">
-          <span>&larr; Drag or click to play videos &amp; reels &rarr;</span>
+          <span>&larr; Drag to explore live site videos &amp; reels &rarr;</span>
         </div>
       </div>
 
-      {/* 3. Cinema Video / Reel Player Modal with Autoplay */}
+      {/* 3. Cinema Video / Reel Player Modal with Audio */}
       <AnimatePresence>
         {selectedMedia && (
           <motion.div
@@ -804,9 +720,7 @@ export const InstagramCurvedSection = () => {
               exit={{ scale: 0.95, opacity: 0, y: 20 }}
               onClick={(e) => e.stopPropagation()}
               className={`bg-[#141517] text-white rounded-3xl overflow-hidden shadow-2xl border border-white/10 relative w-full ${
-                selectedMedia.type === 'short' || selectedMedia.platform === 'instagram'
-                  ? 'max-w-md'
-                  : 'max-w-3xl'
+                selectedMedia.isVertical ? 'max-w-md' : 'max-w-3xl'
               }`}
             >
               {/* Close Button */}
@@ -838,9 +752,7 @@ export const InstagramCurvedSection = () => {
               {/* Player Media Container with Autoplay */}
               <div
                 className={`relative w-full bg-black flex items-center justify-center overflow-hidden ${
-                  selectedMedia.type === 'short' || selectedMedia.platform === 'instagram'
-                    ? 'aspect-[9/16] max-h-[68vh]'
-                    : 'aspect-video max-h-[62vh]'
+                  selectedMedia.isVertical ? 'aspect-[9/16] max-h-[68vh]' : 'aspect-video max-h-[62vh]'
                 }`}
               >
                 {selectedMedia.platform === 'youtube' ? (
