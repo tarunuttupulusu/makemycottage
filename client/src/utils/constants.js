@@ -39,42 +39,42 @@ export const SERVICES = [
     id: 'wooden-homes',
     title: 'Wooden Homes',
     description: 'Custom-designed wooden houses built around your lifestyle with natural warmth and enduring strength.',
-    image: 'https://images.unsplash.com/photo-1518780664697-55e3ad937233?w=1000&q=80'
+    image: '/images/wooden-homes-showcase.jpg'
   },
   {
     num: '02',
     id: 'farm-houses',
     title: 'Farm Houses',
     description: 'Relaxed, natural spaces designed for weekend living, organic farm retreats, and countryside estates.',
-    image: 'https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8?w=1000&q=80'
+    image: '/images/farm-houses-showcase.jpg'
   },
   {
     num: '03',
     id: 'cottage-homes',
     title: 'Cottage Homes',
     description: 'Compact and beautiful cottages for resorts, hill retreats, farms, and private scenic properties.',
-    image: 'https://images.unsplash.com/photo-1510798831971-661eb04b3739?w=1000&q=80'
+    image: '/images/cottage-homes-showcase.jpg'
   },
   {
     num: '04',
     id: 'prefabricated-homes',
     title: 'Prefabricated Homes',
     description: 'Efficient precision construction with modern modular prefabricated timber systems for rapid delivery.',
-    image: 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1000&q=80'
+    image: '/images/prefabricated-homes-showcase.jpg'
   },
   {
     num: '05',
     id: 'resort-cottages',
     title: 'Resort Cottages',
     description: 'Distinctive wooden accommodation spaces engineered for hospitality luxury and guest escapism.',
-    image: 'https://images.unsplash.com/photo-1605146769289-440113cc3d00?w=1000&q=80'
+    image: '/images/resort-cottages-showcase.jpg'
   },
   {
     num: '06',
     id: 'custom-structures',
     title: 'Custom Structures',
     description: 'Unique architectural wooden pergolas, pavilions, gazebos, and extensions made to exact specifications.',
-    image: 'https://images.unsplash.com/photo-1572120360610-d971b9d7767c?w=1000&q=80'
+    image: '/images/custom-structures-showcase.jpg'
   }
 ];
 

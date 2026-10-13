@@ -48,12 +48,9 @@ const Navbar = () => {
 
   const isHomePage = location.pathname === '/';
   const isGalleryPage = location.pathname === '/gallery';
+  const isServicesPage = location.pathname === '/services';
   const isDarkHeroPage = isHomePage || location.pathname === '/projects';
-  const isDarkTheme = isDarkHeroPage || (isGalleryPage && !isScrolled);
-
-  if (location.pathname === '/services') {
-    return null;
-  }
+  const isDarkTheme = isDarkHeroPage || ((isGalleryPage || isServicesPage) && !isScrolled);
 
   return (
     <>
