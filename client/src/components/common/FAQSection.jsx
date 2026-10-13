@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { HiQuestionMarkCircle } from 'react-icons/hi';
+import { BUSINESS_INFO } from '../../utils/constants';
 
 const FAQS = [
   {
@@ -53,18 +54,18 @@ const FAQSection = () => {
   };
 
   return (
-    <section id="faq" className="py-24 sm:py-32 px-4 sm:px-6 md:px-10 max-w-7xl mx-auto border-t border-[#e3e3de] relative">
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start relative">
+    <section id="faq" className="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 md:px-10 max-w-7xl mx-auto border-t border-[#e3e3de] relative">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start relative">
         
-        {/* Left Column: Pins when reaching first question, stays frozen until bottom ends align with right column */}
-        <div className="lg:col-span-5 lg:sticky lg:top-24 lg:self-start space-y-8">
+        {/* Left Column: Pins neatly on scroll and fits comfortably in viewport */}
+        <div className="lg:col-span-5 lg:sticky lg:top-20 lg:self-start space-y-6">
           <div>
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#141517] text-white text-xs uppercase tracking-wider font-semibold mb-6 shadow-sm">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#141517] text-white text-xs uppercase tracking-wider font-semibold mb-4 shadow-sm">
               <HiQuestionMarkCircle className="w-4 h-4 text-white" />
               <span>FAQ</span>
             </div>
 
-            <h2 className="font-heading text-4xl sm:text-5xl lg:text-6xl text-[#141517] font-bold tracking-tight leading-[1.05] mb-5">
+            <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl text-[#141517] font-bold tracking-tight leading-[1.08] mb-3.5">
               Got Questions?<br />We Have Answers.
             </h2>
 
@@ -73,24 +74,30 @@ const FAQSection = () => {
             </p>
           </div>
 
-          {/* Consultant Portrait Card - preserved in full size aspect-[4/5] exactly as shown in screenshot */}
-          <div className="relative rounded-3xl sm:rounded-[32px] overflow-hidden aspect-[4/5] w-full max-w-xs sm:max-w-sm shadow-xl border border-[#e3e3de] group bg-stone-100">
+          {/* Consultant Portrait Card - perfectly framed so full card & photo fit completely on screen */}
+          <a
+            href={`tel:${BUSINESS_INFO.phone}`}
+            className="relative rounded-2xl sm:rounded-3xl overflow-hidden w-full max-w-[320px] h-48 sm:h-56 shadow-lg border border-[#e3e3de] group bg-stone-100 block cursor-pointer transition-all hover:shadow-xl"
+          >
             <img
               src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=800&q=80"
               alt="Make My Cottage Architectural Consultation"
-              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
               loading="lazy"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent opacity-80" />
-            <div className="absolute bottom-5 left-5 right-5 text-white">
-              <span className="text-[11px] uppercase tracking-widest text-white/80 block font-medium mb-0.5">
+            <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent transition-opacity group-hover:opacity-90" />
+            <div className="absolute bottom-3.5 left-4 right-4 text-white">
+              <span className="text-[10px] uppercase tracking-widest text-[#ff8a65] block font-semibold mb-0.5">
                 Design &amp; Engineering Team
               </span>
-              <p className="text-sm font-heading font-semibold text-white">
+              <p className="text-xs sm:text-sm font-heading font-medium text-white leading-snug">
                 Turnkey Wooden Architecture Specialists
               </p>
+              <span className="text-[11px] text-white/80 font-light mt-1 flex items-center gap-1 group-hover:text-white">
+                Call {BUSINESS_INFO.displayPhone} &rarr;
+              </span>
             </div>
-          </div>
+          </a>
         </div>
 
         {/* Right Column: Individual Rounded Pill Card Accordion (Exact RBP Imageworks Clone) */}
