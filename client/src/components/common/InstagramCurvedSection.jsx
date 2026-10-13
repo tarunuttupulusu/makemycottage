@@ -250,6 +250,7 @@ export const CURVED_MEDIA_ITEMS = [
 export const InstagramCurvedSection = () => {
   const containerRef = useRef(null);
   const canvasRef = useRef(null);
+  const videoContainerRef = useRef(null);
   const [selectedIdx, setSelectedIdx] = useState(null);
 
   const selectedMedia = selectedIdx !== null ? CURVED_MEDIA_ITEMS[selectedIdx] : null;
@@ -279,6 +280,7 @@ export const InstagramCurvedSection = () => {
   useEffect(() => {
     const container = containerRef.current;
     const canvas = canvasRef.current;
+    const hiddenContainer = videoContainerRef.current;
     if (!container || !canvas) return;
 
     let width = container.clientWidth || window.innerWidth;
@@ -312,9 +314,13 @@ export const InstagramCurvedSection = () => {
     renderer.setSize(width, height);
     renderer.setClearColor(0x000000, 0);
 
-    // 4. Video Loader for Ultra-Smooth Automatic Playback
+    // 4. Video Loader & Texture Pool (12 unique clips, zero thrashing)
     const videoElements = [];
-    const textures = CURVED_MEDIA_ITEMS.map((item) => {
+    const videoTexturesMap = new Map(); // videoUrl -> THREE.VideoTexture
+
+    CURVED_MEDIA_ITEMS.forEach((item) => {
+      if (videoTexturesMap.has(item.videoUrl)) return;
+
       const video = document.createElement('video');
       video.src = item.videoUrl;
       video.crossOrigin = 'anonymous';
@@ -323,29 +329,27 @@ export const InstagramCurvedSection = () => {
       video.muted = true;
       video.defaultMuted = true;
       video.playsInline = true;
+      video.autoplay = true;
       video.setAttribute('playsinline', '');
       video.setAttribute('webkit-playsinline', '');
       video.setAttribute('muted', '');
-      video.autoplay = true;
+      video.setAttribute('autoplay', '');
+      video.setAttribute('loop', '');
 
-      // Autoplay smoothly
-      const startPlay = () => {
+      // Append to hidden DOM container so browser allocates top active decoding priority
+      if (hiddenContainer) {
+        hiddenContainer.appendChild(video);
+      }
+
+      const startPlaying = () => {
         if (video.paused) {
           video.play().catch(() => {});
         }
       };
 
-      video.addEventListener('canplay', startPlay, { once: true });
-      video.addEventListener('canplaythrough', startPlay, { once: true });
-      startPlay();
-
-      // Fallback in case browser pauses before first user interaction
-      const resumeOnGesture = () => {
-        startPlay();
-      };
-      window.addEventListener('scroll', resumeOnGesture, { once: true, passive: true });
-      window.addEventListener('touchstart', resumeOnGesture, { once: true, passive: true });
-      window.addEventListener('click', resumeOnGesture, { once: true, passive: true });
+      video.addEventListener('canplay', startPlaying);
+      video.addEventListener('loadeddata', startPlaying);
+      startPlaying();
 
       videoElements.push(video);
 
@@ -354,8 +358,19 @@ export const InstagramCurvedSection = () => {
       videoTex.magFilter = THREE.LinearFilter;
       videoTex.generateMipmaps = false;
       videoTex.format = THREE.RGBAFormat;
-      return videoTex;
+
+      videoTexturesMap.set(item.videoUrl, videoTex);
     });
+
+    // Fallback in case browser pauses before first user interaction
+    const resumeAllVideos = () => {
+      videoElements.forEach((v) => {
+        if (v.paused) v.play().catch(() => {});
+      });
+    };
+    window.addEventListener('scroll', resumeAllVideos, { passive: true });
+    window.addEventListener('touchstart', resumeAllVideos, { passive: true });
+    window.addEventListener('click', resumeAllVideos, { passive: true });
 
     // 5. 3D Cylindrical Geometry
     const planeWidth = 1.55;
@@ -367,9 +382,8 @@ export const InstagramCurvedSection = () => {
     const arcSpread = 0.70 * Math.PI;
     const angleStep = arcSpread / (numVisible - 1);
     const numMeshes = 28; // 2 loops of 14 items
-    const centerIndex = Math.floor(numMeshes / 2);
 
-    // 6. Shader Material with Card Curvature, Rounded Corners & Crop-Cover UV Mapping
+    // 6. Shader Material with Card Curvature, Antialiased Smooth Rounded Corners & Crop-Cover
     const vertexShader = `
       varying vec2 vUv;
       uniform float uRadius;
@@ -410,13 +424,16 @@ export const InstagramCurvedSection = () => {
         // Correct for plane aspect ratio (1.55 / 2.2 = 0.705)
         vec2 p = (vUv - 0.5) * vec2(0.705, 1.0) * 2.0;
         float d = roundedBox(p, vec2(0.705 - 0.075, 1.0 - 0.075), 0.075);
-        if (d > 0.0) discard;
+        
+        // Silky smooth antialiased border without GPU discard stalls
+        float alpha = 1.0 - smoothstep(0.0, 0.008, d);
+        if (alpha < 0.01) discard;
 
         // Subtle gradient vignette on bottom for cinematic depth
         float bottomGrad = smoothstep(0.35, 0.0, vUv.y) * 0.40;
         color.rgb = mix(color.rgb, color.rgb * 0.4, bottomGrad);
 
-        gl_FragColor = color;
+        gl_FragColor = vec4(color.rgb, alpha);
       }
     `;
 
@@ -427,15 +444,17 @@ export const InstagramCurvedSection = () => {
       const item = CURVED_MEDIA_ITEMS[itemIdx];
       // Horizontal 16:9 videos on a 0.705 vertical card need uAspectCover = 1.777 / 0.705 = ~2.52
       const aspectCover = item.isVertical ? 1.0 : 2.52;
+      const texture = videoTexturesMap.get(item.videoUrl);
 
       const material = new THREE.ShaderMaterial({
         uniforms: {
-          uTexture: { value: textures[itemIdx] },
+          uTexture: { value: texture },
           uRadius: { value: radius },
           uAspectCover: { value: aspectCover },
         },
         vertexShader,
         fragmentShader,
+        transparent: true,
         side: THREE.DoubleSide,
       });
 
@@ -445,56 +464,49 @@ export const InstagramCurvedSection = () => {
       meshes.push(mesh);
     }
 
-    // 7. Mouse & Touch Drag Controls with Click Detection
-    const mouse = {
-      x: 0,
-      y: 0,
-      startX: 0,
-      prevX: 0,
-      isDown: false,
-      hasDragged: false,
+    // 7. Infinite Smooth Autoplay Drift & Fluid Drag Controls
+    let scrollPos = 0;
+    let targetScrollPos = 0;
+    let dragVelocity = 0;
+    let isDragging = false;
+    let startPointerX = 0;
+    let prevPointerX = 0;
+    let hasDraggedDistance = false;
+    let isHovering = false;
+
+    // Continuous smooth drift speed (approx 1 card every 4.5 seconds)
+    const DRIFT_SPEED = 0.0032;
+
+    const onPointerDown = (clientX) => {
+      isDragging = true;
+      startPointerX = clientX;
+      prevPointerX = clientX;
+      hasDraggedDistance = false;
+      dragVelocity = 0;
     };
 
-    const autoSlide = {
-      enabled: true,
-      speed: 0.35,
-      range: 2.8,
-      direction: 1,
-      pauseTime: 1800,
-      isPaused: false,
-      pauseStartTime: 0,
-    };
-
-    let targetX = 0;
-    let currentX = 0;
-    const ease = 0.06;
-
-    const onMouseDown = (e) => {
-      mouse.isDown = true;
-      mouse.startX = e.clientX;
-      mouse.prevX = e.clientX;
-      mouse.hasDragged = false;
-      autoSlide.enabled = false;
-    };
-
-    const onMouseMove = (e) => {
-      if (!mouse.isDown) return;
-      const deltaX = e.clientX - mouse.prevX;
-      if (Math.abs(e.clientX - mouse.startX) > 8) {
-        mouse.hasDragged = true;
+    const onPointerMove = (clientX) => {
+      if (!isDragging) return;
+      const deltaX = clientX - prevPointerX;
+      if (Math.abs(clientX - startPointerX) > 6) {
+        hasDraggedDistance = true;
       }
-      targetX += deltaX * 0.007;
-      mouse.prevX = e.clientX;
+      const moveDelta = -deltaX * 0.008;
+      targetScrollPos += moveDelta;
+      scrollPos += moveDelta;
+      dragVelocity = moveDelta;
+      prevPointerX = clientX;
     };
 
-    const onMouseUp = (e) => {
-      if (mouse.isDown && !mouse.hasDragged) {
+    const onPointerUp = (clientX, clientY) => {
+      if (isDragging && !hasDraggedDistance && clientX !== undefined && clientY !== undefined) {
         const rect = canvas.getBoundingClientRect();
-        const nx = ((e.clientX - rect.left) / rect.width) * 2 - 1;
-        const ny = -(((e.clientY - rect.top) / rect.height) * 2 - 1);
+        const nx = ((clientX - rect.left) / rect.width) * 2 - 1;
+        const ny = -(((clientY - rect.top) / rect.height) * 2 - 1);
         const raycaster = new THREE.Raycaster();
         raycaster.setFromCamera(new THREE.Vector2(nx, ny), camera);
-        const intersects = raycaster.intersectObjects(meshes);
+        const visibleMeshes = meshes.filter((m) => m.visible);
+        const intersects = raycaster.intersectObjects(visibleMeshes);
         if (intersects.length > 0) {
           const itemIdx = intersects[0].object.userData.reelIndex;
           if (itemIdx !== undefined && CURVED_MEDIA_ITEMS[itemIdx]) {
@@ -502,61 +514,38 @@ export const InstagramCurvedSection = () => {
           }
         }
       }
-
-      mouse.isDown = false;
-      setTimeout(() => {
-        autoSlide.enabled = true;
-      }, 1200);
+      isDragging = false;
     };
 
-    const onTouchStart = (e) => {
-      mouse.isDown = true;
-      mouse.startX = e.touches[0].clientX;
-      mouse.prevX = e.touches[0].clientX;
-      mouse.hasDragged = false;
-      autoSlide.enabled = false;
-    };
+    const handleMouseDown = (e) => onPointerDown(e.clientX);
+    const handleMouseMove = (e) => onPointerMove(e.clientX);
+    const handleMouseUp = (e) => onPointerUp(e.clientX, e.clientY);
 
-    const onTouchMove = (e) => {
-      if (!mouse.isDown) return;
-      const deltaX = e.touches[0].clientX - mouse.prevX;
-      if (Math.abs(e.touches[0].clientX - mouse.startX) > 8) {
-        mouse.hasDragged = true;
+    const handleTouchStart = (e) => {
+      if (e.touches?.[0]) onPointerDown(e.touches[0].clientX);
+    };
+    const handleTouchMove = (e) => {
+      if (e.touches?.[0]) onPointerMove(e.touches[0].clientX);
+    };
+    const handleTouchEnd = (e) => {
+      if (e.changedTouches?.[0]) {
+        onPointerUp(e.changedTouches[0].clientX, e.changedTouches[0].clientY);
+      } else {
+        isDragging = false;
       }
-      targetX += deltaX * 0.007;
-      mouse.prevX = e.touches[0].clientX;
     };
 
-    const onTouchEnd = (e) => {
-      if (mouse.isDown && !mouse.hasDragged && e.changedTouches?.length > 0) {
-        const touch = e.changedTouches[0];
-        const rect = canvas.getBoundingClientRect();
-        const nx = ((touch.clientX - rect.left) / rect.width) * 2 - 1;
-        const ny = -(((touch.clientY - rect.top) / rect.height) * 2 - 1);
-        const raycaster = new THREE.Raycaster();
-        raycaster.setFromCamera(new THREE.Vector2(nx, ny), camera);
-        const intersects = raycaster.intersectObjects(meshes);
-        if (intersects.length > 0) {
-          const itemIdx = intersects[0].object.userData.reelIndex;
-          if (itemIdx !== undefined && CURVED_MEDIA_ITEMS[itemIdx]) {
-            setSelectedIdx(itemIdx);
-          }
-        }
-      }
+    const handleMouseEnter = () => { isHovering = true; };
+    const handleMouseLeave = () => { isHovering = false; };
 
-      mouse.isDown = false;
-      setTimeout(() => {
-        autoSlide.enabled = true;
-      }, 1200);
-    };
-
-    const el = container;
-    el.addEventListener('mousedown', onMouseDown);
-    window.addEventListener('mousemove', onMouseMove);
-    window.addEventListener('mouseup', onMouseUp);
-    el.addEventListener('touchstart', onTouchStart, { passive: true });
-    el.addEventListener('touchmove', onTouchMove, { passive: true });
-    el.addEventListener('touchend', onTouchEnd);
+    container.addEventListener('mousedown', handleMouseDown);
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mouseup', handleMouseUp);
+    container.addEventListener('touchstart', handleTouchStart, { passive: true });
+    window.addEventListener('touchmove', handleTouchMove, { passive: true });
+    window.addEventListener('touchend', handleTouchEnd);
+    container.addEventListener('mouseenter', handleMouseEnter);
+    container.addEventListener('mouseleave', handleMouseLeave);
 
     // 8. Responsive Resize
     const onResize = () => {
@@ -570,43 +559,40 @@ export const InstagramCurvedSection = () => {
 
     window.addEventListener('resize', onResize);
 
-    // 9. Animation Loop (Continuous video rendering & carousel motion)
+    // 9. Animation Loop with Continuous Infinite Autoplay Drift & Liquid 60fps Motion
     let animId;
+    let frameCount = 0;
+
     const animate = () => {
       animId = requestAnimationFrame(animate);
+      frameCount++;
 
-      if (autoSlide.enabled && !mouse.isDown) {
-        if (autoSlide.isPaused) {
-          if (Date.now() - autoSlide.pauseStartTime >= autoSlide.pauseTime) {
-            autoSlide.isPaused = false;
-          }
+      if (!isDragging) {
+        if (Math.abs(dragVelocity) > 0.0003) {
+          targetScrollPos += dragVelocity;
+          dragVelocity *= 0.92; // smooth inertia friction
         } else {
-          targetX += autoSlide.speed * autoSlide.direction * 0.008;
-          if (Math.abs(targetX) >= autoSlide.range) {
-            autoSlide.direction *= -1;
-            autoSlide.isPaused = true;
-            autoSlide.pauseStartTime = Date.now();
-          }
+          dragVelocity = 0;
+          // Elegant continuous drift (slightly gentle on hover)
+          targetScrollPos += isHovering ? DRIFT_SPEED * 0.4 : DRIFT_SPEED;
         }
-      } else if (!mouse.isDown) {
-        targetX *= 0.98;
       }
 
-      currentX += (targetX - currentX) * ease;
+      // Buttery smooth lerp toward target scroll position
+      scrollPos += (targetScrollPos - scrollPos) * 0.08;
 
-      // Track active meshes in viewport for prioritized 60fps video playback
-      const activeReels = new Set();
+      // Position meshes seamlessly in a continuous wrapping ribbon
       for (let i = 0; i < meshes.length; i++) {
-        const offset = i - centerIndex + currentX;
-        const angle = offset * angleStep;
+        // Seamless modulo wrapping within [-14, 14]
+        let offset = ((i - scrollPos) % 28 + 42) % 28 - 14;
 
         if (Math.abs(offset) > 4.6) {
           meshes[i].visible = false;
           continue;
-        } else {
-          meshes[i].visible = true;
-          activeReels.add(meshes[i].userData.reelIndex);
         }
+
+        meshes[i].visible = true;
+        const angle = offset * angleStep;
 
         meshes[i].position.x = radius * Math.sin(angle);
         meshes[i].position.z = radius * (1 - Math.cos(angle));
@@ -615,19 +601,12 @@ export const InstagramCurvedSection = () => {
         meshes[i].lookAt(camera.position.x, meshes[i].position.y, camera.position.z);
       }
 
-      // Smoothly update visible video textures & pause off-screen videos
-      for (let i = 0; i < videoElements.length; i++) {
-        const video = videoElements[i];
-        if (activeReels.has(i)) {
-          if (video.paused) {
-            video.play().catch(() => {});
-          }
-          if (textures[i] && video.readyState >= 2) {
-            textures[i].needsUpdate = true;
-          }
-        } else {
-          if (!video.paused) {
-            video.pause();
+      // Keep all video streams gently playing once per second (every 60 frames) without churn
+      if (frameCount % 60 === 0) {
+        for (let j = 0; j < videoElements.length; j++) {
+          const v = videoElements[j];
+          if (v.paused) {
+            v.play().catch(() => {});
           }
         }
       }
@@ -641,26 +620,31 @@ export const InstagramCurvedSection = () => {
     return () => {
       cancelAnimationFrame(animId);
       window.removeEventListener('resize', onResize);
-      el.removeEventListener('mousedown', onMouseDown);
-      window.removeEventListener('mousemove', onMouseMove);
-      window.removeEventListener('mouseup', onMouseUp);
-      el.removeEventListener('touchstart', onTouchStart);
-      el.removeEventListener('touchmove', onTouchMove);
-      el.removeEventListener('touchend', onTouchEnd);
+      container.removeEventListener('mousedown', handleMouseDown);
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseup', handleMouseUp);
+      container.removeEventListener('touchstart', handleTouchStart);
+      window.removeEventListener('touchmove', handleTouchMove);
+      window.removeEventListener('touchend', handleTouchEnd);
+      container.removeEventListener('mouseenter', handleMouseEnter);
+      container.removeEventListener('mouseleave', handleMouseLeave);
+      window.removeEventListener('touchstart', resumeAllVideos);
+      window.removeEventListener('scroll', resumeAllVideos);
+      window.removeEventListener('click', resumeAllVideos);
 
       videoElements.forEach((v) => {
         v.pause();
         v.removeAttribute('src');
         v.load();
+        if (v.parentNode) v.parentNode.removeChild(v);
       });
 
       meshes.forEach((m) => {
         m.geometry.dispose();
-        if (m.material.uniforms?.uTexture?.value) {
-          m.material.uniforms.uTexture.value.dispose();
-        }
         m.material.dispose();
       });
+
+      videoTexturesMap.forEach((tex) => tex.dispose());
       renderer.dispose();
     };
   }, []);
@@ -716,6 +700,12 @@ export const InstagramCurvedSection = () => {
           className="relative w-full h-[330px] sm:h-[380px] md:h-[430px] lg:h-[470px] flex items-center justify-center overflow-hidden select-none cursor-grab active:cursor-grabbing"
         >
           <canvas ref={canvasRef} className="block w-full h-full" />
+          {/* Hidden DOM elements for active hardware decoding */}
+          <div
+            ref={videoContainerRef}
+            className="fixed -top-[9999px] -left-[9999px] w-[1px] h-[1px] overflow-hidden opacity-[0.001] pointer-events-none"
+            aria-hidden="true"
+          />
         </div>
 
         {/* Drag Hint & Navigation */}
