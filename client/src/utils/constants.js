@@ -404,40 +404,40 @@ export const PROJECTS_DATA = [
     slug: 'ravipati-kalyana-mandapam',
     num: '08',
     name: 'Ravipati Kalyana Mandapam',
-    location: 'Guntur, Andhra Pradesh',
-    category: 'Custom Structures',
-    shortDescription: 'Grand 12,000 sq.ft timber convention hall featuring high-span wooden trusses, carved teak arches, and open colonnades.',
-    description: 'Located in the Guntur / Palnadu region of Andhra Pradesh, Ravipati Kalyana Mandapam is a monumental 12,000 sq.ft wooden convention architecture engineered and crafted by Make My Cottage. Celebrating rich South Indian timber heritage with modern structural engineering, the hall boasts majestic high-span teakwood trusses, carved entryway pillars, expansive open-air reception colonnades, and banquet facilities tailored for grand celebrations.',
+    location: 'Palnadu / Guntur District, Andhra Pradesh',
+    category: 'Convention Estate & VIP Wooden Chalets',
+    shortDescription: 'Grand convention destination featuring authentic solid pine VIP guest chalets, bridal dressing suites with vaulted rafter ceilings, and an expansive 12,000 sq.ft wedding banquet mandapam hall.',
+    description: 'Situated along Piduguralla Road near Dodleru and Krosuru in Palnadu / Guntur District, Andhra Pradesh, Ravipati Kalyana Mandapam is a premier celebration estate featuring authentic solid timber VIP guest chalets and luxury bridal suites engineered and crafted by Make My Cottage alongside an expansive 12,000 sq.ft convention and banquet hall. Designed to host lavish weddings and cultural celebrations, the estate combines a high-capacity air-conditioned mandapam hall with picturesque pine log guest cottages equipped with private covered sit-out porches, king-post trusses, vaulted pine ceilings, modern ensuite dressing rooms, and landscaped lawn avenues.',
     specs: {
       client: 'Ravipati Kalyana Mandapam',
       builtUpArea: '12,000 sq.ft',
-      location: 'Guntur, Andhra Pradesh',
-      projectType: 'Heritage Wooden Convention & Banquet Hall',
-      constructionType: 'High-Span Heavy Timber Truss & Colonnades',
+      location: 'Piduguralla Road, Dodleru Village, Krosuru Mandalam, Palnadu District, Andhra Pradesh 522410',
+      projectType: 'Convention Estate & VIP Wooden Guest Chalets',
+      constructionType: 'Solid Timber Pine Log Cottages & Grand Convention Architecture',
       duration: '110 Days',
       completion: '2024',
-      materials: 'Seasoned Burma Teak, Pressure-Treated Hardwood, Granite Plinth'
+      materials: 'Treated Russian Pine Logs, Seasoned Teak, Vaulted Rafters, Asphalt Shingle Roofing, Vitrified Tile Flooring'
     },
-    challenge: 'Engineering clear-span timber roof trusses over 12,000 sq.ft without internal support columns obstructing banquet visibility, ensuring acoustic balance and complete fire-retardant, termite-resistant structural performance.',
-    solution: 'Designed precision-engineered timber scissor trusses reinforced with concealed high-tensile steel gussets. All timber was vacuum-impregnated with fire-retardant and anti-termite treatments, paired with acoustic micro-perforated wood ceiling panelling.',
+    challenge: 'Engineering a high-capacity celebration estate that seamlessly pairs a massive 12,000 sq.ft clear-span air-conditioned banquet hall with an exclusive cluster of luxury solid pine guest chalets and bridal dressing suites, demanding exceptional thermal and acoustic insulation under Andhra Pradesh weather conditions.',
+    solution: 'Constructed authentic tongue-and-groove pine log cottages featuring vaulted king-post timber roof trusses, multi-layer thermal and acoustic insulative wall panels, handcrafted timber porch railings, and weatherproof green asphalt shingles arranged around a manicured lawn promenade, delivered concurrently with the banquet hall on a rapid turnkey schedule.',
     features: [
-      'Monumental Clear-Span Timber Roof Engineering',
-      'Hand-Carved Burma Teak Entrance Colonnades',
-      'Acoustically Balanced High-Volume Wood Ceiling',
-      'Vacuum-Pressure Fire & Termite Treated Timber',
-      'Capacity for Over 1,000 Celebration Guests',
-      'Turnkey Turnaround in Under 110 Days'
+      'Authentic Solid Pine VIP Guest Chalets & Suites',
+      '12,000 sq.ft Grand Banquet & Mandapam Hall',
+      'Vaulted King-Post Rafter Ceilings & Porches',
+      'Dedicated Luxury Bridal Dressing Suite',
+      'Expansive Manicured Event Lawns & Flagstone Paths',
+      'Turnkey Engineering Delivered in 110 Days'
     ],
-    heroImage: 'https://images.unsplash.com/photo-1518780664697-55e3ad937233?w=1920&q=80',
+    heroImage: '/images/projects/ravipati-kalyana-mandapam/hero.jpg',
     mapUrl: 'https://maps.app.goo.gl/zeeECEn81nEZ5JRo7',
     mapQuery: '16.543307,80.0611687',
     images: [
-      'https://images.unsplash.com/photo-1518780664697-55e3ad937233?w=1400&q=80',
-      'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=1400&q=80',
-      'https://images.unsplash.com/photo-1587061949409-02df41d5e562?w=1400&q=80',
-      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1400&q=80',
-      'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1400&q=80',
-      'https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8?w=1400&q=80'
+      '/images/projects/ravipati-kalyana-mandapam/image-1.jpg',
+      '/images/projects/ravipati-kalyana-mandapam/image-2.jpg',
+      '/images/projects/ravipati-kalyana-mandapam/image-3.jpg',
+      '/images/projects/ravipati-kalyana-mandapam/image-4.jpg',
+      '/images/projects/ravipati-kalyana-mandapam/image-5.jpg',
+      '/images/projects/ravipati-kalyana-mandapam/image-6.jpg'
     ]
   }
 ];
