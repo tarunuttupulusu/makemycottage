@@ -20,11 +20,39 @@ const GalleryPage = () => {
   const [lightboxDragging, setLightboxDragging] = useState(false);
   const lightboxRef = useRef(null);
 
-  // Smooth scroll depth transitions for hero section
+  // Responsive hero dimensions: base height and shrunk height (matching ProjectsPage architecture)
+  const [heroDims, setHeroDims] = useState(() => {
+    if (typeof window === 'undefined') return { base: 615, shrunk: 360 };
+    const w = window.innerWidth;
+    if (w < 640) return { base: 500, shrunk: 320 };
+    if (w < 1024) return { base: 560, shrunk: 340 };
+    return { base: 615, shrunk: 360 };
+  });
+
+  useEffect(() => {
+    const handleResize = () => {
+      const w = window.innerWidth;
+      if (w < 640) {
+        setHeroDims({ base: 500, shrunk: 320 });
+      } else if (w < 1024) {
+        setHeroDims({ base: 560, shrunk: 340 });
+      } else {
+        setHeroDims({ base: 615, shrunk: 360 });
+      }
+    };
+    window.addEventListener('resize', handleResize, { passive: true });
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const { scrollY } = useScroll();
-  const heroScale = useTransform(scrollY, [0, 480], [1, 0.94]);
-  const heroOpacity = useTransform(scrollY, [0, 520], [1, 0.72]);
-  const heroY = useTransform(scrollY, [0, 500], [0, -18]);
+  const cardHeight = useTransform(scrollY, (value) => {
+    const distance = heroDims.base - heroDims.shrunk;
+    if (value <= 0) return `${heroDims.base}px`;
+    if (value >= distance) return `${heroDims.shrunk}px`;
+    const progress = value / distance;
+    const h = heroDims.base - progress * (heroDims.base - heroDims.shrunk);
+    return `${h}px`;
+  });
 
   const filteredProjects = activeCategory === 'All'
     ? galleryProjects
@@ -124,7 +152,7 @@ const GalleryPage = () => {
   const currentProject = lightboxIndex !== null ? filteredProjects[lightboxIndex] : null;
 
   return (
-    <div className="bg-white min-h-screen w-full pb-24 font-['Manrope',sans-serif] pt-3 sm:pt-4">
+    <div className="bg-white min-h-screen w-full pb-24 font-['Manrope',sans-serif]">
       <Helmet>
         <title>Our Gallery | MakeMyCottage</title>
         <meta
@@ -136,35 +164,48 @@ const GalleryPage = () => {
         <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
       </Helmet>
 
-      {/* Pinned Hero Image Background Layer (Stays pinned while content moves over it) */}
-      <div className="sticky top-3 sm:top-4 z-10 px-3 sm:px-5 md:px-8 max-w-[1560px] mx-auto pointer-events-none">
-        <motion.div
-          style={{
-            scale: heroScale,
-            opacity: heroOpacity,
-            y: heroY,
-          }}
-          className="relative w-full h-[calc(86vh-2rem)] min-h-[500px] max-h-[660px] origin-top"
-        >
-          {/* Component 1: Hero Image Banner */}
+      {/* =========================================================================
+          1. HERO SECTION (Locked Pinned Hero Image with Scroll-Over Content)
+      ========================================================================= */}
+      {/* Pinned / Locked Hero Image Background Layer (Stays locked in place while content rolls over it) */}
+      <div className="sticky top-3 sm:top-4 md:top-5 z-10 w-full max-w-[1440px] mx-auto px-3 sm:px-4 md:px-5 pointer-events-none">
+        <div className="relative w-full h-[88vh] min-h-[560px] max-h-[720px] rounded-t-[28px] sm:rounded-t-[32px] rounded-br-[32px] sm:rounded-br-[40px] rounded-bl-none overflow-hidden bg-[#1c1d21] shadow-sm">
           <GalleryHeroImage
             src="/images/gallery-hero.png"
             alt="Snow covered modern glass cottage - MakeMyCottage Gallery"
           />
-        </motion.div>
+        </div>
       </div>
 
-      {/* Moving Foreground Layer: Starts from OurProjectsCard and moves UP on the hero image on scroll */}
-      <div className="relative z-20 w-full max-w-[1560px] mx-auto px-3 sm:px-5 md:px-8 -mt-28 sm:-mt-32 md:-mt-36">
-        {/* Component 2: Our Projects / Gallery Cutout Card - Moves UP ON the hero image */}
-        <div className="inline-block pointer-events-auto">
+      {/* Moving Foreground Layer: Card & content move UP over the locked hero image on scroll */}
+      <div className="relative z-20 w-full max-w-[1440px] mx-auto px-3 sm:px-4 md:px-5 -mt-[64px] sm:-mt-[84px] md:-mt-[90px]">
+        {/* Component 2: Our Gallery Cutout Card - Slides in from the side on open */}
+        <motion.div
+          initial={{ x: -100, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{
+            duration: 0.95,
+            delay: 0.3,
+            ease: [0.16, 1, 0.3, 1],
+          }}
+          className="inline-block pointer-events-auto"
+        >
           <OurProjectsCard title="Our Gallery" />
-        </div>
+        </motion.div>
 
         {/* Content Sheet with Filters and Continuous Grid smoothly rolling over hero */}
-        <div className="bg-white pt-2 sm:pt-3">
-          {/* Category Filter Pills (Sticky below navbar while browsing all 51 projects) */}
-          <div className="sticky top-20 sm:top-24 z-30 bg-white/95 backdrop-blur-md py-3 sm:py-4 mb-6 sm:mb-8 flex flex-wrap items-center gap-2.5 sm:gap-3 border-b border-gray-100/80">
+        <div className="bg-white pt-8 sm:pt-10 px-2 sm:px-4">
+          {/* Category Filter Pills - Fades in smoothly on open */}
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{
+              duration: 0.85,
+              delay: 0.55,
+              ease: [0.16, 1, 0.3, 1],
+            }}
+            className="flex items-center gap-2.5 sm:gap-3 overflow-x-auto pb-3 mb-8 sm:mb-10 no-scrollbar border-b border-gray-100/80"
+          >
             {categories.map((category) => {
               const displayName = category === 'All' ? 'All Images' : category;
               const count = category === 'All' 
@@ -175,22 +216,22 @@ const GalleryPage = () => {
                 <button
                   key={category}
                   onClick={() => setActiveCategory(category)}
-                  className={`px-5 sm:px-7 py-2.5 sm:py-3 rounded-full text-sm sm:text-[15px] font-['Manrope',sans-serif] tracking-normal transition-all duration-200 flex items-center gap-2 cursor-pointer ${
+                  className={`px-5 sm:px-6 py-2.5 sm:py-3 rounded-[50px] text-xs sm:text-sm font-medium tracking-wide whitespace-nowrap transition-all duration-300 ease-out cursor-pointer flex items-center gap-2 ${
                     activeCategory === category
-                      ? 'bg-[#28282c] text-white font-semibold shadow-sm'
-                      : 'bg-[#e9ecf2] text-[#28282c] hover:bg-[#dfe3ea] font-medium'
+                      ? 'bg-[#28282c] text-white shadow-sm'
+                      : 'bg-[#e9ecf2] text-[#555866] hover:bg-[#dfe3ec] hover:text-[#141517]'
                   }`}
                 >
                   <span>{displayName}</span>
                   <span className={`text-[11px] px-2 py-0.5 rounded-full font-normal ${
-                    activeCategory === category ? 'bg-white/20 text-white' : 'bg-black/10 text-[#28282c]/80'
+                    activeCategory === category ? 'bg-white/20 text-white' : 'bg-black/10 text-[#555866]'
                   }`}>
                     {count}
                   </span>
                 </button>
               );
             })}
-          </div>
+          </motion.div>
 
           {/* Main Gallery Grid Body */}
           <div id="gallery-grid" className="w-full">
@@ -235,8 +276,8 @@ const GalleryPage = () => {
                     <BeforeAfterSlider
                       beforeSrc={project.beforeSrc}
                       afterSrc={project.afterSrc}
-                      beforeLabel={project.beforeLabel || 'BEFORE'}
-                      afterLabel={project.afterLabel || 'AFTER'}
+                      beforeLabel="BEFORE"
+                      afterLabel="AFTER"
                       title={project.title}
                       onOpenLightbox={() => openLightbox(index)}
                       className="w-full"
@@ -319,12 +360,11 @@ const GalleryPage = () => {
               {/* Central Box (Video Player or Before/After Comparison Slider) */}
               {currentProject.type === 'video' ? (
                 <div className="relative w-full h-[65vh] md:h-[75vh] max-h-[750px] rounded-xl overflow-hidden bg-black shadow-2xl border border-white/10 flex items-center justify-center">
-                  <iframe
-                    src={`https://www.youtube.com/embed/${currentProject.videoId}?autoplay=1&mute=1&controls=1&enablejsapi=1&rel=0`}
+                  <GalleryVideoCard
+                    id={`lightbox-${currentProject.id}`}
+                    videoId={currentProject.videoId}
                     title={currentProject.title}
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                    className="w-full h-full border-0"
+                    className="w-full h-full"
                   />
                 </div>
               ) : (
@@ -370,8 +410,8 @@ const GalleryPage = () => {
                       lightboxPosition >= 25 ? 'opacity-100 scale-100' : 'opacity-0 scale-90'
                     }`}
                   >
-                    <span className="px-3 py-1.5 rounded-md text-xs font-semibold tracking-wider uppercase bg-black/80 text-sand border border-white/10 backdrop-blur-md shadow-md">
-                      {currentProject.beforeLabel}
+                    <span className="px-2.5 py-1 rounded text-[11px] font-semibold tracking-wider uppercase bg-charcoal/85 text-white border border-white/15 backdrop-blur-md shadow-md">
+                      BEFORE
                     </span>
                   </div>
 
@@ -381,8 +421,8 @@ const GalleryPage = () => {
                       lightboxPosition <= 75 ? 'opacity-100 scale-100' : 'opacity-0 scale-90'
                     }`}
                   >
-                    <span className="px-3 py-1.5 rounded-md text-xs font-semibold tracking-wider uppercase bg-primary-400 text-white border border-white/20 backdrop-blur-md shadow-md">
-                      {currentProject.afterLabel}
+                    <span className="px-2.5 py-1 rounded text-[11px] font-semibold tracking-wider uppercase bg-[#b87355] text-white border border-white/20 backdrop-blur-md shadow-md">
+                      AFTER
                     </span>
                   </div>
 
