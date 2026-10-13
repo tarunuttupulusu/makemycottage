@@ -3,31 +3,32 @@ import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
+import LogoLoop from '../components/common/LogoLoop';
 
 const groundRules = [
   {
     number: '01',
-    badge: 'Issues reported within 24 hours',
-    title: 'Problems surface early',
-    description: 'Clients hear difficult site issues immediately, before delays grow into expensive complications later.'
+    badge: 'Quality Materials',
+    title: 'Built with lasting quality',
+    description: 'We choose durable, high-quality materials to create cottages that stay beautiful, comfortable, and reliable for years to come.'
   },
   {
     number: '02',
-    badge: 'Direct manager contact provided',
-    title: 'Direct site access',
-    description: 'Clients receive clear updates weekly, even during slower phases with little visible progress onsite.'
+    badge: 'Thoughtful Design',
+    title: 'Every detail matters',
+    description: 'From smart layouts to natural finishes, every detail is planned to create a welcoming space that feels just right.'
   },
   {
     number: '03',
-    badge: 'Backup trades always prepared',
-    title: 'Pressure stays internal',
-    description: 'Make My Cottage adjusts sequencing, not client schedules, when subcontractors or seasonal challenges arise.'
+    badge: 'Faster Construction',
+    title: 'From plans to reality',
+    description: 'Our streamlined construction process helps bring your dream cottage to life efficiently, with attention to every detail.'
   },
   {
     number: '04',
-    badge: 'Written approvals before changes',
-    title: 'No hidden decisions',
-    description: 'Client approval needed for major cost or material changes before work begins.'
+    badge: 'Complete Transparency',
+    title: 'Confidence at every step',
+    description: 'From the initial design to the final handover, we keep you informed about the process, costs, and progress.'
   }
 ];
 
@@ -72,18 +73,16 @@ const timelineMilestones = [
 
 const teamMembers = [
   {
-    name: 'Daniel Harper',
-    role: 'Founder & Managing Director',
-    experience: '18+ yrs experience',
+    name: 'Manjunath',
+    role: 'Founder & Visionary Leader',
     image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80',
-    bio: 'Pioneered turnkey timber architecture and structural wood design standards across residential and resort developments.'
+    bio: 'With a passion for traditional craftsmanship and timeless architecture, Manjunath leads the vision behind Make My Cottage. He is dedicated to creating thoughtfully designed spaces while preserving the beauty of natural materials and traditional wooden artistry through Manuvalogillu, a collection of vintage wooden treasures.'
   },
   {
-    name: 'Lucas Bennett',
-    role: 'Co-Founder & Technical Director',
-    experience: '14+ yrs experience',
-    image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=800&q=80',
-    bio: 'Oversees site logistics, contractor scheduling, and rapid prefabrication assembly across remote and urban sites.'
+    name: 'Madhuri',
+    role: 'Co-Founder & Creative Director',
+    image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&q=80',
+    bio: 'Madhuri brings creativity, elegance, and a deep appreciation for traditional Indian heritage to Make My Cottage. Alongside Manjunath, she helps celebrate the charm of vintage wooden pieces through Manuvalogillu, bringing character, culture, and timeless beauty into modern homes.'
   }
 ];
 
@@ -122,6 +121,35 @@ const recognitions = [
     title: 'CHAS accredited principal contractor',
     awardedBy: 'Contractors Health & Safety Scheme',
     detail: 'Acknowledged for zero-incident site safety records and disciplined coordination.'
+  }
+];
+
+// Brand logos for <LogoLoop /> with transparent backgrounds
+const brandLogos = [
+  {
+    src: '/images/logos/jk-fenner.png',
+    alt: 'JK Fenner',
+    title: 'JK Fenner'
+  },
+  {
+    src: '/images/logos/andhra-pradesh-govt.png',
+    alt: 'Government of Andhra Pradesh',
+    title: 'Government of Andhra Pradesh'
+  },
+  {
+    src: '/images/logos/grandpaw-resorts.png',
+    alt: 'Grandpaw Pet Resorts',
+    title: 'Grandpaw Pet Resorts'
+  },
+  {
+    src: '/images/logos/navya-developers.png',
+    alt: 'Navya Developers',
+    title: 'Navya Developers'
+  },
+  {
+    src: '/images/logos/velugu-organisation.png',
+    alt: 'Velugu A Voluntary Organisation',
+    title: 'Velugu A Voluntary Organisation'
   }
 ];
 
@@ -196,24 +224,32 @@ const AboutPage = () => {
   });
 
   // Background blur and dimming over the panoramic foundation image
-  const bgBlur = useTransform(stackProgress, [0, 0.25, 0.85], [4, 12, 16]);
-  const bgDim = useTransform(stackProgress, [0, 0.25], [0.1, 0.35]);
+  // 0 to 0.12: Crystal clear (0px blur, 0 dim) - user sees pure background image
+  // 0.12 to 0.28: Smoothly blurs (0 -> 14px) and dims (0 -> 0.32) as Card 1 arrives
+  // 0.28 to 0.86: Stays blurred while cards are being read
+  // 0.86 to 1.0: Remains blurred as Card 2 exits into Ground Rules
+  const bgBlur = useTransform(stackProgress, [0, 0.12, 0.28, 0.86], [0, 0, 14, 14]);
+  const bgDim = useTransform(stackProgress, [0, 0.12, 0.28, 0.86], [0, 0, 0.32, 0.32]);
 
   // Card 1 ("Future Expectation")
-  // 100% centered and visible from progress 0 to 0.40
-  // Between 0.40 and 0.52: scales down slightly (1 -> 0.9) and fades out as Card 2 stacks over it
-  const card1Y = useTransform(stackProgress, [0, 0.40, 0.52], [0, 0, -30]);
-  const card1Scale = useTransform(stackProgress, [0, 0.40, 0.52], [1, 1, 0.9]);
-  const card1Opacity = useTransform(stackProgress, [0, 0.40, 0.50], [1, 1, 0]);
+  // 0 to 0.12: Hidden below (y: 120, opacity: 0) while background is shown clearly
+  // 0.12 to 0.28: Slides up smoothly into center (y: 120 -> 0, opacity: 0 -> 1, scale: 0.94 -> 1)
+  // 0.28 to 0.48: Centered and fully readable (y: 0, opacity: 1, scale: 1)
+  // 0.48 to 0.62: Slides up slightly and fades out (y: 0 -> -35, opacity: 1 -> 0, scale: 1 -> 0.92)
+  const card1Y = useTransform(stackProgress, [0, 0.12, 0.28, 0.48, 0.62], [120, 120, 0, 0, -35]);
+  const card1Scale = useTransform(stackProgress, [0, 0.12, 0.28, 0.48, 0.62], [0.94, 0.94, 1, 1, 0.92]);
+  const card1Opacity = useTransform(stackProgress, [0, 0.12, 0.26, 0.48, 0.60], [0, 0, 1, 1, 0]);
+  const card1Pointer = useTransform(card1Opacity, o => (o > 0.2 ? 'auto' : 'none'));
 
   // Card 2 ("Working standard")
-  // Strictly off-screen below (y: 1000px) and invisible (opacity: 0) from 0 to 0.40
-  // Between 0.40 and 0.52: slides up cleanly into center (y: 0, opacity: 1, scale: 1)
-  // Stays centered from 0.52 to 0.85
-  // Scrolls out of view between 0.85 and 1.0 (y: -120px, opacity: 0)
-  const card2Y = useTransform(stackProgress, [0, 0.40, 0.52, 0.85, 1], [1000, 1000, 0, 0, -120]);
-  const card2Opacity = useTransform(stackProgress, [0, 0.40, 0.48, 0.88, 1], [0, 0, 1, 1, 0]);
-  const card2Scale = useTransform(stackProgress, [0.40, 0.52], [0.92, 1]);
+  // 0 to 0.48: Hidden below (y: 160, opacity: 0)
+  // 0.48 to 0.64: Slides up smoothly into center (y: 160 -> 0, opacity: 0 -> 1, scale: 0.94 -> 1)
+  // 0.64 to 0.84: Centered and fully readable (y: 0, opacity: 1, scale: 1)
+  // 0.84 to 1.0: Slides up and fades out (y: 0 -> -90, opacity: 1 -> 0, scale: 1 -> 0.95)
+  const card2Y = useTransform(stackProgress, [0, 0.48, 0.64, 0.84, 1.0], [160, 160, 0, 0, -90]);
+  const card2Scale = useTransform(stackProgress, [0, 0.48, 0.64, 0.84, 1.0], [0.94, 0.94, 1, 1, 0.95]);
+  const card2Opacity = useTransform(stackProgress, [0, 0.48, 0.62, 0.84, 0.98], [0, 0, 1, 1, 0]);
+  const card2Pointer = useTransform(card2Opacity, o => (o > 0.2 ? 'auto' : 'none'));
 
   // =========================================================================
   // Ground Rules Sticky Scroll Controller & One-by-One Line Shrinking
@@ -246,12 +282,12 @@ const AboutPage = () => {
   const historyLineHeight = useTransform(historyProgress, [0, 1], ['0%', '100%']);
 
   return (
-    <div className="bg-white min-h-screen w-full pt-32 pb-24 text-[#141517]">
+    <div className="bg-white min-h-screen w-full pt-32 pb-0 text-[#141517]">
       <Helmet>
-        <title>About Us | Make My Cottage - Turning Complicated Plans Into Clear Execution</title>
+        <title>About Us | Make My Cottage - Handcrafted Wooden Homes & Cottages</title>
         <meta
           name="description"
-          content="Learn about Make My Cottage. Structured coordination, direct communication, and disciplined oversight keep every timber home and cottage build moving clearly and predictably forward."
+          content="Discover Make My Cottage. We blend master timber craftsmanship with modern engineering to design and construct handcrafted wooden homes, luxury cottages, and nature retreats."
         />
       </Helmet>
 
@@ -266,9 +302,9 @@ const AboutPage = () => {
           transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
           className="text-5xl sm:text-7xl md:text-8xl lg:text-[6.2rem] font-medium tracking-[-0.035em] leading-[0.96] text-[#1B1915] mb-8 max-w-5xl"
         >
-          Turning complicated<br />
-          plans into clear<br />
-          execution.
+          Crafting timeless<br />
+          wooden homes rooted<br />
+          in nature.
         </motion.h1>
 
         {/* Subtitle & Book a Call CTA */}
@@ -279,7 +315,7 @@ const AboutPage = () => {
             transition={{ duration: 0.9, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
             className="text-lg sm:text-xl text-[#504732] max-w-xl font-normal leading-relaxed"
           >
-            Structured coordination, direct communication, and disciplined oversight keep every stage moving clearly and predictably forward.
+            From handcrafted wooden cottages to luxury timber farmhouses, we blend master craftsmanship and precision engineering to build timeless sanctuaries in harmony with nature.
           </motion.p>
 
           <motion.div
@@ -301,17 +337,22 @@ const AboutPage = () => {
       {/* ========================================================================= */}
       {/* 2. STICKY BLURRED HERO BANNER + STACKING FEATURE CARDS (Screenshot 1 & 2) */}
       {/* ========================================================================= */}
-      <section ref={stackedSectionRef} className="relative h-[240vh] w-full">
+      <section ref={stackedSectionRef} className="relative h-[300vh] w-full">
         {/* Unified Sticky Viewport */}
         <div className="sticky top-0 h-screen w-full overflow-hidden flex items-center justify-center px-4 sm:px-8">
           {/* Panoramic Foundation Background Image */}
-          <img
+          <motion.img
+            style={{
+              filter: useTransform(bgBlur, b => `blur(${b}px)`),
+              WebkitFilter: useTransform(bgBlur, b => `blur(${b}px)`),
+              scale: useTransform(bgBlur, [0, 14], [1, 1.05])
+            }}
             src="/images/about/hero-foundation.jpg"
             onError={(e) => {
               e.currentTarget.src = "https://framerusercontent.com/images/J9MqEXKjA7McbiNo1TApI5zUMQQ.jpg";
             }}
-            alt="Make My Cottage construction foundation execution"
-            className="absolute inset-0 w-full h-full object-cover z-0"
+            alt="Handcrafted lakeside wooden cottage foundation and framework construction"
+            className="absolute inset-0 w-full h-full object-cover z-0 transition-[transform,filter] duration-200"
             loading="eager"
           />
 
@@ -333,32 +374,30 @@ const AboutPage = () => {
               style={{
                 y: card1Y,
                 scale: card1Scale,
-                opacity: card1Opacity
+                opacity: card1Opacity,
+                pointerEvents: card1Pointer
               }}
               className="absolute w-full bg-[#F9F0DA] border border-[#E0D5BD] rounded-3xl p-6 sm:p-10 lg:p-12 shadow-2xl"
             >
               <div className="flex flex-col md:flex-row items-center gap-6 sm:gap-8 lg:gap-10">
-                {/* Left Image: Construction workers on building site */}
+                {/* Left Image: Engineers and timber cottage construction */}
                 <div className="w-full md:w-[260px] lg:w-[280px] h-[220px] sm:h-[260px] md:h-[290px] shrink-0 rounded-2xl overflow-hidden shadow-sm bg-[#E8DFC8]">
                   <img
-                    src="/images/about/future-expectation.png"
-                    onError={(e) => {
-                      e.currentTarget.src = "https://framerusercontent.com/images/NBBlbWROSapSp6qQF3L5diW5o.png?width=1064&height=1260";
-                    }}
-                    alt="Construction workers on building site"
+                    src="/images/about/card1-vision.jpg"
+                    alt="Engineers planning wooden cottage construction in nature"
                     className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
                   />
                 </div>
                 {/* Right Text Content */}
                 <div className="flex-1 space-y-4">
                   <h2 className="text-3xl sm:text-4xl lg:text-[2.6rem] font-medium tracking-tight text-[#1B1915]">
-                    Future Expectation
+                    Our Vision for Better Living
                   </h2>
                   <p className="text-sm sm:text-base lg:text-lg text-[#504732] leading-relaxed font-normal">
-                    Make My Cottage is reshaping how clients experience major renovations, timber architecture, and custom cottage retreats by making construction feel transparent, predictable, and professionally managed instead of stressful, confusing, and reactive.
+                    Make My Cottage aims to transform the way people experience cottage design and construction by bringing together thoughtful architecture, natural materials, and quality craftsmanship. We focus on creating beautiful, comfortable, and functional cottages that blend seamlessly with nature while reflecting each client's unique vision.
                   </p>
                   <p className="text-sm sm:text-base lg:text-lg text-[#504732] leading-relaxed font-normal">
-                    Raising project communication standards so clients no longer expect delays, silence, or uncertainty.
+                    Our goal is to make every step—from initial planning and design to construction and final handover—smooth, transparent, and reliable, so our clients can turn their dream cottage into reality with confidence.
                   </p>
                 </div>
               </div>
@@ -369,32 +408,30 @@ const AboutPage = () => {
               style={{
                 y: card2Y,
                 scale: card2Scale,
-                opacity: card2Opacity
+                opacity: card2Opacity,
+                pointerEvents: card2Pointer
               }}
               className="absolute w-full bg-[#F9F0DA] border border-[#E0D5BD] rounded-3xl p-6 sm:p-10 lg:p-12 shadow-2xl z-20"
             >
               <div className="flex flex-col md:flex-row items-center gap-6 sm:gap-8 lg:gap-10">
-                {/* Left Image: Timber craftsmanship & workers */}
+                {/* Left Image: Architectural planning & luxury sunset cottage */}
                 <div className="w-full md:w-[260px] lg:w-[280px] h-[220px] sm:h-[260px] md:h-[290px] shrink-0 rounded-2xl overflow-hidden shadow-sm bg-[#E8DFC8]">
                   <img
-                    src="/images/about/working-standard.png"
-                    onError={(e) => {
-                      e.currentTarget.src = "https://framerusercontent.com/images/FYMD4tETcedhyjeJ74hNQBZZu2U.png?width=1064&height=1260";
-                    }}
-                    alt="Workers measuring timber structure"
+                    src="/images/about/card2-working.jpg"
+                    alt="Architectural design and finished sunset timber retreat"
                     className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
                   />
                 </div>
                 {/* Right Text Content */}
                 <div className="flex-1 space-y-4">
                   <h2 className="text-3xl sm:text-4xl lg:text-[2.6rem] font-medium tracking-tight text-[#1B1915]">
-                    Working standard
+                    Our Way of Working
                   </h2>
                   <p className="text-sm sm:text-base lg:text-lg text-[#504732] leading-relaxed font-normal">
-                    Make My Cottage delivers organized, clearly managed spaces where clients always know what happens next, what decisions matter, and how timelines, costs, and site activity are being controlled from day one through final handover.
+                    At Make My Cottage, every project begins with understanding your vision and turning it into a well-planned reality. From design and material selection to construction and final handover, we focus on quality, clear communication, and careful attention to every detail.
                   </p>
                   <p className="text-sm sm:text-base lg:text-lg text-[#504732] leading-relaxed font-normal">
-                    Manages complex timber structures through disciplined planning, direct communication, and accountable on-site coordination.
+                    Our organized approach keeps you informed about project progress, timelines, and important decisions, ensuring a smooth and reliable experience from the first step to the finished cottage.
                   </p>
                 </div>
               </div>
@@ -416,13 +453,13 @@ const AboutPage = () => {
           <div className="flex items-center gap-2 mb-3">
             <span className="w-2.5 h-2.5 bg-[#DE5533] rounded-[2px]" />
             <span className="text-xs sm:text-sm font-medium tracking-wider text-[#6B6149] uppercase">
-              Ground rules
+              Why Choose Us
             </span>
           </div>
 
           {/* Section Heading */}
           <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.25rem] font-medium tracking-[-0.03em] leading-[1.08] text-[#1B1915] max-w-3xl mb-8 md:mb-12">
-            Standards built through difficult site experience
+            Thoughtfully designed cottages, made for better living
           </h2>
 
           {/* 4 Animated Columns whose timeline lines shrink one by one along with scroll */}
@@ -558,10 +595,10 @@ const AboutPage = () => {
             transition={{ duration: 0.8 }}
             className="text-4xl sm:text-5xl md:text-6xl font-medium tracking-[-0.03em] leading-[1.05] text-[#1B1915] mb-4"
           >
-            Experienced minds behind complex site execution
+            The minds shaping modern timber architecture
           </motion.h2>
-          <p className="text-base text-[#504732] max-w-xl mx-auto">
-            Our multidisciplinary leadership combines architectural mastery, precision timber engineering, and seasoned on-site project directors.
+          <p className="text-base text-[#504732] max-w-xl mx-auto leading-relaxed">
+            Dedicated to thoughtful architectural design, natural materials, and the timeless beauty of handcrafted wooden artistry.
           </p>
         </div>
 
@@ -589,18 +626,15 @@ const AboutPage = () => {
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
                 </div>
-                <div className="flex items-center justify-between gap-2 mb-1">
+                <div className="mb-1">
                   <h3 className="text-xl font-medium text-[#1B1915] tracking-tight">
                     {member.name}
                   </h3>
-                  <span className="text-xs text-[#897F6C] font-mono">
-                    {member.experience}
-                  </span>
                 </div>
                 <p className="text-sm font-medium text-[#DE5533] mb-3">
                   {member.role}
                 </p>
-                <p className="text-xs sm:text-sm text-[#504732] leading-relaxed font-light">
+                <p className="text-xs sm:text-sm text-[#504732] leading-relaxed font-normal">
                   {member.bio}
                 </p>
               </div>
@@ -671,6 +705,38 @@ const AboutPage = () => {
       </section>
 
       {/* ========================================================================= */}
+      {/* 6.5 PARTNERS & LOGO LOOP (React Bits Integration) */}
+      {/* ========================================================================= */}
+      <section className="py-20 md:py-24 bg-[#FAF7F0] border-t border-[#EAE3D2] overflow-hidden">
+        <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-16 mb-12 text-center">
+          <div className="flex items-center justify-center gap-2 mb-3">
+            <span className="w-2.5 h-2.5 bg-[#DE5533] rounded-[2px]" />
+            <span className="text-xs sm:text-sm font-medium tracking-wider text-[#6B6149] uppercase">
+              Brands & Clients
+            </span>
+          </div>
+          <h3 className="text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight text-[#1B1915]">
+            We work with the best brands
+          </h3>
+        </div>
+
+        <div className="w-full relative py-4">
+          <LogoLoop
+            logos={brandLogos}
+            speed={65}
+            direction="left"
+            logoHeight={56}
+            gap={60}
+            hoverSpeed={0}
+            scaleOnHover
+            fadeOut
+            fadeOutColor="#FAF7F0"
+            ariaLabel="We work with the best brands"
+          />
+        </div>
+      </section>
+
+      {/* ========================================================================= */}
       {/* 7. BOTTOM CONSULTATION CTA SECTION (FULL-WIDTH IMMERSIVE) */}
       {/* ========================================================================= */}
       <section id="consultation-cta" className="relative w-full overflow-hidden bg-[#030000] py-28 sm:py-36 md:py-48 lg:py-64 flex items-center min-h-[640px] md:min-h-[780px] lg:min-h-[872px]">
@@ -695,9 +761,9 @@ const AboutPage = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              className="text-4xl sm:text-5xl lg:text-[56px] font-medium tracking-[-0.02em] leading-[1.08] text-[#FCF6E9] mb-6"
+              className="text-4xl sm:text-5xl lg:text-[54px] font-medium tracking-[-0.025em] leading-[1.08] text-[#FCF6E9] mb-6"
             >
-              Talk through your ideas clearly.
+              Bring your dream wooden sanctuary to life.
             </motion.h2>
 
             <motion.p
@@ -707,7 +773,7 @@ const AboutPage = () => {
               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
               className="text-base sm:text-lg text-[#BAB3A2] leading-relaxed font-normal mb-10"
             >
-              You’ll get a clear understanding of cost range, timeline expectations, and what your space realistically requires.
+              Connect directly with our master timber architects. Gain clear insight into custom 3D blueprints, transparent turnkey pricing, and rapid prefabricated construction timelines tailored to your land.
             </motion.p>
 
             <motion.div
@@ -720,7 +786,7 @@ const AboutPage = () => {
                 to="/contact"
                 className="inline-flex items-center gap-2.5 bg-[#FCF6E9] hover:bg-white text-[#1B1915] px-7 py-3.5 rounded-full font-medium text-sm md:text-base transition-all duration-300 hover:scale-[1.02] shadow-lg group"
               >
-                <span>Book a call</span>
+                <span>Schedule a consultation</span>
                 <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
               </Link>
             </motion.div>
