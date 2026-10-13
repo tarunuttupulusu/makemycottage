@@ -46,22 +46,15 @@ const Navbar = () => {
     }
   }, [location]);
 
+  const isHomePage = location.pathname === '/';
+  const isGalleryPage = location.pathname === '/gallery';
+  const isServicesPage = location.pathname === '/services';
   const isDarkHeroPage = location.pathname === '/' || location.pathname === '/projects';
-  const isDarkTheme = isDarkHeroPage;
-
-  if (location.pathname === '/services') {
-    return null;
-  }
+  const isDarkTheme = isHomePage || ((isGalleryPage || isServicesPage) && !isScrolled) || isDarkHeroPage;
 
   return (
     <>
-      {(() => {
-        const isHomePage = location.pathname === '/';
-        const isGalleryPage = location.pathname === '/gallery';
-        const isDarkTheme = isHomePage || (isGalleryPage && !isScrolled);
-
-        return (
-          <header
+      <header
             className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 px-6 sm:px-12 ${
               isScrolled
                 ? isDarkTheme
