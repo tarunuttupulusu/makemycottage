@@ -281,40 +281,40 @@ export const PROJECTS_DATA = [
     slug: 'vintage-bougainvillas',
     num: '05',
     name: 'Vintage Bougainvillas',
-    location: 'Moinabad, Hyderabad',
-    category: 'Farm House',
-    shortDescription: 'Rustic-luxe wooden estate cottages nestled in blooming bougainvillea gardens with a private pool and open party decks.',
-    description: 'Situated in the picturesque countryside of Moinabad near Chevella and Shankarpally, Vintage Bougainvillas is a boutique farmhouse retreat crafted by Make My Cottage. Featuring rustic timber cottages, stone plinth foundations, expansive private swimming pool decks, campfire courtyards, and open-air event lawns framed by vibrant bougainvillea gardens, the estate is engineered for exclusive weekend escapes and celebration gatherings.',
+    location: 'Sriramnagar, Chevella / Moinabad, Telangana',
+    category: 'Timber Cottage Farmstay & Event Retreat',
+    shortDescription: 'Charming solid timber farmhouse retreat featuring vaulted pine-panelled cottages, mezzanine loft suites, and expansive celebration lawns.',
+    description: 'Set amidst peaceful rural greens in Sriramnagar near Chevella and Moinabad, Vintage Bougainvillas is a handcrafted timber farmstay and event retreat crafted by Make My Cottage. The retreat features an authentic two-story solid pine cottage with classic dormer roofing, vaulted cathedral ceilings, open-plan wooden living and dining lounges, handcrafted king and bunk-bed suites, ambient heritage lampposts, a dedicated terracotta bonfire pit, and vast manicured lawns bordered by traditional Warli folk art murals.',
     specs: {
       client: 'Vintage Bougainvillas',
       builtUpArea: '4,200 sq.ft',
-      location: 'Moinabad - Chevella, Hyderabad, Telangana',
-      projectType: 'Boutique Farmhouse & Wooden Event Villas',
-      constructionType: 'Handcrafted Rustic Timber & Exposed Stone',
+      location: '76CR+86, Sriramnagar, Telangana 501504',
+      projectType: 'Solid Timber Farmstay & Celebration Retreat',
+      constructionType: 'Interlocking Pine Log Wall & Heavy Timber Rafter Framing',
       duration: '80 Days',
       completion: '2024',
-      materials: 'Seasoned Teak, Scandinavian Pine, Natural Stone, Double Glazing'
+      materials: 'Vacuum-Pressure Treated Pine, Seasoned Teak, Toughened Glass, Natural Stone & Terracotta'
     },
-    challenge: 'Creating a flexible, multi-purpose farmstay layout capable of hosting intimate family weekend retreats as well as large outdoor celebrations, while preserving an authentic, weathered timber heritage charm without structural maintenance overhead.',
-    solution: 'Constructed heavy timber post-and-beam frameworks using vacuum-pressure impregnated pine treated with weather-shield microporous oils. Deep perimeter verandahs buffer the living spaces from sun and rain, while seamless French timber doors open out directly onto the central pool and bougainvillea lawns.',
+    challenge: 'Constructing an authentic all-timber two-story farmstay cottage with high-pitched dormer roofing and high-volume vaulted ceilings, ensuring complete weather-sealing, termite-proofing, and thermal insulation against Telangana climate while crafting expansive party grounds.',
+    solution: 'Engineered interlocking tongue-and-groove pine timber walls treated with vacuum-pressure eco-friendly weather and insect retardants. Designed an open-truss vaulted roof structure with multi-layer thermal insulation, framed by vintage heritage lampposts, an artisanal terracotta firepit, and expansive party lawns with Warli art accents.',
     features: [
-      'Handcrafted Rustic Timber Cottage Architecture',
-      'Integrated Swimming Pool & Outdoor Wood Sundecks',
-      'Expansive Bougainvillea Gardens & Bonfire Courtyards',
-      'High-Capacity Verandahs for Celebrations & Gatherings',
-      'Vacuum-Pressure Weatherproofed Natural Timber',
-      'Turnkey Turnaround in Under 80 Days'
+      'Solid Pine Log Cottage Architecture with Dormer Roof',
+      'Vaulted High-Ceiling Timber Living Hall & Dining Nook',
+      'Handcrafted Wooden Master Suite & Bunk-Bed Loft Bedrooms',
+      'Sprawling Event Lawns with Traditional Warli Art Murals',
+      'Open-Air Gazebo Pavilion & Dedicated Bonfire Firepit',
+      'Turnkey Design & Build Delivery in 80 Days'
     ],
-    heroImage: 'https://images.unsplash.com/photo-1605146769289-440113cc3d00?w=1920&q=80',
+    heroImage: '/images/projects/vintage-bougainvillas/hero.jpg',
     mapUrl: 'https://maps.app.goo.gl/wKqVGC57Lw6Geq1F8',
     mapQuery: '17.2707926,78.2405959',
     images: [
-      'https://images.unsplash.com/photo-1605146769289-440113cc3d00?w=1400&q=80',
-      'https://images.unsplash.com/photo-1600585153490-76fb20a32601?w=1400&q=80',
-      'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=1400&q=80',
-      'https://images.unsplash.com/photo-1510798831971-661eb04b3739?w=1400&q=80',
-      'https://images.unsplash.com/photo-1600573472592-401b489a3cdc?w=1400&q=80',
-      'https://images.unsplash.com/photo-1587061949409-02df41d5e562?w=1400&q=80'
+      '/images/projects/vintage-bougainvillas/image-1.jpg',
+      '/images/projects/vintage-bougainvillas/image-2.jpg',
+      '/images/projects/vintage-bougainvillas/image-3.jpg',
+      '/images/projects/vintage-bougainvillas/image-4.jpg',
+      '/images/projects/vintage-bougainvillas/image-5.jpg',
+      '/images/projects/vintage-bougainvillas/image-6.jpg'
     ]
   },
   {
