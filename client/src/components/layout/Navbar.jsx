@@ -49,21 +49,21 @@ const Navbar = () => {
   const isHomePage = location.pathname === '/';
   const isGalleryPage = location.pathname === '/gallery';
   const isServicesPage = location.pathname === '/services';
-  const isDarkHeroPage = location.pathname === '/' || location.pathname === '/projects';
-  const isDarkTheme = isHomePage || ((isGalleryPage || isServicesPage) && !isScrolled) || isDarkHeroPage;
+  const isDarkHeroPage = isHomePage || location.pathname === '/projects';
+  const isDarkTheme = isDarkHeroPage || ((isGalleryPage || isServicesPage) && !isScrolled);
 
   return (
     <>
       <header
-            className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 px-6 sm:px-12 ${
-              isScrolled
-                ? isDarkTheme
-                  ? 'py-3.5 bg-black/85 backdrop-blur-xl border-b border-white/10 shadow-lg'
-                  : 'py-3.5 bg-white/90 backdrop-blur-xl border-b border-black/10 shadow-sm'
-                : 'py-5 sm:py-7 bg-transparent'
-            }`}
-          >
-            <div className="max-w-7xl mx-auto flex items-center justify-between">
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 px-6 sm:px-12 ${
+          isScrolled
+            ? isDarkTheme
+              ? 'py-3.5 bg-black/85 backdrop-blur-xl border-b border-white/10 shadow-lg'
+              : 'py-3.5 bg-white/90 backdrop-blur-xl border-b border-black/10 shadow-sm'
+            : 'py-5 sm:py-7 bg-transparent'
+        }`}
+      >
+        <div className="max-w-7xl mx-auto flex items-center justify-between">
               
               {/* Logo with Brick / Cottage Icon */}
               <Link
