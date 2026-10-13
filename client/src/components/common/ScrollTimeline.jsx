@@ -263,7 +263,7 @@ const ScrollTimeline = () => {
       </div>
 
       {/* =========================================================================
-          2. ANIMATED TIMBER LORRY (ON TOP OF WOOD & MILESTONES - z-40)
+          2. STRAIGHT 3D TIMBER DELIVERY VEHICLE (VERTICAL ALIGNMENT WITH LOW LIGHTS)
       ========================================================================= */}
       <div
         ref={lorrySpineRef}
@@ -274,46 +274,22 @@ const ScrollTimeline = () => {
           className="timeline-lorry is-idle"
           aria-label="MakeMyCottage Timber Delivery Truck"
         >
-          {/* Dual Headlight Light Cone Beams projecting down the track */}
-          <div className="lorry-headlight-beams">
-            <div className="headlight-beam beam-left" />
-            <div className="headlight-beam beam-right" />
-          </div>
-
-          {/* Micro Exhaust Smoke Puffs */}
-          <div className="lorry-exhaust-wrap">
-            <span className="exhaust-puff puff-1" />
-            <span className="exhaust-puff puff-2" />
-            <span className="exhaust-puff puff-3" />
-          </div>
-
-          {/* Lorry Body with dynamic steering rotation */}
+          {/* Straight Lorry Body with clean suspension rumble */}
           <div ref={lorryInnerRef} className="lorry-body">
-            {/* Lorry Graphic */}
             <img
-              src="/lorry-cropped.png"
-              alt="MakeMyCottage Delivery Truck"
+              src="/lorry-theme-matched.png"
+              alt="MakeMyCottage Timber Delivery Truck"
               className="lorry-image"
               draggable={false}
             />
-
-            {/* Headlight Flares on Front Bumper */}
-            <div className="lorry-front-flares">
-              <span className="front-flare flare-left" />
-              <span className="front-flare flare-right" />
-            </div>
-
-            {/* Tail Light Flares at Rear Bed */}
-            <div className="lorry-rear-flares">
-              <span className="tail-flare flare-left" />
-              <span className="tail-flare flare-right" />
-            </div>
           </div>
 
-          {/* Ground shadow & road underglow */}
+          {/* Ground shadow & ambient contact */}
           <div className="lorry-ground-shadow" />
         </div>
       </div>
+
+
 
       {/* =========================================================================
           TIMELINE MILESTONES 01 TO 06 (z-20 IN FRONT OF SPINE LINE)

@@ -8,49 +8,56 @@
   width: 100%;
 }
 
-/* Timeline center spine (Tracks strictly behind wood & cottage) */
+/* Timeline center spine (Architectural route behind wood & cottage) */
 .timeline-spine {
   position: absolute;
-  width: 2px;
+  width: 3px;
   pointer-events: none;
-  z-index: 10; /* Strictly BEHIND milestone wood nodes and cottages */
+  z-index: 10;
 }
 
-/* Background subtle grey track */
+@media (min-width: 768px) {
+  .timeline-spine {
+    width: 4px;
+  }
+}
+
+/* Background architectural road track */
 .timeline-track-line {
   position: absolute;
   inset: 0;
-  width: 2px;
-  background-color: #e5e7eb;
+  width: 100%;
+  background: linear-gradient(180deg, #e7e5e0 0%, #dedbd4 100%);
   border-radius: 9999px;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
   z-index: 1;
 }
 
-/* Active animated orange line */
+/* Active animated orange road route line */
 .timeline-progress-line {
   position: absolute;
   top: 0;
   left: 0;
-  width: 2px;
+  width: 100%;
   height: 0;
-  background-color: #ff4b18;
+  background: linear-gradient(180deg, #ff4b18 0%, #ea580c 100%);
   border-radius: 9999px;
   will-change: height;
-  box-shadow: 0 0 10px rgba(255, 75, 24, 0.5);
+  box-shadow: 0 0 10px rgba(255, 75, 24, 0.45);
   pointer-events: none;
   z-index: 2;
 }
 
 /* =========================================================================
-   Animated MakeMyCottage Timber Lorry (Vehicle Scroll Indicator)
+   Straight 3D Timber Delivery Vehicle (Vertical Alignment & Low Lights)
 ========================================================================= */
 
-/* Lorry Track Spine (Rides on top of wood nodes) */
+/* Vehicle Track Spine */
 .timeline-lorry-track {
   position: absolute;
   width: 2px;
   pointer-events: none;
-  z-index: 40; /* Lorry rides on top of cards and nodes */
+  z-index: 35;
 }
 
 .timeline-lorry {
@@ -58,10 +65,10 @@
   top: 0%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 36px;
-  height: 76px;
+  width: 32px;
+  height: 90px;
   pointer-events: none;
-  z-index: 50; /* Lorry is always in front */
+  z-index: 35;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -70,19 +77,19 @@
 
 @media (min-width: 640px) {
   .timeline-lorry {
-    width: 42px;
-    height: 89px;
+    width: 36px;
+    height: 102px;
   }
 }
 
 @media (min-width: 768px) {
   .timeline-lorry {
-    width: 48px;
-    height: 102px;
+    width: 42px;
+    height: 118px;
   }
 }
 
-/* Lorry Body with Engine Vibration / Suspension */
+/* Lorry Body with clean suspension rumble */
 .lorry-body {
   position: relative;
   width: 100%;
@@ -94,278 +101,75 @@
   will-change: transform;
 }
 
-/* Idle Engine Vibration */
+/* Idle Suspension Rumble */
 .timeline-lorry.is-idle .lorry-body {
-  animation: lorry-engine-rumble 2.4s infinite ease-in-out;
+  animation: straight-lorry-idle 2.6s infinite ease-in-out;
 }
 
 /* Driving Suspension Bounce when scrolling */
 .timeline-lorry.is-moving .lorry-body {
-  animation: lorry-drive-bounce 0.45s infinite ease-in-out;
+  animation: straight-lorry-drive 0.4s infinite ease-in-out;
 }
 
-/* Dynamic Steering Tilt */
-.timeline-lorry.is-forward .lorry-body {
-  transform: rotate(1.8deg);
-  transition: transform 0.25s ease;
-}
-
+/* Reversing / Braking */
 .timeline-lorry.is-reversing .lorry-body {
-  transform: rotate(-1.8deg);
-  transition: transform 0.25s ease;
+  transform: translateY(-1.5px) scale(0.99);
 }
 
-/* Lorry Graphic Image */
+/* Timber Delivery Truck Graphic Image */
 .lorry-image {
   width: 100%;
   height: 100%;
   object-fit: contain;
   user-select: none;
   -webkit-user-drag: none;
-  filter: drop-shadow(0 10px 14px rgba(0, 0, 0, 0.28))
-          drop-shadow(0 2px 5px rgba(255, 75, 24, 0.35));
+  filter: drop-shadow(0 10px 14px rgba(0, 0, 0, 0.28));
   transition: filter 0.3s ease;
 }
 
 .timeline-lorry.is-moving .lorry-image {
-  filter: drop-shadow(0 12px 18px rgba(0, 0, 0, 0.34))
-          drop-shadow(0 3px 8px rgba(255, 75, 24, 0.55));
+  filter: drop-shadow(0 12px 18px rgba(0, 0, 0, 0.35));
 }
 
-/* Ground Contact Ambient Glow & Shadow */
+/* Ground Contact Ambient Shadow */
 .lorry-ground-shadow {
   position: absolute;
-  top: 15%;
-  bottom: 8%;
-  left: 8%;
-  right: 8%;
+  bottom: 4px;
+  left: 12%;
+  right: 12%;
+  height: 12px;
   background: radial-gradient(
     ellipse at center,
-    rgba(0, 0, 0, 0.45) 0%,
-    rgba(255, 75, 24, 0.3) 50%,
-    transparent 80%
+    rgba(0, 0, 0, 0.3) 0%,
+    transparent 75%
   );
-  filter: blur(6px);
+  filter: blur(4px);
   z-index: -1;
   pointer-events: none;
-  transform: translateY(4px);
-  transition: opacity 0.3s ease;
 }
 
-.timeline-lorry.is-moving .lorry-ground-shadow {
-  opacity: 0.95;
-  filter: blur(8px);
-}
-
-/* =========================================================================
-   Dual Headlight Cone Light Beams
-========================================================================= */
-
-.lorry-headlight-beams {
-  position: absolute;
-  top: calc(100% - 12px);
-  left: 6%;
-  right: 6%;
-  height: 65px;
-  pointer-events: none;
-  z-index: 10;
-  display: flex;
-  justify-content: space-between;
-  padding: 0 3px;
-}
-
-@media (min-width: 768px) {
-  .lorry-headlight-beams {
-    height: 80px;
-  }
-}
-
-.headlight-beam {
-  width: 14px;
-  height: 100%;
-  background: linear-gradient(
-    180deg,
-    rgba(255, 245, 210, 0.8) 0%,
-    rgba(255, 185, 80, 0.4) 35%,
-    rgba(255, 120, 20, 0.15) 70%,
-    transparent 100%
-  );
-  clip-path: polygon(25% 0%, 75% 0%, 100% 100%, 0% 100%);
-  filter: blur(2.5px);
-  transform-origin: top center;
-  transition: opacity 0.25s ease, transform 0.25s ease;
-  opacity: 0.55;
-}
-
-.timeline-lorry.is-moving .headlight-beam {
-  opacity: 0.95;
-  transform: scaleY(1.22);
-  filter: blur(2px);
-}
-
-.timeline-lorry.is-reversing .headlight-beam {
-  opacity: 0.22;
-  transform: scaleY(0.65);
-}
-
-/* Front Headlight Flares on Bumper */
-.lorry-front-flares {
-  position: absolute;
-  bottom: 2px;
-  left: 0;
-  right: 0;
-  height: 8px;
-  pointer-events: none;
-}
-
-.front-flare {
-  position: absolute;
-  bottom: 1px;
-  width: 6px;
-  height: 6px;
-  border-radius: 9999px;
-  background-color: #fffef0;
-  box-shadow: 0 0 6px 2px rgba(255, 200, 80, 0.95),
-              0 0 12px 4px rgba(255, 75, 24, 0.7);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
-
-.front-flare.flare-left {
-  left: 17%;
-}
-
-.front-flare.flare-right {
-  right: 17%;
-}
-
-.timeline-lorry.is-moving .front-flare {
-  transform: scale(1.3);
-  box-shadow: 0 0 8px 3px rgba(255, 230, 120, 1),
-              0 0 16px 6px rgba(255, 75, 24, 0.9);
-}
-
-/* =========================================================================
-   Rear Tail / Reverse Flares
-========================================================================= */
-
-.lorry-rear-flares {
-  position: absolute;
-  top: 4px;
-  left: 0;
-  right: 0;
-  height: 6px;
-  pointer-events: none;
-}
-
-.tail-flare {
-  position: absolute;
-  top: 0;
-  width: 5px;
-  height: 5px;
-  border-radius: 9999px;
-  background-color: #8b1818;
-  opacity: 0.35;
-  transition: all 0.2s ease;
-}
-
-.tail-flare.flare-left {
-  left: 15%;
-}
-
-.tail-flare.flare-right {
-  right: 15%;
-}
-
-/* Reversing / Braking when scrolling up */
-.timeline-lorry.is-reversing .tail-flare {
-  opacity: 1;
-  background-color: #ff2222;
-  box-shadow: 0 0 8px 3px rgba(255, 34, 34, 0.95),
-              0 0 16px 5px rgba(255, 0, 0, 0.6);
-  transform: scale(1.4);
-}
-
-/* =========================================================================
-   Micro Exhaust Smoke Puffs
-========================================================================= */
-
-.lorry-exhaust-wrap {
-  position: absolute;
-  top: 28%;
-  right: 1px;
-  width: 14px;
-  height: 14px;
-  pointer-events: none;
-  z-index: 5;
-}
-
-.exhaust-puff {
-  position: absolute;
-  width: 8px;
-  height: 8px;
-  border-radius: 9999px;
-  background: radial-gradient(circle, rgba(160, 160, 160, 0.6) 0%, rgba(200, 200, 200, 0.2) 60%, transparent 100%);
-  opacity: 0;
-  pointer-events: none;
-}
-
-.timeline-lorry.is-moving .exhaust-puff.puff-1 {
-  animation: exhaust-drift 1.1s infinite 0s ease-out;
-}
-
-.timeline-lorry.is-moving .exhaust-puff.puff-2 {
-  animation: exhaust-drift 1.1s infinite 0.35s ease-out;
-}
-
-.timeline-lorry.is-moving .exhaust-puff.puff-3 {
-  animation: exhaust-drift 1.1s infinite 0.7s ease-out;
-}
-
-@keyframes exhaust-drift {
-  0% {
-    opacity: 0.75;
-    transform: translate(0, 0) scale(0.4);
-  }
-  50% {
-    opacity: 0.4;
-  }
-  100% {
-    opacity: 0;
-    transform: translate(8px, -22px) scale(1.8);
-  }
-}
-
-/* =========================================================================
-   Keyframe Animations for Body
-========================================================================= */
-
-@keyframes lorry-engine-rumble {
+/* Keyframes */
+@keyframes straight-lorry-idle {
   0%, 100% {
-    transform: translateY(0) scale(1);
-  }
-  25% {
-    transform: translateY(-0.6px) rotate(0.12deg);
+    transform: translateY(0);
   }
   50% {
-    transform: translateY(0.4px) rotate(-0.12deg);
-  }
-  75% {
-    transform: translateY(-0.3px) rotate(0.08deg);
+    transform: translateY(-0.6px);
   }
 }
 
-@keyframes lorry-drive-bounce {
+@keyframes straight-lorry-drive {
   0%, 100% {
     transform: translateY(0) scaleY(1);
   }
   25% {
-    transform: translateY(-1.5px) scaleY(1.015);
+    transform: translateY(-1.2px) scaleY(1.01);
   }
   50% {
-    transform: translateY(0.8px) scaleY(0.99);
+    transform: translateY(0.5px) scaleY(0.99);
   }
   75% {
-    transform: translateY(-0.7px) scaleY(1.008);
+    transform: translateY(-0.6px) scaleY(1.005);
   }
 }
 
