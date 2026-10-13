@@ -141,16 +141,16 @@ export const PROJECTS_DATA = [
       'Native Stone Plinth Foundation Engineering',
       'Turnkey Turnaround in Under 75 Days'
     ],
-    heroImage: 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=1920&q=80',
+    heroImage: '/images/projects/country-hills/hero.jpg',
     mapUrl: 'https://maps.app.goo.gl/wpHH8FWHUbgT3ngo7',
     mapQuery: '17.5051367,78.9012893',
     images: [
-      'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=1400&q=80',
-      'https://images.unsplash.com/photo-1587061949409-02df41d5e562?w=1400&q=80',
-      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1400&q=80',
-      'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1400&q=80',
-      'https://images.unsplash.com/photo-1510798831971-661eb04b3739?w=1400&q=80',
-      'https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8?w=1400&q=80'
+      '/images/projects/country-hills/image-1.jpg',
+      '/images/projects/country-hills/image-2.jpg',
+      '/images/projects/country-hills/image-3.jpg',
+      '/images/projects/country-hills/image-4.jpg',
+      '/images/projects/country-hills/image-5.jpg',
+      '/images/projects/country-hills/image-6.jpg'
     ]
   },
   {
@@ -165,7 +165,7 @@ export const PROJECTS_DATA = [
     specs: {
       client: 'EcoBliss HideAway',
       builtUpArea: '2,400 sq.ft',
-      location: 'Shamirpet, Hyderabad, Telangana',
+      location: 'Layana Farms, Shamirpet, Hyderabad, Telangana',
       projectType: 'A-Frame Luxury Cottages & Farm Retreat',
       constructionType: 'Precision A-Frame Timber & Double Glazing',
       duration: '65 Days',
@@ -182,16 +182,16 @@ export const PROJECTS_DATA = [
       'Vacuum-Pressure Treated Weatherproof Timber',
       'Turnkey Turnaround in Under 65 Days'
     ],
-    heroImage: 'https://images.unsplash.com/photo-1510798831971-661eb04b3739?w=1920&q=80',
+    heroImage: '/images/projects/ecobliss-shamirpet/hero.jpg',
     mapUrl: 'https://maps.app.goo.gl/U1HTYyCrKq1xqQkf6',
     mapQuery: '17.7736383,78.6857574',
     images: [
-      'https://images.unsplash.com/photo-1510798831971-661eb04b3739?w=1400&q=80',
-      'https://images.unsplash.com/photo-1587061949409-02df41d5e562?w=1400&q=80',
-      'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=1400&q=80',
-      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1400&q=80',
-      'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1400&q=80',
-      'https://images.unsplash.com/photo-1572120360610-d971b9d7767c?w=1400&q=80'
+      '/images/projects/ecobliss-shamirpet/image-1.jpg',
+      '/images/projects/ecobliss-shamirpet/image-2.jpg',
+      '/images/projects/ecobliss-shamirpet/image-3.jpg',
+      '/images/projects/ecobliss-shamirpet/image-4.jpg',
+      '/images/projects/ecobliss-shamirpet/image-5.jpg',
+      '/images/projects/ecobliss-shamirpet/image-6.jpg'
     ]
   },
   {
