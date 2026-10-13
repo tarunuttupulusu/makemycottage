@@ -74,26 +74,26 @@ const FAQSection = () => {
             </p>
           </div>
 
-          {/* Consultant Portrait Card - perfectly framed so full card & photo fit completely on screen */}
+          {/* Consultant Portrait Card - increased height with clean face framing */}
           <a
             href={`tel:${BUSINESS_INFO.phone}`}
-            className="relative rounded-2xl sm:rounded-3xl overflow-hidden w-full max-w-[320px] h-48 sm:h-56 shadow-lg border border-[#e3e3de] group bg-stone-100 block cursor-pointer transition-all hover:shadow-xl"
+            className="relative rounded-3xl overflow-hidden w-full max-w-[340px] sm:max-w-[360px] h-[370px] sm:h-[420px] shadow-xl border border-[#e3e3de] group bg-stone-100 block cursor-pointer transition-all hover:shadow-2xl"
           >
             <img
               src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=800&q=80"
               alt="Make My Cottage Architectural Consultation"
-              className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+              className="w-full h-full object-cover object-[center_20%] transition-transform duration-700 group-hover:scale-105"
               loading="lazy"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent transition-opacity group-hover:opacity-90" />
-            <div className="absolute bottom-3.5 left-4 right-4 text-white">
-              <span className="text-[10px] uppercase tracking-widest text-[#ff8a65] block font-semibold mb-0.5">
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent transition-opacity group-hover:opacity-90" />
+            <div className="absolute bottom-5 left-5 right-5 text-white">
+              <span className="text-[10px] sm:text-[11px] uppercase tracking-widest text-[#ff8a65] block font-semibold mb-1">
                 Design &amp; Engineering Team
               </span>
-              <p className="text-xs sm:text-sm font-heading font-medium text-white leading-snug">
+              <p className="text-sm font-heading font-medium text-white leading-snug">
                 Turnkey Wooden Architecture Specialists
               </p>
-              <span className="text-[11px] text-white/80 font-light mt-1 flex items-center gap-1 group-hover:text-white">
+              <span className="text-xs text-white/85 font-light mt-1.5 flex items-center gap-1 group-hover:text-white">
                 Call {BUSINESS_INFO.displayPhone} &rarr;
               </span>
             </div>
