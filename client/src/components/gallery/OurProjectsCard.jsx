@@ -1,64 +1,50 @@
-import React from 'react';
+import { motion } from 'framer-motion';
 
 /**
  * OurProjectsCard Component
- * Resentii / Framer architectural cutout badge with dual concave SVG fillet corners
- * and charcoal pill title container.
+ * Exact dimensions matching ProjectsPage hero notch:
+ * - Top concave fillet (20px x 20px SVG)
+ * - Right concave fillet (20px x 20px SVG)
+ * - White cutout box (rounded-tr-[28px] sm:rounded-tr-[32px])
+ * - Dark pill badge (px-8 sm:px-12 py-4 sm:py-5, rounded-[20px] sm:rounded-[24px])
+ * - Clean sans-serif title (text-3xl sm:text-5xl md:text-[54px])
  */
 const OurProjectsCard = ({
   title = 'Our Gallery',
   className = '',
 }) => {
   return (
-    <div className={`relative z-10 flex flex-row items-end select-none ${className}`}>
-      {/* Column containing top inverted SVG fillet and white cutout container */}
-      <div className="flex flex-col items-start flex-none">
-        {/* Top Inverted Fillet (34px x 34px, rotate 270deg) */}
-        <div
-          className="w-[34px] h-[34px] flex-none pointer-events-none"
-          style={{ transform: 'rotate(270deg)' }}
-          aria-hidden="true"
-        >
-          <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full block">
-            <path d="M0 0L0 20C0 6 6 0 20 0L0 0Z" fill="rgb(255, 255, 255)" />
+    <div className={`relative z-10 flex items-end select-none ${className}`}>
+      <div className="bg-white pt-3 sm:pt-4 pr-3.5 sm:pr-4 pb-0 pl-0 rounded-tr-[28px] sm:rounded-tr-[32px] relative">
+        {/* Top Concave Fillet Curve */}
+        <div className="absolute -top-[20px] left-0 w-5 h-5 pointer-events-none">
+          <svg viewBox="0 0 20 20" fill="none" className="w-5 h-5 block">
+            <path d="M0 20L0 0C0 11.0457 8.9543 20 20 20L0 20Z" fill="#ffffff" />
           </svg>
         </div>
 
-        {/* White Cutout Box (border-top-right-radius: 30px, padding: 15px) */}
-        <div
-          className="bg-white flex-none"
-          style={{
-            borderTopRightRadius: '30px',
-            borderBottomLeftRadius: '0px',
-            borderBottomRightRadius: '0px',
-            borderTopLeftRadius: '0px',
-            padding: '15px',
-          }}
-        >
-          {/* Dark Charcoal Pill (border-radius: 20px, translated -10px, 10px) */}
-          <div
-            className="bg-[#28282c] px-6 sm:px-10 md:px-14 py-3.5 sm:py-4 md:py-5 flex items-center justify-center shadow-md"
-            style={{
-              borderRadius: '20px',
-              transform: 'translateX(-10px) translateY(10px)',
-            }}
-          >
-            <h1 className="text-white text-3xl sm:text-5xl md:text-[56px] lg:text-[68px] font-bold tracking-[-0.03em] select-none whitespace-nowrap leading-none font-['Manrope',sans-serif]">
-              {title}
-            </h1>
-          </div>
+        {/* Right Concave Fillet Curve */}
+        <div className="absolute bottom-0 -right-[20px] w-5 h-5 pointer-events-none">
+          <svg viewBox="0 0 20 20" fill="none" className="w-5 h-5 block">
+            <path d="M0 20H20C8.9543 20 0 11.0457 0 0V20Z" fill="#ffffff" />
+          </svg>
         </div>
-      </div>
 
-      {/* Right Inverted Fillet (34px x 34px, rotate -90deg) */}
-      <div
-        className="w-[34px] h-[34px] flex-none pointer-events-none"
-        style={{ transform: 'rotate(-90deg)' }}
-        aria-hidden="true"
-      >
-        <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full block">
-          <path d="M0 0L0 20C0 6 6 0 20 0L0 0Z" fill="rgb(255, 255, 255)" />
-        </svg>
+        {/* The Dark Pill Badge with Clean Sans-Serif Title Case & Smooth Fade Animation */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{
+            duration: 0.85,
+            delay: 0.25,
+            ease: [0.16, 1, 0.3, 1],
+          }}
+          className="bg-[#28282c] text-white px-8 sm:px-12 py-4 sm:py-5 rounded-[20px] sm:rounded-[24px] flex items-center shadow-sm"
+        >
+          <h1 className="font-sans text-3xl sm:text-5xl md:text-[54px] font-normal tracking-tight text-white leading-none">
+            {title}
+          </h1>
+        </motion.div>
       </div>
     </div>
   );

@@ -39,42 +39,42 @@ export const SERVICES = [
     id: 'wooden-homes',
     title: 'Wooden Homes',
     description: 'Custom-designed wooden houses built around your lifestyle with natural warmth and enduring strength.',
-    image: 'https://images.unsplash.com/photo-1518780664697-55e3ad937233?w=1000&q=80'
+    image: '/images/wooden-homes-showcase.jpg'
   },
   {
     num: '02',
     id: 'farm-houses',
     title: 'Farm Houses',
     description: 'Relaxed, natural spaces designed for weekend living, organic farm retreats, and countryside estates.',
-    image: 'https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8?w=1000&q=80'
+    image: '/images/farm-houses-showcase.jpg'
   },
   {
     num: '03',
     id: 'cottage-homes',
     title: 'Cottage Homes',
     description: 'Compact and beautiful cottages for resorts, hill retreats, farms, and private scenic properties.',
-    image: 'https://images.unsplash.com/photo-1510798831971-661eb04b3739?w=1000&q=80'
+    image: '/images/cottage-homes-showcase.jpg'
   },
   {
     num: '04',
     id: 'prefabricated-homes',
     title: 'Prefabricated Homes',
     description: 'Efficient precision construction with modern modular prefabricated timber systems for rapid delivery.',
-    image: 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1000&q=80'
+    image: '/images/prefabricated-homes-showcase.jpg'
   },
   {
     num: '05',
     id: 'resort-cottages',
     title: 'Resort Cottages',
     description: 'Distinctive wooden accommodation spaces engineered for hospitality luxury and guest escapism.',
-    image: 'https://images.unsplash.com/photo-1605146769289-440113cc3d00?w=1000&q=80'
+    image: '/images/resort-cottages-showcase.jpg'
   },
   {
     num: '06',
     id: 'custom-structures',
     title: 'Custom Structures',
     description: 'Unique architectural wooden pergolas, pavilions, gazebos, and extensions made to exact specifications.',
-    image: 'https://images.unsplash.com/photo-1572120360610-d971b9d7767c?w=1000&q=80'
+    image: '/images/custom-structures-showcase.jpg'
   }
 ];
 
@@ -141,16 +141,16 @@ export const PROJECTS_DATA = [
       'Native Stone Plinth Foundation Engineering',
       'Turnkey Turnaround in Under 75 Days'
     ],
-    heroImage: 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=1920&q=80',
+    heroImage: '/images/projects/country-hills/hero.jpg',
     mapUrl: 'https://maps.app.goo.gl/wpHH8FWHUbgT3ngo7',
     mapQuery: '17.5051367,78.9012893',
     images: [
-      'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=1400&q=80',
-      'https://images.unsplash.com/photo-1587061949409-02df41d5e562?w=1400&q=80',
-      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1400&q=80',
-      'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1400&q=80',
-      'https://images.unsplash.com/photo-1510798831971-661eb04b3739?w=1400&q=80',
-      'https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8?w=1400&q=80'
+      '/images/projects/country-hills/image-1.jpg',
+      '/images/projects/country-hills/image-2.jpg',
+      '/images/projects/country-hills/image-3.jpg',
+      '/images/projects/country-hills/image-4.jpg',
+      '/images/projects/country-hills/image-5.jpg',
+      '/images/projects/country-hills/image-6.jpg'
     ]
   },
   {
@@ -165,7 +165,7 @@ export const PROJECTS_DATA = [
     specs: {
       client: 'EcoBliss HideAway',
       builtUpArea: '2,400 sq.ft',
-      location: 'Shamirpet, Hyderabad, Telangana',
+      location: 'Layana Farms, Shamirpet, Hyderabad, Telangana',
       projectType: 'A-Frame Luxury Cottages & Farm Retreat',
       constructionType: 'Precision A-Frame Timber & Double Glazing',
       duration: '65 Days',
@@ -182,16 +182,16 @@ export const PROJECTS_DATA = [
       'Vacuum-Pressure Treated Weatherproof Timber',
       'Turnkey Turnaround in Under 65 Days'
     ],
-    heroImage: 'https://images.unsplash.com/photo-1510798831971-661eb04b3739?w=1920&q=80',
+    heroImage: '/images/projects/ecobliss-shamirpet/hero.jpg',
     mapUrl: 'https://maps.app.goo.gl/U1HTYyCrKq1xqQkf6',
     mapQuery: '17.7736383,78.6857574',
     images: [
-      'https://images.unsplash.com/photo-1510798831971-661eb04b3739?w=1400&q=80',
-      'https://images.unsplash.com/photo-1587061949409-02df41d5e562?w=1400&q=80',
-      'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=1400&q=80',
-      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1400&q=80',
-      'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1400&q=80',
-      'https://images.unsplash.com/photo-1572120360610-d971b9d7767c?w=1400&q=80'
+      '/images/projects/ecobliss-shamirpet/image-1.jpg',
+      '/images/projects/ecobliss-shamirpet/image-2.jpg',
+      '/images/projects/ecobliss-shamirpet/image-3.jpg',
+      '/images/projects/ecobliss-shamirpet/image-4.jpg',
+      '/images/projects/ecobliss-shamirpet/image-5.jpg',
+      '/images/projects/ecobliss-shamirpet/image-6.jpg'
     ]
   },
   {
@@ -199,81 +199,81 @@ export const PROJECTS_DATA = [
     slug: 'dvaita-resorts',
     num: '03',
     name: 'Dvaita Resorts',
-    location: 'Keesara, Hyderabad',
-    category: 'Resort Cottage',
-    shortDescription: 'Serene nature farmstay resort featuring handcrafted timber villas, private poolside decks, and open-air verandahs.',
-    description: 'Located along the scenic countryside near Keesara and Ghatkesar, Dvaita Resorts is a tranquil eco-hospitality sanctuary designed and built by Make My Cottage. Blending natural timber craftsmanship with modern farmstay comforts, the property showcases luxury wooden villas, wide covered verandahs, an integrated outdoor swimming pool with timber deck surrounds, and lush green banquet lawns.',
+    location: 'Bommalaramaram, Rangapuram, Telangana',
+    category: 'A-Frame & Glamping Resort',
+    shortDescription: 'Signature eco-luxury retreat featuring architectural A-frame lakefront chalets, geodesic glamping domes, and swimming pool.',
+    description: 'Nestled in the pristine countryside of Rangapuram along Bommalaramaram Road near Keesara, Dvaita Resorts is an architectural eco-luxury resort built by Make My Cottage. The retreat features iconic A-frame wooden chalets facing a serene water-lily pond, luxury all-weather geodesic glamping domes, handcrafted pine cabin suites, an integrated open-air swimming pool with poolside cabana, and expansive landscaped party lawns.',
     specs: {
       client: 'Dvaita Resorts',
-      builtUpArea: '3,600 sq.ft',
-      location: 'Keesara - Ghatkesar, Hyderabad, Telangana',
-      projectType: 'Hospitality & Nature Farmstay Resort',
-      constructionType: 'Handcrafted Post-and-Beam Timber',
-      duration: '70 Days',
+      builtUpArea: '3,800 sq.ft',
+      location: 'Survey no 254, Bommalaramaram Rd, Ramalingampally, Rangapuram, Telangana 508126',
+      projectType: 'A-Frame Chalets & Geodesic Glamping Resort',
+      constructionType: 'A-Frame Timber & Geodesic Dome Engineering',
+      duration: '75 Days',
       completion: '2024',
-      materials: 'Seasoned Teak, Scandinavian Pine, Natural Stone'
+      materials: 'Pressure-Treated Pine, Seasoned Teak, Toughened Structural Glass, Insulated Geodesic Canvas'
     },
-    challenge: 'Creating expansive multi-room resort villas with high ceilings and heavy footfall hospitality durability, while maintaining an authentic organic wooden aesthetic and weatherproof performance across Hyderabad summers and monsoons.',
-    solution: 'Utilized heavy-section kiln-dried and pressure-impregnated timber columns with precision joinery. Reinforced foundations with native stone plinths prevent moisture ingress, while expansive roof overhangs provide natural passive shading and thermal insulation.',
+    challenge: 'Integrating diverse architectural typologies—including steep-pitch A-frame chalets and geodesic dome glamping tents—around an active natural water body while engineering weatherproof, thermally insulated, and high-durability hospitality structures for Telangana climate.',
+    solution: 'Engineered specialized foundation plinths with moisture barrier protection around the water-lily pond. Built kiln-seasoned and vacuum-pressure impregnated pine timber frames for the A-frame chalets, paired with heavy-duty thermal insulated geodesic dome envelopes and double-glazed geometric facade glass.',
     features: [
-      'Luxury Handcrafted Wooden Resort Villas',
-      'Direct Poolside Timber Decks & Lounge Terraces',
-      'Natural Stone Plinth & Anti-Termite Foundations',
-      'Spacious Multi-Key Family Suites & Verandahs',
-      'Weather-Sealed Vacuum Impregnated Woodwork',
-      'Turnkey Delivery in Under 70 Days'
+      'Iconic A-Frame Chalets with Lily Pond Deck',
+      'Luxury Geodesic Dome Glamping Suites',
+      'Handcrafted Pine Timber Cabin Bedrooms',
+      'Mezzanine Lofts with Geometric Glass Facades',
+      'Integrated Swimming Pool & Poolside Cabana',
+      'Expansive Landscaped Lawns with Ambient Lighting'
     ],
-    heroImage: 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=1920&q=80',
+    heroImage: '/images/projects/dvaita-resorts/hero.jpg',
     mapUrl: 'https://maps.app.goo.gl/rofZmo3dJnfWdZcN6',
     mapQuery: '17.5633952,78.728025',
     images: [
-      'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=1400&q=80',
-      'https://images.unsplash.com/photo-1587061949409-02df41d5e562?w=1400&q=80',
-      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1400&q=80',
-      'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1400&q=80',
-      'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=1400&q=80',
-      'https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8?w=1400&q=80'
+      '/images/projects/dvaita-resorts/image-1.jpg',
+      '/images/projects/dvaita-resorts/image-2.jpg',
+      '/images/projects/dvaita-resorts/image-3.jpg',
+      '/images/projects/dvaita-resorts/image-4.jpg',
+      '/images/projects/dvaita-resorts/image-5.jpg',
+      '/images/projects/dvaita-resorts/image-6.jpg'
     ]
   },
   {
     id: 'shathakshi-resort',
     slug: 'shathakshi-resort',
     num: '04',
-    name: 'Shathakshi Resorts',
-    location: 'Maheshwaram, Shamshabad',
-    category: 'Resort Cottage',
-    shortDescription: 'Luxury nature retreat showcasing waterfront timber cottages, teakwood villas, and an expansive pool deck.',
-    description: 'Located in the serene countryside near Maheshwaram and Shamshabad just minutes from Hyderabad airport, Shathakshi Resorts is a premier destination nature escape built with Make My Cottage timber craftsmanship. The retreat features signature Jalakutira water cottages, handcrafted teak villas with open verandahs, wellness pavilions, and expansive timber pool decks flanking the central swimming pool.',
+    name: 'Shathakshi Resort',
+    location: 'Ameerpet, Kalwakole, Telangana',
+    category: 'Overwater A-Frame & Nature Resort',
+    shortDescription: 'Signature architectural overwater A-frame chalets resting directly above a turquoise pool canal, featuring mezzanine loft suites and multi-tier illuminated pools.',
+    description: 'Located amidst tranquil palm tree farms in Ameerpet, Kalwakole near Maheshwaram and Srisailam Highway, Shathakshi Resort is a distinctive nature getaway crafted by Make My Cottage. The retreat features signature overwater A-frame timber chalets built directly above a turquoise swimming canal with floating stone pathways, multi-tier illuminated night swimming pools, pinewood mezzanine loft suites, luxury modern private villas, an open waterfront pavilion, and palm groves surrounded by scenic countryside.',
     specs: {
-      client: 'Shathakshi Resorts',
-      builtUpArea: '4,800 sq.ft',
-      location: 'Maheshwaram - Shamshabad, Hyderabad, Telangana',
-      projectType: 'Eco-Resort Water Cottages & Villas',
-      constructionType: 'Bespoke Hardwood Stilt & Post-and-Beam',
-      duration: '85 Days',
+      client: 'Shathakshi Resort',
+      builtUpArea: '4,500 sq.ft',
+      location: 'Palm trees farm, Ameerpet, Kalwakole, Telangana 509325',
+      projectType: 'Overwater A-Frame Chalets & Nature Resort',
+      constructionType: 'Overwater Timber Cantilever & A-Frame Post-and-Beam',
+      duration: '80 Days',
       completion: '2024',
-      materials: 'Seasoned Burma Teak, Pressure-Treated Timber, Stone Plinth'
+      materials: 'Pressure-Treated Pine, Seasoned Teakwood, Marine Moisture Barriers, Toughened Architectural Glass'
     },
-    challenge: 'Constructing water-flanked timber cottages (Jalakutira) with structural integrity over damp terrain, requiring permanent water-repellent timber treatment, anti-corrosion joinery, and humidity-balanced indoor microclimates.',
-    solution: 'Engineered marine-grade timber pilings anchored in reinforced stone foundations, vacuum-impregnated with eco-friendly biocides. Teakwood wall cladding with vented air gaps and elevated roof pitch enables natural convection cooling and complete weather resistance.',
+    challenge: 'Engineering overwater A-frame chalets cantilevered directly above swimming pool water while ensuring zero structural moisture seepage, supreme humidity balancing in interior timber loft bedrooms, and long-term timber longevity under Telangana sun and water exposure.',
+    solution: 'Engineered specialized reinforced concrete submerged plinths with marine-grade waterproof polyurethane coatings and stainless steel tie anchors. Handcrafted high-pitch A-frame trusses from kiln-seasoned, vacuum-pressure impregnated pine with breathable insulation decking and high-ceiling mezzanine lofts.',
     features: [
-      'Signature Waterfront Timber Stilt Cottages (Jalakutira)',
-      'Expansive Poolside Decks & Outdoor Timber Gazebos',
-      'Bespoke Teak Millwork & Covered Verandahs',
-      'Marine-Grade Pressure-Treated Substructure',
-      'Native Stone Base Plinth & Natural Ventilation',
-      'Turnkey Turnaround in Under 85 Days'
+      'Iconic Overwater A-Frame Chalets ("Jalakutira")',
+      'Floating Stepping Stone Walkways Above Pool Canal',
+      'Multi-Tier Illuminated Night Swimming Pools & Sun Deck',
+      'Handcrafted Pinewood Mezzanine Loft Bedrooms',
+      'Luxury Master Resort Suites & Modern Marble Living',
+      'Waterfront Reception Pavilion Amidst Palm Groves'
     ],
-    heroImage: 'https://images.unsplash.com/photo-1572120360610-d971b9d7767c?w=1920&q=80',
+    heroImage: '/images/projects/shathakshi-resort/hero.jpg',
     mapUrl: 'https://maps.app.goo.gl/FksTfFRUd2Fdee28A',
     mapQuery: '17.1427618,78.3497878',
     images: [
-      'https://images.unsplash.com/photo-1572120360610-d971b9d7767c?w=1400&q=80',
-      'https://images.unsplash.com/photo-1600585154084-4e5fe7c39198?w=1400&q=80',
-      'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=1400&q=80',
-      'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=1400&q=80',
-      'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=1400&q=80',
-      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1400&q=80'
+      '/images/projects/shathakshi-resort/image-1.jpg',
+      '/images/projects/shathakshi-resort/image-2.jpg',
+      '/images/projects/shathakshi-resort/image-3.jpg',
+      '/images/projects/shathakshi-resort/image-4.jpg',
+      '/images/projects/shathakshi-resort/image-5.jpg',
+      '/images/projects/shathakshi-resort/image-6.jpg'
     ]
   },
   {
@@ -281,40 +281,40 @@ export const PROJECTS_DATA = [
     slug: 'vintage-bougainvillas',
     num: '05',
     name: 'Vintage Bougainvillas',
-    location: 'Moinabad, Hyderabad',
-    category: 'Farm House',
-    shortDescription: 'Rustic-luxe wooden estate cottages nestled in blooming bougainvillea gardens with a private pool and open party decks.',
-    description: 'Situated in the picturesque countryside of Moinabad near Chevella and Shankarpally, Vintage Bougainvillas is a boutique farmhouse retreat crafted by Make My Cottage. Featuring rustic timber cottages, stone plinth foundations, expansive private swimming pool decks, campfire courtyards, and open-air event lawns framed by vibrant bougainvillea gardens, the estate is engineered for exclusive weekend escapes and celebration gatherings.',
+    location: 'Sriramnagar, Chevella / Moinabad, Telangana',
+    category: 'Timber Cottage Farmstay & Event Retreat',
+    shortDescription: 'Charming solid timber farmhouse retreat featuring vaulted pine-panelled cottages, mezzanine loft suites, and expansive celebration lawns.',
+    description: 'Set amidst peaceful rural greens in Sriramnagar near Chevella and Moinabad, Vintage Bougainvillas is a handcrafted timber farmstay and event retreat crafted by Make My Cottage. The retreat features an authentic two-story solid pine cottage with classic dormer roofing, vaulted cathedral ceilings, open-plan wooden living and dining lounges, handcrafted king and bunk-bed suites, ambient heritage lampposts, a dedicated terracotta bonfire pit, and vast manicured lawns bordered by traditional Warli folk art murals.',
     specs: {
       client: 'Vintage Bougainvillas',
       builtUpArea: '4,200 sq.ft',
-      location: 'Moinabad - Chevella, Hyderabad, Telangana',
-      projectType: 'Boutique Farmhouse & Wooden Event Villas',
-      constructionType: 'Handcrafted Rustic Timber & Exposed Stone',
+      location: '76CR+86, Sriramnagar, Telangana 501504',
+      projectType: 'Solid Timber Farmstay & Celebration Retreat',
+      constructionType: 'Interlocking Pine Log Wall & Heavy Timber Rafter Framing',
       duration: '80 Days',
       completion: '2024',
-      materials: 'Seasoned Teak, Scandinavian Pine, Natural Stone, Double Glazing'
+      materials: 'Vacuum-Pressure Treated Pine, Seasoned Teak, Toughened Glass, Natural Stone & Terracotta'
     },
-    challenge: 'Creating a flexible, multi-purpose farmstay layout capable of hosting intimate family weekend retreats as well as large outdoor celebrations, while preserving an authentic, weathered timber heritage charm without structural maintenance overhead.',
-    solution: 'Constructed heavy timber post-and-beam frameworks using vacuum-pressure impregnated pine treated with weather-shield microporous oils. Deep perimeter verandahs buffer the living spaces from sun and rain, while seamless French timber doors open out directly onto the central pool and bougainvillea lawns.',
+    challenge: 'Constructing an authentic all-timber two-story farmstay cottage with high-pitched dormer roofing and high-volume vaulted ceilings, ensuring complete weather-sealing, termite-proofing, and thermal insulation against Telangana climate while crafting expansive party grounds.',
+    solution: 'Engineered interlocking tongue-and-groove pine timber walls treated with vacuum-pressure eco-friendly weather and insect retardants. Designed an open-truss vaulted roof structure with multi-layer thermal insulation, framed by vintage heritage lampposts, an artisanal terracotta firepit, and expansive party lawns with Warli art accents.',
     features: [
-      'Handcrafted Rustic Timber Cottage Architecture',
-      'Integrated Swimming Pool & Outdoor Wood Sundecks',
-      'Expansive Bougainvillea Gardens & Bonfire Courtyards',
-      'High-Capacity Verandahs for Celebrations & Gatherings',
-      'Vacuum-Pressure Weatherproofed Natural Timber',
-      'Turnkey Turnaround in Under 80 Days'
+      'Solid Pine Log Cottage Architecture with Dormer Roof',
+      'Vaulted High-Ceiling Timber Living Hall & Dining Nook',
+      'Handcrafted Wooden Master Suite & Bunk-Bed Loft Bedrooms',
+      'Sprawling Event Lawns with Traditional Warli Art Murals',
+      'Open-Air Gazebo Pavilion & Dedicated Bonfire Firepit',
+      'Turnkey Design & Build Delivery in 80 Days'
     ],
-    heroImage: 'https://images.unsplash.com/photo-1605146769289-440113cc3d00?w=1920&q=80',
+    heroImage: '/images/projects/vintage-bougainvillas/hero.jpg',
     mapUrl: 'https://maps.app.goo.gl/wKqVGC57Lw6Geq1F8',
     mapQuery: '17.2707926,78.2405959',
     images: [
-      'https://images.unsplash.com/photo-1605146769289-440113cc3d00?w=1400&q=80',
-      'https://images.unsplash.com/photo-1600585153490-76fb20a32601?w=1400&q=80',
-      'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=1400&q=80',
-      'https://images.unsplash.com/photo-1510798831971-661eb04b3739?w=1400&q=80',
-      'https://images.unsplash.com/photo-1600573472592-401b489a3cdc?w=1400&q=80',
-      'https://images.unsplash.com/photo-1587061949409-02df41d5e562?w=1400&q=80'
+      '/images/projects/vintage-bougainvillas/image-1.jpg',
+      '/images/projects/vintage-bougainvillas/image-2.jpg',
+      '/images/projects/vintage-bougainvillas/image-3.jpg',
+      '/images/projects/vintage-bougainvillas/image-4.jpg',
+      '/images/projects/vintage-bougainvillas/image-5.jpg',
+      '/images/projects/vintage-bougainvillas/image-6.jpg'
     ]
   },
   {
@@ -322,40 +322,40 @@ export const PROJECTS_DATA = [
     slug: 'myron-dynasty',
     num: '06',
     name: 'Myron Dynasty',
-    location: 'Manneguda, Chevella',
-    category: 'Wooden Home',
-    shortDescription: 'Contemporary luxury wooden villas and weekend cottages with panoramic timber decks and nature views.',
-    description: 'Set within an expansive 100+ acre master-planned community at Manneguda along the Chevella – Vikarabad corridor near Ananthagiri Hills, Myron Dynasty features bespoke wooden villas and weekend retreats engineered by Make My Cottage. Combining Scandinavian timber post-and-beam construction, floor-to-ceiling double glazing, spacious timber decks, and open-plan modern aesthetics, each villa offers an unparalleled country living experience with rapid prefabricated assembly.',
+    location: 'Manneguda, Vikarabad Highway, Telangana',
+    category: 'Timber Cottages & Master-Planned Community',
+    shortDescription: 'Prefabricated solid timber cottages and weekend chalets with stone plinth foundations, king-post gable trusses, and scenic community parklands.',
+    description: 'Located within an expansive 100+ acre master-planned township in Manneguda along the Vikarabad–Hyderabad Highway, Myron Dynasty features handcrafted timber cottages and weekend chalets built by Make My Cottage. Designed with solid pine timber framing on natural stone plinths, exposed king-post roof trusses, green architectural shingle roofs, front porch verandas, and panoramic views over serene lakes, the project is integrated with 50+ luxury amenities including classical archways, gazebo pavilions, and children\'s recreation parks.',
     specs: {
-      client: 'Myron Dynasty',
+      client: 'Myron Dynasty / Myron Homes',
       builtUpArea: '3,400 sq.ft',
-      location: 'Manneguda, Chevella - Vikarabad Highway, Telangana',
-      projectType: 'Luxury Weekend Wooden Villas',
-      constructionType: 'Precision Prefabricated Timber Frame',
+      location: '8X65+M8H, Kothrepally, Manneguda (Sarecas), Telangana 501102',
+      projectType: 'Prefabricated Timber Cottages & Weekend Chalets',
+      constructionType: 'Post-and-Beam Timber Framing & Stone Plinth Foundation',
       duration: '55 Days',
       completion: '2024',
-      materials: 'Scandinavian Pine, Canadian Cedar, High-Performance Glass'
+      materials: 'Pressure-Treated Pine Logs, Natural Stone Masonry, Architectural Shingles, Toughened Glass'
     },
-    challenge: 'Delivering rapid turnkey construction of large-format luxury wooden homes with superior thermal insulation and acoustic performance within an active community layout without disturbing pristine natural surroundings.',
-    solution: 'Pre-engineered modular timber wall cassettes and CNC-milled roof trusses pre-manufactured off-site. On-site assembly completed in just 55 days using dry-construction techniques, anchored to reinforced concrete grade beams with zero site disruption.',
+    challenge: 'Rapidly engineering precision all-timber weekend cottages on elevated stone plinth foundations within a 100+ acre master-planned community, ensuring superior weather resilience, thermal comfort under Telangana sun, and zero on-site construction disruption.',
+    solution: 'Pre-engineered modular tongue-and-groove pine wall panels and CNC-machined king-post roof trusses pre-fabricated off-site. On-site installation completed in 55 days on dressed stone masonry foundations, topped with high-grade multi-layer architectural shingle roofing and treated with eco-friendly timber weather retardants.',
     features: [
-      'Precision Modular Prefabricated Timber Framing',
-      'Double-Glazed Panoramic Glass Curtain Walls',
-      'Expansive Cantilevered Timber Decks & Verandahs',
-      'Thermal & Acoustic Multi-Layer Insulation',
-      'Vacuum-Pressure Weatherproofed Certified Timber',
-      'Rapid Turnkey Handover in 55 Days'
+      'Solid Pine Timber Post-and-Beam Construction',
+      'Elevated Dressed Stone Masonry Plinth Foundation',
+      'Exposed King-Post Gable Roof Trusses & Shingle Roofing',
+      'Integrated Front Porch Veranda with Timber Railings',
+      'Overlooks 100+ Acre Township with Lake & Parklands',
+      'Rapid Turnkey Prefab Delivery in Under 55 Days'
     ],
-    heroImage: 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1920&q=80',
+    heroImage: '/images/projects/myron-dynasty/hero.jpg',
     mapUrl: 'https://maps.app.goo.gl/venv7HRZB3yKPxAc7',
     mapQuery: '17.3116875,77.9583125',
     images: [
-      'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1400&q=80',
-      'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1400&q=80',
-      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1400&q=80',
-      'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1400&q=80',
-      'https://images.unsplash.com/photo-1510798831971-661eb04b3739?w=1400&q=80',
-      'https://images.unsplash.com/photo-1572120360610-d971b9d7767c?w=1400&q=80'
+      '/images/projects/myron-dynasty/image-1.jpg',
+      '/images/projects/myron-dynasty/image-2.jpg',
+      '/images/projects/myron-dynasty/image-3.jpg',
+      '/images/projects/myron-dynasty/image-4.jpg',
+      '/images/projects/myron-dynasty/image-5.jpg',
+      '/images/projects/myron-dynasty/image-6.jpg'
     ]
   },
   {
@@ -363,40 +363,40 @@ export const PROJECTS_DATA = [
     slug: 'the-courtyard',
     num: '07',
     name: 'The Courtyard',
-    location: 'Venkatapur, Shankarpally',
-    category: 'Wooden Home',
-    shortDescription: 'Expansive 10,000 sq.ft timber courtyard estate featuring traditional open-to-sky verandas and private pool.',
-    description: 'Situated in the serene green environs of Venkatapur near Shankarpally and Mokila, The Courtyard is a magnificent 10,000 sq.ft architectural wooden estate crafted by Make My Cottage. Reimagining traditional Indian courtyard living with contemporary luxury timber engineering, the villa revolves around an open-to-sky central courtyard, expansive teakwood verandahs, high-volume cedar ceiling trusses, private swimming pool decks, and lush landscaped gardens.',
+    location: 'Mokila, Shankarpally / Venkatapur, Telangana',
+    category: 'Luxury Courtyard Villa & Wooden Estate',
+    shortDescription: 'Expansive 10,000 sq.ft contemporary courtyard villa featuring open-to-sky living, architectural timber pergola louvers, and private rooftop pool with timber sun deck.',
+    description: 'Situated in the prime luxury villa hub of Mokila near Shankarpally and Venkatapur, The Courtyard is an exquisite 10,000 sq.ft contemporary architectural estate crafted by Make My Cottage. Reimagining traditional Indian courtyard living through modern architectural woodwork and precision engineering, the estate features an open-to-sky central courtyard, precision-milled timber pergola louvers casting geometric shade patterns, expansive cantilevered terraces, and a private rooftop swimming pool with integrated kids pool and timber sun deck overlooking serene panoramic surroundings.',
     specs: {
-      client: 'The Courtyard',
+      client: 'The Courtyard Villa',
       builtUpArea: '10,000 sq.ft',
-      location: 'Venkatapur, Shankarpally, Hyderabad, Telangana',
-      projectType: 'Luxury Timber Courtyard Estate',
-      constructionType: 'Post-and-Beam Heavy Timber & Stone Plinth',
-      duration: '120 Days',
+      location: 'C5QP+WH8, Mokila, Telangana 501203',
+      projectType: 'Luxury Courtyard Villa & Wooden Estate',
+      constructionType: 'Heavy Timber Pergola Framing, Post-and-Beam & Double Glazing',
+      duration: '90 Days',
       completion: '2024',
-      materials: 'Seasoned Teak, Scandinavian Pine, Natural Stone Plinth'
+      materials: 'Seasoned Teakwood, Pressure-Treated Pine Louvers, Toughened Structural Glass, Anti-Skid Timber Decking'
     },
-    challenge: 'Engineering an expansive 10,000 sq.ft continuous timber roof structure with a central open-to-sky courtyard, requiring complex stormwater diversion, heavy-timber structural load distribution, and natural microclimate ventilation.',
-    solution: 'Designed a heavy-section timber beam network anchored with concealed structural steel tie connectors. Precision-pitched internal timber eaves funnel rainwater smoothly into concealed drainage, while shaded inner verandahs generate passive cooling through stack-effect airflow.',
+    challenge: 'Engineering an expansive 10,000 sq.ft contemporary villa estate combining an open-to-sky central courtyard layout with heavy timber cantilevered pergola overhangs and an elevated rooftop swimming pool requiring specialized waterproofing and structural load balancing.',
+    solution: 'Engineered high-load timber and steel composite framing for the cantilevered roof pergolas with solar-optimized louver angles for natural stack-effect cooling. The rooftop pool deck was constructed with multi-tier elastomeric polyurethane waterproofing, anti-skid seasoned timber decking, and concealed stormwater drainage channels.',
     features: [
-      'Traditional Open-to-Sky Central Timber Courtyard',
-      '10,000 sq.ft Expansive Luxury Living Layout',
-      'Integrated Swimming Pool & Wide Teak Decking',
-      'High-Volume Exposed Timber Trusses & Ceilings',
-      'Vacuum-Pressure Impregnated Weatherproof Wood',
-      'Turnkey Turnaround in Under 120 Days'
+      'Open-to-Sky Central Living Courtyard',
+      '10,000 sq.ft Contemporary Luxury Villa Layout',
+      'Private Rooftop Swimming Pool & Kids Pool',
+      'Architectural Timber Pergola & Solar Louvers',
+      'Weatherproof Teakwood Decks & Glass Balconies',
+      'Turnkey Engineering Delivered in 90 Days'
     ],
-    heroImage: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1920&q=80',
+    heroImage: '/images/projects/the-courtyard/hero.jpg',
     mapUrl: 'https://maps.app.goo.gl/jBEmceYTSv4Md1ca7',
     mapQuery: '17.4397875,78.1864531',
     images: [
-      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1400&q=80',
-      'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1400&q=80',
-      'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=1400&q=80',
-      'https://images.unsplash.com/photo-1510798831971-661eb04b3739?w=1400&q=80',
-      'https://images.unsplash.com/photo-1572120360610-d971b9d7767c?w=1400&q=80',
-      'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=1400&q=80'
+      '/images/projects/the-courtyard/image-1.jpg',
+      '/images/projects/the-courtyard/image-2.jpg',
+      '/images/projects/the-courtyard/image-3.jpg',
+      '/images/projects/the-courtyard/image-4.jpg',
+      '/images/projects/the-courtyard/image-5.jpg',
+      '/images/projects/the-courtyard/image-6.jpg'
     ]
   },
   {
@@ -404,40 +404,40 @@ export const PROJECTS_DATA = [
     slug: 'ravipati-kalyana-mandapam',
     num: '08',
     name: 'Ravipati Kalyana Mandapam',
-    location: 'Guntur, Andhra Pradesh',
-    category: 'Custom Structures',
-    shortDescription: 'Grand 12,000 sq.ft timber convention hall featuring high-span wooden trusses, carved teak arches, and open colonnades.',
-    description: 'Located in the Guntur / Palnadu region of Andhra Pradesh, Ravipati Kalyana Mandapam is a monumental 12,000 sq.ft wooden convention architecture engineered and crafted by Make My Cottage. Celebrating rich South Indian timber heritage with modern structural engineering, the hall boasts majestic high-span teakwood trusses, carved entryway pillars, expansive open-air reception colonnades, and banquet facilities tailored for grand celebrations.',
+    location: 'Palnadu / Guntur District, Andhra Pradesh',
+    category: 'Convention Estate & VIP Wooden Chalets',
+    shortDescription: 'Grand convention destination featuring authentic solid pine VIP guest chalets, bridal dressing suites with vaulted rafter ceilings, and an expansive 12,000 sq.ft wedding banquet mandapam hall.',
+    description: 'Situated along Piduguralla Road near Dodleru and Krosuru in Palnadu / Guntur District, Andhra Pradesh, Ravipati Kalyana Mandapam is a premier celebration estate featuring authentic solid timber VIP guest chalets and luxury bridal suites engineered and crafted by Make My Cottage alongside an expansive 12,000 sq.ft convention and banquet hall. Designed to host lavish weddings and cultural celebrations, the estate combines a high-capacity air-conditioned mandapam hall with picturesque pine log guest cottages equipped with private covered sit-out porches, king-post trusses, vaulted pine ceilings, modern ensuite dressing rooms, and landscaped lawn avenues.',
     specs: {
       client: 'Ravipati Kalyana Mandapam',
       builtUpArea: '12,000 sq.ft',
-      location: 'Guntur, Andhra Pradesh',
-      projectType: 'Heritage Wooden Convention & Banquet Hall',
-      constructionType: 'High-Span Heavy Timber Truss & Colonnades',
+      location: 'Piduguralla Road, Dodleru Village, Krosuru Mandalam, Palnadu District, Andhra Pradesh 522410',
+      projectType: 'Convention Estate & VIP Wooden Guest Chalets',
+      constructionType: 'Solid Timber Pine Log Cottages & Grand Convention Architecture',
       duration: '110 Days',
       completion: '2024',
-      materials: 'Seasoned Burma Teak, Pressure-Treated Hardwood, Granite Plinth'
+      materials: 'Treated Russian Pine Logs, Seasoned Teak, Vaulted Rafters, Asphalt Shingle Roofing, Vitrified Tile Flooring'
     },
-    challenge: 'Engineering clear-span timber roof trusses over 12,000 sq.ft without internal support columns obstructing banquet visibility, ensuring acoustic balance and complete fire-retardant, termite-resistant structural performance.',
-    solution: 'Designed precision-engineered timber scissor trusses reinforced with concealed high-tensile steel gussets. All timber was vacuum-impregnated with fire-retardant and anti-termite treatments, paired with acoustic micro-perforated wood ceiling panelling.',
+    challenge: 'Engineering a high-capacity celebration estate that seamlessly pairs a massive 12,000 sq.ft clear-span air-conditioned banquet hall with an exclusive cluster of luxury solid pine guest chalets and bridal dressing suites, demanding exceptional thermal and acoustic insulation under Andhra Pradesh weather conditions.',
+    solution: 'Constructed authentic tongue-and-groove pine log cottages featuring vaulted king-post timber roof trusses, multi-layer thermal and acoustic insulative wall panels, handcrafted timber porch railings, and weatherproof green asphalt shingles arranged around a manicured lawn promenade, delivered concurrently with the banquet hall on a rapid turnkey schedule.',
     features: [
-      'Monumental Clear-Span Timber Roof Engineering',
-      'Hand-Carved Burma Teak Entrance Colonnades',
-      'Acoustically Balanced High-Volume Wood Ceiling',
-      'Vacuum-Pressure Fire & Termite Treated Timber',
-      'Capacity for Over 1,000 Celebration Guests',
-      'Turnkey Turnaround in Under 110 Days'
+      'Authentic Solid Pine VIP Guest Chalets & Suites',
+      '12,000 sq.ft Grand Banquet & Mandapam Hall',
+      'Vaulted King-Post Rafter Ceilings & Porches',
+      'Dedicated Luxury Bridal Dressing Suite',
+      'Expansive Manicured Event Lawns & Flagstone Paths',
+      'Turnkey Engineering Delivered in 110 Days'
     ],
-    heroImage: 'https://images.unsplash.com/photo-1518780664697-55e3ad937233?w=1920&q=80',
+    heroImage: '/images/projects/ravipati-kalyana-mandapam/hero.jpg',
     mapUrl: 'https://maps.app.goo.gl/zeeECEn81nEZ5JRo7',
     mapQuery: '16.543307,80.0611687',
     images: [
-      'https://images.unsplash.com/photo-1518780664697-55e3ad937233?w=1400&q=80',
-      'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=1400&q=80',
-      'https://images.unsplash.com/photo-1587061949409-02df41d5e562?w=1400&q=80',
-      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1400&q=80',
-      'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1400&q=80',
-      'https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8?w=1400&q=80'
+      '/images/projects/ravipati-kalyana-mandapam/image-1.jpg',
+      '/images/projects/ravipati-kalyana-mandapam/image-2.jpg',
+      '/images/projects/ravipati-kalyana-mandapam/image-3.jpg',
+      '/images/projects/ravipati-kalyana-mandapam/image-4.jpg',
+      '/images/projects/ravipati-kalyana-mandapam/image-5.jpg',
+      '/images/projects/ravipati-kalyana-mandapam/image-6.jpg'
     ]
   }
 ];

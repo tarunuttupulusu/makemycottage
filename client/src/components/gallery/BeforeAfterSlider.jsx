@@ -136,8 +136,8 @@ const BeforeAfterSlider = ({
             showBeforeBadge ? 'opacity-100 scale-100' : 'opacity-0 scale-90'
           }`}
         >
-          <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-semibold tracking-wider uppercase bg-charcoal/80 text-sand backdrop-blur-md shadow-sm border border-white/10">
-            {beforeLabel}
+          <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-semibold tracking-wider uppercase bg-charcoal/85 text-white backdrop-blur-md shadow-sm border border-white/15">
+            BEFORE
           </span>
         </div>
 
@@ -147,8 +147,8 @@ const BeforeAfterSlider = ({
             showAfterBadge ? 'opacity-100 scale-100' : 'opacity-0 scale-90'
           }`}
         >
-          <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-semibold tracking-wider uppercase bg-primary-400 text-white backdrop-blur-md shadow-sm border border-white/20">
-            {afterLabel}
+          <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-semibold tracking-wider uppercase bg-[#b87355] text-white backdrop-blur-md shadow-sm border border-white/20">
+            AFTER
           </span>
         </div>
 
