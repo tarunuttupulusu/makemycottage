@@ -153,7 +153,7 @@ const DETAILED_SERVICES = [
     cardBaseHeight: 620,
     cardShrunkHeight: 520,
     secondaryImage: '/images/farm-houses-interior.jpg',
-    type: 'B' // Bottom-Left Notch + Secondary Image
+    type: 'A' // Bottom-Right Notch
   },
   {
     id: 'cottage-homes',
@@ -185,7 +185,7 @@ const DETAILED_SERVICES = [
     cardBaseHeight: 620,
     cardShrunkHeight: 520,
     secondaryImage: '/images/prefabricated-homes-interior.jpg',
-    type: 'B' // Bottom-Left Notch + Secondary Image
+    type: 'A' // Bottom-Right Notch
   },
   {
     id: 'resort-cottages',
@@ -217,7 +217,7 @@ const DETAILED_SERVICES = [
     cardBaseHeight: 620,
     cardShrunkHeight: 520,
     secondaryImage: '/images/custom-structures-interior.jpg',
-    type: 'B' // Bottom-Left Notch + Secondary Image
+    type: 'A' // Bottom-Right Notch
   }
 ];
 
@@ -248,63 +248,25 @@ const HERO_SLIDES = [
   }
 ];
 
-// Individual Showcase Section for each service with shrinking card animation matching hero
+// Individual Showcase Section for each service with sticky side-by-side showcase card
 const ServiceSectionRow = ({ srv, rawService, isTypeA, setSelectedServiceModal }) => {
   const sectionRef = useRef(null);
-  const customBase = srv.cardBaseHeight || 720;
-  const customShrunk = srv.cardShrunkHeight || 600;
-  const [dims, setDims] = useState({ base: customBase, shrunk: customShrunk });
-
-  useEffect(() => {
-    const handleResize = () => {
-      const isMobile = window.innerWidth < 640;
-      const isTablet = window.innerWidth < 1024;
-      const baseRatio = customBase / 720;
-      const shrunkRatio = customShrunk / 600;
-      const base = isMobile ? Math.round(550 * baseRatio) : isTablet ? Math.round(640 * baseRatio) : customBase;
-      const shrunk = isMobile ? Math.round(460 * shrunkRatio) : isTablet ? Math.round(530 * shrunkRatio) : customShrunk;
-      setDims({ base, shrunk });
-    };
-    handleResize();
-    window.addEventListener('resize', handleResize, { passive: true });
-    return () => window.removeEventListener('resize', handleResize);
-  }, [customBase, customShrunk]);
-
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start end", "end start"]
-  });
-
-  const cardHeight = useTransform(scrollYProgress, (value) => {
-    // Start shrinking as section enters viewport (0.20) up through center (0.55)
-    if (value <= 0.20) return `${dims.base}px`;
-    if (value >= 0.55) return `${dims.shrunk}px`;
-    const progress = (value - 0.20) / (0.55 - 0.20);
-    const h = dims.base - progress * (dims.base - dims.shrunk);
-    return `${h}px`;
-  });
 
   return (
     <section 
       ref={sectionRef}
       key={srv.id} 
       id={srv.id} 
-      className="max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-14 py-16 sm:py-24 lg:py-28 border-b border-black/5 last:border-b-0 scroll-mt-24"
+      className="max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-14 py-16 sm:py-24 lg:py-28 border-b border-black/5 last:border-b-0 scroll-mt-24 relative"
     >
       {isTypeA ? (
         /* ====================================================================
-           MODEL TYPE A: Left Text / Right Image with Bottom-Right Cutout Notch
+           MODEL TYPE A: Left Scrolling Story / Right Sticky Showcase Card
         ==================================================================== */
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start relative">
           
-          {/* Left Column: Headline, Description & Action */}
-          <motion.div 
-            initial={{ opacity: 0, y: 35 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-60px' }}
-            transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:col-span-5 flex flex-col justify-between pt-2 pb-0 order-1"
-          >
+          {/* Left Column: Headline, Description, Secondary Image & Action (Scrolls naturally) */}
+          <div className="lg:col-span-5 flex flex-col justify-start pt-2 pb-6 order-1 space-y-10 sm:space-y-12 lg:space-y-14 lg:min-h-[880px]">
             {/* Top Headline Block */}
             <div>
               <h2 
@@ -322,7 +284,7 @@ const ServiceSectionRow = ({ srv, rawService, isTypeA, setSelectedServiceModal }
             {srv.secondaryImage && (
               <div 
                 onClick={() => setSelectedServiceModal(rawService)}
-                className="rounded-[22px] sm:rounded-[28px] overflow-hidden aspect-[16/9] w-full my-6 sm:my-8 shadow-md border border-black/5 group cursor-pointer bg-black/5"
+                className="rounded-[22px] sm:rounded-[28px] overflow-hidden aspect-[16/9] w-full shadow-md border border-black/5 group cursor-pointer bg-black/5"
               >
                 <img 
                   src={srv.secondaryImage} 
@@ -333,7 +295,7 @@ const ServiceSectionRow = ({ srv, rawService, isTypeA, setSelectedServiceModal }
             )}
 
             {/* Bottom Feature Block & CTA Button */}
-            <div className="space-y-4">
+            <div className="space-y-4 pt-2">
               <h4 className="font-sans text-2xl sm:text-3xl text-[#101014] font-medium tracking-tight">
                 {srv.subTitle}
               </h4>
@@ -362,120 +324,106 @@ const ServiceSectionRow = ({ srv, rawService, isTypeA, setSelectedServiceModal }
                 </button>
               </div>
             </div>
-          </motion.div>
+          </div>
 
-          {/* Right Column: Large Image with Bottom-Right Inverted Corner Cutout Notch (Shrinks on scroll) */}
-          <motion.div 
-            style={{ height: cardHeight }}
-            className="lg:col-span-7 relative self-start w-full rounded-[32px] sm:rounded-[38px] rounded-br-none overflow-hidden bg-black/5 shadow-xl flex flex-col justify-end order-2"
-          >
-            {/* Architectural Showcase Image (Fixed at base height) */}
-            <div 
-              style={{ height: `${dims.base}px` }} 
-              className="absolute top-0 left-0 w-full z-0 overflow-hidden pointer-events-none"
-            >
-              <img 
-                src={srv.primaryImage} 
-                alt={srv.title} 
-                style={{ objectPosition: srv.imagePosition || 'center' }}
-                className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-60" />
-            </div>
+          {/* Right Column: Large Image with Bottom-Right Inverted Corner Cutout Notch (Sticky on scroll) */}
+          <div className="lg:col-span-7 lg:sticky lg:top-24 self-start w-full order-2">
+            <div className="relative w-full h-[520px] sm:h-[560px] lg:h-[580px] xl:h-[600px] rounded-[32px] sm:rounded-[38px] rounded-br-none overflow-hidden bg-black/5 shadow-xl flex flex-col justify-end group">
+              {/* Architectural Showcase Image */}
+              <div className="absolute inset-0 w-full h-full z-0 overflow-hidden pointer-events-none">
+                <img 
+                  src={srv.primaryImage} 
+                  alt={srv.title} 
+                  style={{ objectPosition: srv.imagePosition || 'center' }}
+                  className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-60" />
+              </div>
 
-            {/* Bottom-Right Cutout Notch (Sitting flush at bottom-right, glides upwards over image as card shrinks) */}
-            <div className="relative z-10 flex items-end justify-end pointer-events-auto">
-              <div className="bg-[#f5f2f2] pt-3 sm:pt-4 pl-3.5 sm:pl-4 pb-0 pr-0 rounded-tl-[28px] sm:rounded-tl-[32px] relative">
-                {/* Top Concave Fillet Curve */}
-                <div className="absolute -top-[20px] right-0 w-5 h-5 pointer-events-none">
-                  <svg viewBox="0 0 20 20" fill="none" className="w-5 h-5 block">
-                    <path d="M20 20L20 0C20 11.0457 11.0457 20 0 20L20 20Z" fill="#f5f2f2" />
-                  </svg>
-                </div>
+              {/* Bottom-Right Cutout Notch */}
+              <div className="relative z-10 flex items-end justify-end pointer-events-auto">
+                <div className="bg-[#f5f2f2] pt-3 sm:pt-4 pl-3.5 sm:pl-4 pb-0 pr-0 rounded-tl-[28px] sm:rounded-tl-[32px] relative">
+                  {/* Top Concave Fillet Curve */}
+                  <div className="absolute -top-[20px] right-0 w-5 h-5 pointer-events-none">
+                    <svg viewBox="0 0 20 20" fill="none" className="w-5 h-5 block">
+                      <path d="M20 20L20 0C20 11.0457 11.0457 20 0 20L20 20Z" fill="#f5f2f2" />
+                    </svg>
+                  </div>
 
-                {/* Left Concave Fillet Curve */}
-                <div className="absolute bottom-0 -left-[20px] w-5 h-5 pointer-events-none">
-                  <svg viewBox="0 0 20 20" fill="none" className="w-5 h-5 block">
-                    <path d="M20 20H0C11.0457 20 20 11.0457 20 0V20Z" fill="#f5f2f2" />
-                  </svg>
-                </div>
+                  {/* Left Concave Fillet Curve */}
+                  <div className="absolute bottom-0 -left-[20px] w-5 h-5 pointer-events-none">
+                    <svg viewBox="0 0 20 20" fill="none" className="w-5 h-5 block">
+                      <path d="M20 20H0C11.0457 20 20 11.0457 20 0V20Z" fill="#f5f2f2" />
+                    </svg>
+                  </div>
 
-                {/* Dark Charcoal Card */}
-                <div className="bg-[#1c1d21] text-white p-5 sm:p-7 md:p-8 rounded-[20px] sm:rounded-[24px] max-w-[280px] sm:max-w-sm md:max-w-md shadow-2xl border border-white/5">
-                  <h4 className="font-sans text-xl sm:text-2xl font-semibold text-white tracking-tight mb-2.5">
-                    {srv.notchTitle}
-                  </h4>
-                  <p className="font-sans text-xs sm:text-[13.5px] text-[#d0d1db]/90 font-light leading-relaxed">
-                    {srv.notchDescription}
-                  </p>
+                  {/* Dark Charcoal Card */}
+                  <div className="bg-[#1c1d21] text-white p-5 sm:p-7 md:p-8 rounded-[20px] sm:rounded-[24px] max-w-[280px] sm:max-w-sm md:max-w-md shadow-2xl border border-white/5">
+                    <h4 className="font-sans text-xl sm:text-2xl font-semibold text-white tracking-tight mb-2.5">
+                      {srv.notchTitle}
+                    </h4>
+                    <p className="font-sans text-xs sm:text-[13.5px] text-[#d0d1db]/90 font-light leading-relaxed">
+                      {srv.notchDescription}
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
-          </motion.div>
+          </div>
 
         </div>
       ) : (
         /* ====================================================================
-           MODEL TYPE B: Left Image with Bottom-Left Cutout Notch / Right Text + Secondary Image
+           MODEL TYPE B: Left Sticky Showcase Card / Right Scrolling Story
         ==================================================================== */
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
-          {/* Left Column: Large Image with Bottom-Left Inverted Corner Cutout Notch (Shrinks on scroll) */}
-          <motion.div 
-            style={{ height: cardHeight }}
-            className="lg:col-span-7 relative self-start w-full rounded-[32px] sm:rounded-[38px] rounded-bl-none overflow-hidden bg-black/5 shadow-xl flex flex-col justify-end order-2 lg:order-1"
-          >
-            {/* Architectural Showcase Image (Fixed at base height) */}
-            <div 
-              style={{ height: `${dims.base}px` }} 
-              className="absolute top-0 left-0 w-full z-0 overflow-hidden pointer-events-none"
-            >
-              <img 
-                src={srv.primaryImage} 
-                alt={srv.title} 
-                style={{ objectPosition: srv.imagePosition || 'center' }}
-                className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-60" />
-            </div>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start relative">
+          {/* Left Column: Large Image with Bottom-Left Inverted Corner Cutout Notch (Sticky on scroll) */}
+          <div className="lg:col-span-7 lg:sticky lg:top-24 self-start w-full order-2 lg:order-1">
+            <div className="relative w-full h-[520px] sm:h-[560px] lg:h-[580px] xl:h-[600px] rounded-[32px] sm:rounded-[38px] rounded-bl-none overflow-hidden bg-black/5 shadow-xl flex flex-col justify-end group">
+              {/* Architectural Showcase Image */}
+              <div className="absolute inset-0 w-full h-full z-0 overflow-hidden pointer-events-none">
+                <img 
+                  src={srv.primaryImage} 
+                  alt={srv.title} 
+                  style={{ objectPosition: srv.imagePosition || 'center' }}
+                  className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-60" />
+              </div>
 
-            {/* Bottom-Left Cutout Notch (Sitting flush at bottom-left, glides upwards over image as card shrinks) */}
-            <div className="relative z-10 flex items-end justify-start pointer-events-auto">
-              <div className="bg-[#f5f2f2] pt-3 sm:pt-4 pr-3.5 sm:pr-4 pb-0 pl-0 rounded-tr-[28px] sm:rounded-tr-[32px] relative">
-                {/* Top Concave Fillet Curve */}
-                <div className="absolute -top-[20px] left-0 w-5 h-5 pointer-events-none">
-                  <svg viewBox="0 0 20 20" fill="none" className="w-5 h-5 block">
-                    <path d="M0 20L0 0C0 11.0457 8.9543 20 20 20L0 20Z" fill="#f5f2f2" />
-                  </svg>
-                </div>
+              {/* Bottom-Left Cutout Notch */}
+              <div className="relative z-10 flex items-end justify-start pointer-events-auto">
+                <div className="bg-[#f5f2f2] pt-3 sm:pt-4 pr-3.5 sm:pr-4 pb-0 pl-0 rounded-tr-[28px] sm:rounded-tr-[32px] relative">
+                  {/* Top Concave Fillet Curve */}
+                  <div className="absolute -top-[20px] left-0 w-5 h-5 pointer-events-none">
+                    <svg viewBox="0 0 20 20" fill="none" className="w-5 h-5 block">
+                      <path d="M0 20L0 0C0 11.0457 8.9543 20 20 20L0 20Z" fill="#f5f2f2" />
+                    </svg>
+                  </div>
 
-                {/* Right Concave Fillet Curve */}
-                <div className="absolute bottom-0 -right-[20px] w-5 h-5 pointer-events-none">
-                  <svg viewBox="0 0 20 20" fill="none" className="w-5 h-5 block">
-                    <path d="M0 20H20C8.9543 20 0 11.0457 0 0V20Z" fill="#f5f2f2" />
-                  </svg>
-                </div>
+                  {/* Right Concave Fillet Curve */}
+                  <div className="absolute bottom-0 -right-[20px] w-5 h-5 pointer-events-none">
+                    <svg viewBox="0 0 20 20" fill="none" className="w-5 h-5 block">
+                      <path d="M0 20H20C8.9543 20 0 11.0457 0 0V20Z" fill="#f5f2f2" />
+                    </svg>
+                  </div>
 
-                {/* Dark Charcoal Card */}
-                <div className="bg-[#1c1d21] text-white p-5 sm:p-7 md:p-8 rounded-[20px] sm:rounded-[24px] max-w-[280px] sm:max-w-sm md:max-w-md shadow-2xl border border-white/5">
-                  <h4 className="font-sans text-xl sm:text-2xl font-semibold text-white tracking-tight mb-2.5">
-                    {srv.notchTitle}
-                  </h4>
-                  <p className="font-sans text-xs sm:text-[13.5px] text-[#d0d1db]/90 font-light leading-relaxed">
-                    {srv.notchDescription}
-                  </p>
+                  {/* Dark Charcoal Card */}
+                  <div className="bg-[#1c1d21] text-white p-5 sm:p-7 md:p-8 rounded-[20px] sm:rounded-[24px] max-w-[280px] sm:max-w-sm md:max-w-md shadow-2xl border border-white/5">
+                    <h4 className="font-sans text-xl sm:text-2xl font-semibold text-white tracking-tight mb-2.5">
+                      {srv.notchTitle}
+                    </h4>
+                    <p className="font-sans text-xs sm:text-[13.5px] text-[#d0d1db]/90 font-light leading-relaxed">
+                      {srv.notchDescription}
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
-          </motion.div>
+          </div>
 
-          {/* Right Column: Headline, Secondary Image, Sub-feature & CTA */}
-          <motion.div 
-            initial={{ opacity: 0, y: 35 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-60px' }}
-            transition={{ duration: 0.75, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:col-span-5 flex flex-col justify-between pt-2 pb-0 order-1 lg:order-2"
-          >
+          {/* Right Column: Headline, Secondary Image, Sub-feature & CTA (Scrolls naturally) */}
+          <div className="lg:col-span-5 flex flex-col justify-start pt-2 pb-6 order-1 lg:order-2 space-y-10 sm:space-y-12 lg:space-y-14 lg:min-h-[880px]">
             {/* Top Headline Block */}
             <div>
               <h2 
@@ -493,7 +441,7 @@ const ServiceSectionRow = ({ srv, rawService, isTypeA, setSelectedServiceModal }
             {srv.secondaryImage && (
               <div 
                 onClick={() => setSelectedServiceModal(rawService)}
-                className="rounded-[22px] sm:rounded-[28px] overflow-hidden aspect-[16/9] w-full my-6 sm:my-8 shadow-md border border-black/5 group cursor-pointer bg-black/5"
+                className="rounded-[22px] sm:rounded-[28px] overflow-hidden aspect-[16/9] w-full shadow-md border border-black/5 group cursor-pointer bg-black/5"
               >
                 <img 
                   src={srv.secondaryImage} 
@@ -504,7 +452,7 @@ const ServiceSectionRow = ({ srv, rawService, isTypeA, setSelectedServiceModal }
             )}
 
             {/* Bottom Feature Block & CTA Button */}
-            <div className="space-y-4">
+            <div className="space-y-4 pt-2">
               <h4 className="font-sans text-2xl sm:text-3xl text-[#101014] font-medium tracking-tight">
                 {srv.subTitle}
               </h4>
@@ -533,7 +481,7 @@ const ServiceSectionRow = ({ srv, rawService, isTypeA, setSelectedServiceModal }
                 </button>
               </div>
             </div>
-          </motion.div>
+          </div>
 
         </div>
       )}
