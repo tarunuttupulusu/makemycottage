@@ -56,6 +56,16 @@ const VALUES_DATA = [
   },
 ];
 
+// Progressive Construction Evolution across the 6 Timeline Milestones
+const STAGE_IMAGES = [
+  '/cottage-stage-1.png', // 01: Basement Foundation Slab
+  '/cottage-stage-2.png', // 02: Timber Post & Beam Skeleton
+  '/cottage-stage-3.png', // 03: Walls, Siding & Verandah Deck
+  '/cottage-stage-4.png', // 04: Roof Rafters & Window Framing
+  '/cottage-stage-5.png', // 05: Completed Exterior Shell
+  '/wooden-cottage.png',   // 06: Fully Finished Master Villa
+];
+
 const ScrollTimeline = () => {
   const containerRef = useRef(null);
   const spineRef = useRef(null);
@@ -253,7 +263,7 @@ const ScrollTimeline = () => {
       </div>
 
       {/* =========================================================================
-          2. ANIMATED TIMBER LORRY (ON TOP OF WOOD & MILESTONES - z-40)
+          2. STRAIGHT 3D TIMBER DELIVERY VEHICLE (VERTICAL ALIGNMENT WITH LOW LIGHTS)
       ========================================================================= */}
       <div
         ref={lorrySpineRef}
@@ -264,46 +274,22 @@ const ScrollTimeline = () => {
           className="timeline-lorry is-idle"
           aria-label="MakeMyCottage Timber Delivery Truck"
         >
-          {/* Dual Headlight Light Cone Beams projecting down the track */}
-          <div className="lorry-headlight-beams">
-            <div className="headlight-beam beam-left" />
-            <div className="headlight-beam beam-right" />
-          </div>
-
-          {/* Micro Exhaust Smoke Puffs */}
-          <div className="lorry-exhaust-wrap">
-            <span className="exhaust-puff puff-1" />
-            <span className="exhaust-puff puff-2" />
-            <span className="exhaust-puff puff-3" />
-          </div>
-
-          {/* Lorry Body with dynamic steering rotation */}
+          {/* Straight Lorry Body with clean suspension rumble */}
           <div ref={lorryInnerRef} className="lorry-body">
-            {/* Lorry Graphic */}
             <img
-              src="/lorry-cropped.png"
-              alt="MakeMyCottage Delivery Truck"
+              src="/lorry-theme-matched.png"
+              alt="MakeMyCottage Timber Delivery Truck"
               className="lorry-image"
               draggable={false}
             />
-
-            {/* Headlight Flares on Front Bumper */}
-            <div className="lorry-front-flares">
-              <span className="front-flare flare-left" />
-              <span className="front-flare flare-right" />
-            </div>
-
-            {/* Tail Light Flares at Rear Bed */}
-            <div className="lorry-rear-flares">
-              <span className="tail-flare flare-left" />
-              <span className="tail-flare flare-right" />
-            </div>
           </div>
 
-          {/* Ground shadow & road underglow */}
+          {/* Ground shadow & ambient contact */}
           <div className="lorry-ground-shadow" />
         </div>
       </div>
+
+
 
       {/* =========================================================================
           TIMELINE MILESTONES 01 TO 06 (z-20 IN FRONT OF SPINE LINE)
@@ -326,23 +312,7 @@ const ScrollTimeline = () => {
                   {/* Subtle target base landing marker */}
                   <div className="wood-base-marker" />
 
-                  {/* 1. Delivered fallen timber logs (animates dropping into place when lorry nears) */}
-                  <div className="fallen-wood-wrap">
-                    <img
-                      src="/wood-logs.png"
-                      alt={`Delivered timber wood ${item.num}`}
-                      className="fallen-wood-img"
-                      draggable={false}
-                    />
-                    {/* Shockwave impact ripple on landing */}
-                    <span className="wood-impact-ripple" />
-                    {/* Wood dust chips */}
-                    <span className="wood-chip chip-1" />
-                    <span className="wood-chip chip-2" />
-                    <span className="wood-chip chip-3" />
-                  </div>
-
-                  {/* 2. Magical Transformation into Wooden Cottage */}
+                  {/* 1. Modern Luxury Wooden Villa Cottage */}
                   <div className="transformed-cottage-wrap">
                     {/* Magical sawdust & golden construction spark burst */}
                     <span className="transform-burst" />
@@ -351,19 +321,21 @@ const ScrollTimeline = () => {
                     <span className="transform-spark spark-3" />
                     <span className="transform-spark spark-4" />
 
-                    {/* Wooden Cottage Miniature */}
+                    {/* Progressive Construction Miniature per Milestone */}
                     <div className="cottage-model-inner">
                       <img
-                        src="/wooden-cottage.png"
-                        alt={`MakeMyCottage Crafted Wooden Cottage ${item.num}`}
+                        src={STAGE_IMAGES[idx] || '/wooden-cottage.png'}
+                        alt={`MakeMyCottage Construction Stage ${item.num} - ${item.title}`}
                         className="cottage-img"
                         draggable={false}
                       />
-                      {/* Chimney Smoke Puffs */}
-                      <div className="cottage-chimney-smoke">
-                        <span className="chimney-puff cp-1" />
-                        <span className="chimney-puff cp-2" />
-                      </div>
+                      {/* Chimney Smoke Puffs - only on the fully completed final villa */}
+                      {idx === VALUES_DATA.length - 1 && (
+                        <div className="cottage-chimney-smoke">
+                          <span className="chimney-puff cp-1" />
+                          <span className="chimney-puff cp-2" />
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>

@@ -2,15 +2,17 @@ import React, { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 
 const DEFAULT_SLIDER_IMAGES = [
-  'https://framerusercontent.com/images/5e2PRqfiR0GkpyCY3atvlPSeQ.jpg',
-  'https://framerusercontent.com/images/MYmdhDGEe2D4fRHyWEaBmO1tms.jpg',
-  'https://framerusercontent.com/images/g08gQShcLnWaRDc7aCIRYsWxo.jpg',
-  'https://framerusercontent.com/images/RAjSlrNzr4UegdX8R3PMn3IlgX0.jpg',
-  'https://framerusercontent.com/images/hljBRUPFdB1QAjBLOT2qb9hbsAI.jpg',
-  'https://framerusercontent.com/images/gbfrMQ8OuM7DaGaIoR5quFax5Gk.jpg',
-  'https://framerusercontent.com/images/km6CGX5VeLEEoW39ZIcGbhw8nfA.jpg',
-  'https://framerusercontent.com/images/MYmdhDGEe2D4fRHyWEaBmO1tms.jpg',
+  '/images/slider/slide-1.jpg',
+  '/images/slider/slide-2.jpg',
+  '/images/slider/slide-3.jpg',
+  '/images/slider/slide-4.jpg',
+  '/images/slider/slide-5.jpg',
+  '/images/slider/slide-6.jpg',
+  '/images/slider/slide-7.jpg',
+  '/images/slider/slide-8.jpg',
+  '/images/slider/slide-9.jpg',
 ];
+
 
 const CurvedSlider = ({ images = DEFAULT_SLIDER_IMAGES }) => {
   const containerRef = useRef(null);
