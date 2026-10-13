@@ -312,33 +312,40 @@ export const InstagramCurvedSection = () => {
     renderer.setSize(width, height);
     renderer.setClearColor(0x000000, 0);
 
-    // 4. Video Loader for Zero-Involvement Automatic Playback
+    // 4. Video Loader for Ultra-Smooth Automatic Playback
     const videoElements = [];
     const textures = CURVED_MEDIA_ITEMS.map((item) => {
       const video = document.createElement('video');
       video.src = item.videoUrl;
       video.crossOrigin = 'anonymous';
+      video.preload = 'auto';
       video.loop = true;
       video.muted = true;
+      video.defaultMuted = true;
       video.playsInline = true;
       video.setAttribute('playsinline', '');
       video.setAttribute('webkit-playsinline', '');
       video.setAttribute('muted', '');
       video.autoplay = true;
 
-      // Autoplay immediately without any involvement
-      const playPromise = video.play();
-      if (playPromise !== undefined) {
-        playPromise.catch(() => {
-          // Fallback if browser suspended media prior to initial gesture
-          const startPlayback = () => {
-            video.play().catch(() => {});
-          };
-          window.addEventListener('scroll', startPlayback, { once: true, passive: true });
-          window.addEventListener('touchstart', startPlayback, { once: true, passive: true });
-          window.addEventListener('click', startPlayback, { once: true, passive: true });
-        });
-      }
+      // Autoplay smoothly
+      const startPlay = () => {
+        if (video.paused) {
+          video.play().catch(() => {});
+        }
+      };
+
+      video.addEventListener('canplay', startPlay, { once: true });
+      video.addEventListener('canplaythrough', startPlay, { once: true });
+      startPlay();
+
+      // Fallback in case browser pauses before first user interaction
+      const resumeOnGesture = () => {
+        startPlay();
+      };
+      window.addEventListener('scroll', resumeOnGesture, { once: true, passive: true });
+      window.addEventListener('touchstart', resumeOnGesture, { once: true, passive: true });
+      window.addEventListener('click', resumeOnGesture, { once: true, passive: true });
 
       videoElements.push(video);
 
@@ -568,13 +575,6 @@ export const InstagramCurvedSection = () => {
     const animate = () => {
       animId = requestAnimationFrame(animate);
 
-      // Keep all video textures updating on every frame
-      for (let i = 0; i < textures.length; i++) {
-        if (textures[i] && videoElements[i] && videoElements[i].readyState >= 2) {
-          textures[i].needsUpdate = true;
-        }
-      }
-
       if (autoSlide.enabled && !mouse.isDown) {
         if (autoSlide.isPaused) {
           if (Date.now() - autoSlide.pauseStartTime >= autoSlide.pauseTime) {
@@ -594,6 +594,8 @@ export const InstagramCurvedSection = () => {
 
       currentX += (targetX - currentX) * ease;
 
+      // Track active meshes in viewport for prioritized 60fps video playback
+      const activeReels = new Set();
       for (let i = 0; i < meshes.length; i++) {
         const offset = i - centerIndex + currentX;
         const angle = offset * angleStep;
@@ -603,6 +605,7 @@ export const InstagramCurvedSection = () => {
           continue;
         } else {
           meshes[i].visible = true;
+          activeReels.add(meshes[i].userData.reelIndex);
         }
 
         meshes[i].position.x = radius * Math.sin(angle);
@@ -610,6 +613,23 @@ export const InstagramCurvedSection = () => {
         meshes[i].position.y = 0.05;
 
         meshes[i].lookAt(camera.position.x, meshes[i].position.y, camera.position.z);
+      }
+
+      // Smoothly update visible video textures & pause off-screen videos
+      for (let i = 0; i < videoElements.length; i++) {
+        const video = videoElements[i];
+        if (activeReels.has(i)) {
+          if (video.paused) {
+            video.play().catch(() => {});
+          }
+          if (textures[i] && video.readyState >= 2) {
+            textures[i].needsUpdate = true;
+          }
+        } else {
+          if (!video.paused) {
+            video.pause();
+          }
+        }
       }
 
       renderer.render(scene, camera);
