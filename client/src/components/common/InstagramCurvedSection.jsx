@@ -5,7 +5,7 @@ import { HiArrowNarrowRight, HiX, HiExternalLink, HiChevronLeft, HiChevronRight 
 import { FaInstagram, FaYoutube } from 'react-icons/fa';
 import { BUSINESS_INFO } from '../../utils/constants';
 
-// 14 Alternating Media Items matching user's exact provided links (7 Instagram Reels & 7 YouTube Videos)
+// 14 Alternating Media Items: Instagram Reels & YouTube Videos
 export const CURVED_MEDIA_ITEMS = [
   // 1. Instagram Reel
   {
@@ -34,7 +34,7 @@ export const CURVED_MEDIA_ITEMS = [
     location: 'Film Nagar, Hyderabad',
     videoId: 'tdq5MfOGj1k',
     url: 'https://youtu.be/tdq5MfOGj1k',
-    embedUrl: 'https://www.youtube.com/embed/tdq5MfOGj1k?autoplay=1&mute=1&controls=1&rel=0&playsinline=1&modestbranding=1',
+    embedUrl: 'https://www.youtube.com/embed/tdq5MfOGj1k?autoplay=1&mute=0&controls=1&rel=0&playsinline=1',
     poster: '/reels/yt-1.jpg',
   },
   // 3. Instagram Reel
@@ -64,7 +64,7 @@ export const CURVED_MEDIA_ITEMS = [
     location: 'Hyderabad, Telangana',
     videoId: 'EPC0g2MIZBA',
     url: 'https://youtube.com/shorts/EPC0g2MIZBA',
-    embedUrl: 'https://www.youtube.com/embed/EPC0g2MIZBA?autoplay=1&mute=1&controls=1&rel=0&playsinline=1&modestbranding=1',
+    embedUrl: 'https://www.youtube.com/embed/EPC0g2MIZBA?autoplay=1&mute=0&controls=1&rel=0&playsinline=1',
     poster: '/reels/yt-2.jpg',
   },
   // 5. Instagram Reel
@@ -94,7 +94,7 @@ export const CURVED_MEDIA_ITEMS = [
     location: 'Chettinad & English Style Cottage',
     videoId: 'ajJKAf4a4w0',
     url: 'https://youtu.be/ajJKAf4a4w0',
-    embedUrl: 'https://www.youtube.com/embed/ajJKAf4a4w0?autoplay=1&mute=1&controls=1&rel=0&playsinline=1&modestbranding=1',
+    embedUrl: 'https://www.youtube.com/embed/ajJKAf4a4w0?autoplay=1&mute=0&controls=1&rel=0&playsinline=1',
     poster: '/reels/yt-3.jpg',
   },
   // 7. Instagram Reel
@@ -124,7 +124,7 @@ export const CURVED_MEDIA_ITEMS = [
     location: 'Hyderabad, Telangana',
     videoId: 'a0EGCiFeeKM',
     url: 'https://youtube.com/shorts/a0EGCiFeeKM',
-    embedUrl: 'https://www.youtube.com/embed/a0EGCiFeeKM?autoplay=1&mute=1&controls=1&rel=0&playsinline=1&modestbranding=1',
+    embedUrl: 'https://www.youtube.com/embed/a0EGCiFeeKM?autoplay=1&mute=0&controls=1&rel=0&playsinline=1',
     poster: '/reels/yt-4.jpg',
   },
   // 9. Instagram Reel
@@ -154,7 +154,7 @@ export const CURVED_MEDIA_ITEMS = [
     location: 'Manduva Courtyard Cottage',
     videoId: 'feLxcihSFJQ',
     url: 'https://youtu.be/feLxcihSFJQ',
-    embedUrl: 'https://www.youtube.com/embed/feLxcihSFJQ?autoplay=1&mute=1&controls=1&rel=0&playsinline=1&modestbranding=1',
+    embedUrl: 'https://www.youtube.com/embed/feLxcihSFJQ?autoplay=1&mute=0&controls=1&rel=0&playsinline=1',
     poster: '/reels/yt-5.jpg',
   },
   // 11. Instagram Reel
@@ -184,7 +184,7 @@ export const CURVED_MEDIA_ITEMS = [
     location: 'Heritage Wooden Villa',
     videoId: 'Oc3QARdxQqw',
     url: 'https://youtu.be/Oc3QARdxQqw',
-    embedUrl: 'https://www.youtube.com/embed/Oc3QARdxQqw?autoplay=1&mute=1&controls=1&rel=0&playsinline=1&modestbranding=1',
+    embedUrl: 'https://www.youtube.com/embed/Oc3QARdxQqw?autoplay=1&mute=0&controls=1&rel=0&playsinline=1',
     poster: '/reels/yt-6.jpg',
   },
   // 13. Instagram Reel
@@ -214,7 +214,7 @@ export const CURVED_MEDIA_ITEMS = [
     location: 'Hyderabad Experience Center',
     videoId: 'gdebWSU3Mi0',
     url: 'https://youtu.be/gdebWSU3Mi0',
-    embedUrl: 'https://www.youtube.com/embed/gdebWSU3Mi0?autoplay=1&mute=1&controls=1&rel=0&playsinline=1&modestbranding=1',
+    embedUrl: 'https://www.youtube.com/embed/gdebWSU3Mi0?autoplay=1&mute=0&controls=1&rel=0&playsinline=1',
     poster: '/reels/yt-7.jpg',
   },
 ];
@@ -284,7 +284,7 @@ export const InstagramCurvedSection = () => {
     renderer.setSize(width, height);
     renderer.setClearColor(0x000000, 0);
 
-    // 4. Texture Loader with Canvas Compositing (Bespoke Badges & Crisp Covers from user's links)
+    // 4. Texture Loader with Canvas Compositing (Bespoke Platform Badges & Crisp Posters)
     const textures = CURVED_MEDIA_ITEMS.map((item) => {
       const offCanvas = document.createElement('canvas');
       offCanvas.width = 640;
@@ -303,7 +303,6 @@ export const InstagramCurvedSection = () => {
       img.crossOrigin = 'anonymous';
       img.src = item.poster;
       img.onload = () => {
-        // Draw exact poster from user's video link
         const imgRatio = img.width / img.height;
         const canvasRatio = offCanvas.width / offCanvas.height;
         let sWidth, sHeight, sx, sy;
@@ -789,7 +788,7 @@ export const InstagramCurvedSection = () => {
         </div>
       </div>
 
-      {/* 3. Cinema Video / Reel Player Modal with Autoplay Without Music */}
+      {/* 3. Cinema Video / Reel Player Modal with Autoplay */}
       <AnimatePresence>
         {selectedMedia && (
           <motion.div
@@ -836,7 +835,7 @@ export const InstagramCurvedSection = () => {
                 <HiChevronRight className="w-6 h-6" />
               </button>
 
-              {/* Player Media Container - Plays user's actual video with autoplay without music (muted) */}
+              {/* Player Media Container with Autoplay */}
               <div
                 className={`relative w-full bg-black flex items-center justify-center overflow-hidden ${
                   selectedMedia.type === 'short' || selectedMedia.platform === 'instagram'
@@ -847,7 +846,7 @@ export const InstagramCurvedSection = () => {
                 {selectedMedia.platform === 'youtube' ? (
                   <iframe
                     key={selectedMedia.videoId}
-                    src={`https://www.youtube.com/embed/${selectedMedia.videoId}?autoplay=1&mute=1&controls=1&rel=0&playsinline=1&modestbranding=1`}
+                    src={`https://www.youtube.com/embed/${selectedMedia.videoId}?autoplay=1&mute=0&controls=1&rel=0&playsinline=1&modestbranding=1`}
                     title={selectedMedia.title}
                     className="w-full h-full border-0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
