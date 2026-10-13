@@ -48,14 +48,12 @@ const Navbar = () => {
 
   const isHomePage = location.pathname === '/';
   const isGalleryPage = location.pathname === '/gallery';
-  // Over the top hero image on Home, Gallery, and Projects, use transparent navbar with white items.
+  const isServicesPage = location.pathname === '/services';
+  const isProjectsHeroPage = location.pathname === '/projects' || location.pathname.startsWith('/projects/');
+  // Over the top hero image on Home, Gallery, Services, and Projects, use transparent navbar with white items.
   // When scrolling down, it smoothly transitions to the white background with black text.
-  const isDarkHeroPage = isHomePage || isGalleryPage || isProjectsHeroPage;
+  const isDarkHeroPage = isHomePage || isGalleryPage || isServicesPage || isProjectsHeroPage;
   const isDarkTheme = isDarkHeroPage && !isScrolled;
-
-  if (location.pathname === '/services') {
-    return null;
-  }
 
   return (
     <>
