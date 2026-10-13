@@ -18,7 +18,7 @@ const GalleryHeroImage = ({
         duration: 1.3,
         ease: [0.16, 1, 0.3, 1],
       }}
-      className={`absolute inset-0 w-full h-full rounded-t-[28px] sm:rounded-t-[32px] rounded-br-[28px] sm:rounded-br-[32px] rounded-bl-none overflow-hidden bg-[#1c1d21] shadow-lg pointer-events-none ${className}`}
+      className={`absolute inset-0 w-full h-full overflow-hidden bg-[#1c1d21] pointer-events-none ${className}`}
     >
       <motion.img
         initial={{ scale: 1.25 }}

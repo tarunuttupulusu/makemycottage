@@ -1,4 +1,4 @@
-import React from 'react';
+import { motion } from 'framer-motion';
 
 /**
  * OurProjectsCard Component
@@ -30,12 +30,21 @@ const OurProjectsCard = ({
           </svg>
         </div>
 
-        {/* The Dark Pill Badge with Clean Sans-Serif Title Case */}
-        <div className="bg-[#28282c] text-white px-8 sm:px-12 py-4 sm:py-5 rounded-[20px] sm:rounded-[24px] flex items-center shadow-sm">
+        {/* The Dark Pill Badge with Clean Sans-Serif Title Case & Smooth Fade Animation */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{
+            duration: 0.85,
+            delay: 0.25,
+            ease: [0.16, 1, 0.3, 1],
+          }}
+          className="bg-[#28282c] text-white px-8 sm:px-12 py-4 sm:py-5 rounded-[20px] sm:rounded-[24px] flex items-center shadow-sm"
+        >
           <h1 className="font-sans text-3xl sm:text-5xl md:text-[54px] font-normal tracking-tight text-white leading-none">
             {title}
           </h1>
-        </div>
+        </motion.div>
       </div>
     </div>
   );
