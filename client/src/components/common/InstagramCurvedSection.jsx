@@ -5,6 +5,14 @@ import { HiArrowNarrowRight, HiX, HiExternalLink, HiChevronLeft, HiChevronRight 
 import { FaInstagram, FaYoutube } from 'react-icons/fa';
 import { BUSINESS_INFO } from '../../utils/constants';
 
+// Fast, responsive, royalty-free video loops that autoplay muted (without music) on the 3D cards
+const VIDEO_LOOPS = [
+  '/videos/hero.mp4',
+  '/medias/nature.mp4',
+  'https://vjs.zencdn.net/v/oceans.mp4',
+  'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4',
+];
+
 // 14 Alternating Media Items: Instagram Reels & YouTube Videos
 export const CURVED_MEDIA_ITEMS = [
   // 1. Instagram Reel
@@ -34,7 +42,7 @@ export const CURVED_MEDIA_ITEMS = [
     location: 'Film Nagar, Hyderabad',
     videoId: 'tdq5MfOGj1k',
     url: 'https://youtu.be/tdq5MfOGj1k',
-    embedUrl: 'https://www.youtube.com/embed/tdq5MfOGj1k?autoplay=1&mute=0&controls=1&rel=0&playsinline=1',
+    embedUrl: 'https://www.youtube.com/embed/tdq5MfOGj1k?autoplay=1&mute=1&controls=1&rel=0&playsinline=1&modestbranding=1',
     poster: '/reels/yt-1.jpg',
   },
   // 3. Instagram Reel
@@ -64,7 +72,7 @@ export const CURVED_MEDIA_ITEMS = [
     location: 'Hyderabad, Telangana',
     videoId: 'EPC0g2MIZBA',
     url: 'https://youtube.com/shorts/EPC0g2MIZBA',
-    embedUrl: 'https://www.youtube.com/embed/EPC0g2MIZBA?autoplay=1&mute=0&controls=1&rel=0&playsinline=1',
+    embedUrl: 'https://www.youtube.com/embed/EPC0g2MIZBA?autoplay=1&mute=1&controls=1&rel=0&playsinline=1&modestbranding=1',
     poster: '/reels/yt-2.jpg',
   },
   // 5. Instagram Reel
@@ -94,7 +102,7 @@ export const CURVED_MEDIA_ITEMS = [
     location: 'Chettinad & English Style Cottage',
     videoId: 'ajJKAf4a4w0',
     url: 'https://youtu.be/ajJKAf4a4w0',
-    embedUrl: 'https://www.youtube.com/embed/ajJKAf4a4w0?autoplay=1&mute=0&controls=1&rel=0&playsinline=1',
+    embedUrl: 'https://www.youtube.com/embed/ajJKAf4a4w0?autoplay=1&mute=1&controls=1&rel=0&playsinline=1&modestbranding=1',
     poster: '/reels/yt-3.jpg',
   },
   // 7. Instagram Reel
@@ -124,7 +132,7 @@ export const CURVED_MEDIA_ITEMS = [
     location: 'Hyderabad, Telangana',
     videoId: 'a0EGCiFeeKM',
     url: 'https://youtube.com/shorts/a0EGCiFeeKM',
-    embedUrl: 'https://www.youtube.com/embed/a0EGCiFeeKM?autoplay=1&mute=0&controls=1&rel=0&playsinline=1',
+    embedUrl: 'https://www.youtube.com/embed/a0EGCiFeeKM?autoplay=1&mute=1&controls=1&rel=0&playsinline=1&modestbranding=1',
     poster: '/reels/yt-4.jpg',
   },
   // 9. Instagram Reel
@@ -154,7 +162,7 @@ export const CURVED_MEDIA_ITEMS = [
     location: 'Manduva Courtyard Cottage',
     videoId: 'feLxcihSFJQ',
     url: 'https://youtu.be/feLxcihSFJQ',
-    embedUrl: 'https://www.youtube.com/embed/feLxcihSFJQ?autoplay=1&mute=0&controls=1&rel=0&playsinline=1',
+    embedUrl: 'https://www.youtube.com/embed/feLxcihSFJQ?autoplay=1&mute=1&controls=1&rel=0&playsinline=1&modestbranding=1',
     poster: '/reels/yt-5.jpg',
   },
   // 11. Instagram Reel
@@ -184,7 +192,7 @@ export const CURVED_MEDIA_ITEMS = [
     location: 'Heritage Wooden Villa',
     videoId: 'Oc3QARdxQqw',
     url: 'https://youtu.be/Oc3QARdxQqw',
-    embedUrl: 'https://www.youtube.com/embed/Oc3QARdxQqw?autoplay=1&mute=0&controls=1&rel=0&playsinline=1',
+    embedUrl: 'https://www.youtube.com/embed/Oc3QARdxQqw?autoplay=1&mute=1&controls=1&rel=0&playsinline=1&modestbranding=1',
     poster: '/reels/yt-6.jpg',
   },
   // 13. Instagram Reel
@@ -214,7 +222,7 @@ export const CURVED_MEDIA_ITEMS = [
     location: 'Hyderabad Experience Center',
     videoId: 'gdebWSU3Mi0',
     url: 'https://youtu.be/gdebWSU3Mi0',
-    embedUrl: 'https://www.youtube.com/embed/gdebWSU3Mi0?autoplay=1&mute=0&controls=1&rel=0&playsinline=1',
+    embedUrl: 'https://www.youtube.com/embed/gdebWSU3Mi0?autoplay=1&mute=1&controls=1&rel=0&playsinline=1&modestbranding=1',
     poster: '/reels/yt-7.jpg',
   },
 ];
@@ -284,177 +292,28 @@ export const InstagramCurvedSection = () => {
     renderer.setSize(width, height);
     renderer.setClearColor(0x000000, 0);
 
-    // 4. Texture Loader with Canvas Compositing (Bespoke Platform Badges & Crisp Posters)
-    const textures = CURVED_MEDIA_ITEMS.map((item) => {
-      const offCanvas = document.createElement('canvas');
-      offCanvas.width = 640;
-      offCanvas.height = 910;
-      const ctx = offCanvas.getContext('2d');
+    // 4. Video Loader (Autoplay without music / muted looping on every 3D card)
+    const videoElements = VIDEO_LOOPS.map((src) => {
+      const video = document.createElement('video');
+      video.src = src;
+      video.crossOrigin = 'anonymous';
+      video.loop = true;
+      video.muted = true; // AUTOPLAY WITHOUT MUSIC / MUTED
+      video.playsInline = true;
+      video.setAttribute('playsinline', '');
+      video.setAttribute('webkit-playsinline', '');
+      video.autoplay = true;
+      video.play().catch(() => {});
+      return video;
+    });
 
-      ctx.fillStyle = '#181b20';
-      ctx.fillRect(0, 0, offCanvas.width, offCanvas.height);
-
-      const texture = new THREE.CanvasTexture(offCanvas);
-      texture.minFilter = THREE.LinearFilter;
-      texture.magFilter = THREE.LinearFilter;
-      texture.generateMipmaps = false;
-
-      const img = new Image();
-      img.crossOrigin = 'anonymous';
-      img.src = item.poster;
-      img.onload = () => {
-        const imgRatio = img.width / img.height;
-        const canvasRatio = offCanvas.width / offCanvas.height;
-        let sWidth, sHeight, sx, sy;
-        if (imgRatio > canvasRatio) {
-          sHeight = img.height;
-          sWidth = img.height * canvasRatio;
-          sx = (img.width - sWidth) / 2;
-          sy = 0;
-        } else {
-          sWidth = img.width;
-          sHeight = img.width / canvasRatio;
-          sx = 0;
-          sy = (img.height - sHeight) / 2;
-        }
-        ctx.drawImage(img, sx, sy, sWidth, sHeight, 0, 0, offCanvas.width, offCanvas.height);
-
-        // Top vignette gradient
-        const topGrad = ctx.createLinearGradient(0, 0, 0, 150);
-        topGrad.addColorStop(0, 'rgba(0,0,0,0.72)');
-        topGrad.addColorStop(1, 'rgba(0,0,0,0)');
-        ctx.fillStyle = topGrad;
-        ctx.fillRect(0, 0, offCanvas.width, 150);
-
-        // Bottom cinematic gradient
-        const botGrad = ctx.createLinearGradient(0, offCanvas.height - 270, 0, offCanvas.height);
-        botGrad.addColorStop(0, 'rgba(0,0,0,0)');
-        botGrad.addColorStop(0.5, 'rgba(0,0,0,0.65)');
-        botGrad.addColorStop(1, 'rgba(0,0,0,0.92)');
-        ctx.fillStyle = botGrad;
-        ctx.fillRect(0, offCanvas.height - 270, offCanvas.width, 270);
-
-        // Platform Badge (Top Left)
-        const isInsta = item.platform === 'instagram';
-        const pillX = 28;
-        const pillY = 28;
-        const pillH = 40;
-        const pillText = isInsta ? 'REEL' : (item.type === 'short' ? 'SHORT' : 'YOUTUBE');
-        ctx.font = '700 18px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
-        const textW = ctx.measureText(pillText).width;
-        const pillW = textW + (isInsta ? 64 : 58);
-        const radius = 20;
-
-        ctx.save();
-        ctx.beginPath();
-        if (ctx.roundRect) {
-          ctx.roundRect(pillX, pillY, pillW, pillH, radius);
-        } else {
-          ctx.rect(pillX, pillY, pillW, pillH);
-        }
-        if (isInsta) {
-          const g = ctx.createLinearGradient(pillX, pillY, pillX + pillW, pillY + pillH);
-          g.addColorStop(0, '#f09433');
-          g.addColorStop(0.35, '#e6683c');
-          g.addColorStop(0.7, '#dc2743');
-          g.addColorStop(1, '#bc1888');
-          ctx.fillStyle = g;
-        } else {
-          ctx.fillStyle = '#E62117';
-        }
-        ctx.fill();
-
-        // Icon & text in badge
-        ctx.fillStyle = '#FFFFFF';
-        ctx.textBaseline = 'middle';
-        if (isInsta) {
-          ctx.beginPath();
-          ctx.arc(pillX + 20, pillY + pillH / 2, 6, 0, Math.PI * 2);
-          ctx.fillStyle = '#ffffff';
-          ctx.fill();
-          ctx.beginPath();
-          ctx.arc(pillX + 20, pillY + pillH / 2, 3.5, 0, Math.PI * 2);
-          ctx.fillStyle = '#dc2743';
-          ctx.fill();
-          ctx.fillStyle = '#ffffff';
-          ctx.fillText(pillText, pillX + 36, pillY + pillH / 2 + 1);
-        } else {
-          ctx.beginPath();
-          ctx.moveTo(pillX + 16, pillY + pillH / 2 - 6);
-          ctx.lineTo(pillX + 26, pillY + pillH / 2);
-          ctx.lineTo(pillX + 16, pillY + pillH / 2 + 6);
-          ctx.closePath();
-          ctx.fillStyle = '#ffffff';
-          ctx.fill();
-          ctx.fillText(pillText, pillX + 34, pillY + pillH / 2 + 1);
-        }
-        ctx.restore();
-
-        // Views count (Top Right)
-        if (item.views) {
-          ctx.save();
-          ctx.font = '600 16px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
-          const vw = ctx.measureText(item.views).width;
-          const vPillW = vw + 24;
-          const vPillX = offCanvas.width - 28 - vPillW;
-          ctx.beginPath();
-          if (ctx.roundRect) {
-            ctx.roundRect(vPillX, pillY, vPillW, pillH, radius);
-          } else {
-            ctx.rect(vPillX, pillY, vPillW, pillH);
-          }
-          ctx.fillStyle = 'rgba(0, 0, 0, 0.55)';
-          ctx.fill();
-          ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
-          ctx.textBaseline = 'middle';
-          ctx.fillText(item.views, vPillX + 12, pillY + pillH / 2);
-          ctx.restore();
-        }
-
-        // Center Frosted Play Icon
-        ctx.save();
-        const cx = offCanvas.width / 2;
-        const cy = offCanvas.height / 2;
-        ctx.beginPath();
-        ctx.arc(cx, cy, 46, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(0, 0, 0, 0.42)';
-        ctx.fill();
-        ctx.lineWidth = 2.5;
-        ctx.strokeStyle = 'rgba(255, 255, 255, 0.7)';
-        ctx.stroke();
-
-        ctx.beginPath();
-        ctx.moveTo(cx - 11, cy - 16);
-        ctx.lineTo(cx + 18, cy);
-        ctx.lineTo(cx - 11, cy + 16);
-        ctx.closePath();
-        ctx.fillStyle = '#FFFFFF';
-        ctx.fill();
-        ctx.restore();
-
-        // Bottom Info
-        ctx.save();
-        ctx.font = 'bold 22px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
-        ctx.fillStyle = '#FFFFFF';
-        ctx.textBaseline = 'bottom';
-        let t = item.title;
-        if (ctx.measureText(t).width > offCanvas.width - 56) {
-          while (t.length > 3 && ctx.measureText(t + '...').width > offCanvas.width - 56) {
-            t = t.slice(0, -1);
-          }
-          t += '...';
-        }
-        ctx.fillText(t, 28, offCanvas.height - 48);
-
-        ctx.font = '400 16px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.75)';
-        ctx.fillText(item.location, 28, offCanvas.height - 22);
-        ctx.restore();
-
-        texture.needsUpdate = true;
-      };
-
-      return texture;
+    const textures = CURVED_MEDIA_ITEMS.map((item, idx) => {
+      const video = videoElements[idx % videoElements.length];
+      const tex = new THREE.VideoTexture(video);
+      tex.minFilter = THREE.LinearFilter;
+      tex.magFilter = THREE.LinearFilter;
+      tex.generateMipmaps = false;
+      return tex;
     });
 
     // 5. 3D Cylindrical Geometry
@@ -469,7 +328,7 @@ export const InstagramCurvedSection = () => {
     const numMeshes = 28; // 2 loops of 14 items
     const centerIndex = Math.floor(numMeshes / 2);
 
-    // 6. Shader Material with Card Curvature and Rounded Corners
+    // 6. Shader Material with Live Video Playback, Platform Badges, Frosted Center Play Ring, and Rounded Corners
     const vertexShader = `
       varying vec2 vUv;
       uniform float uRadius;
@@ -491,24 +350,77 @@ export const InstagramCurvedSection = () => {
     const fragmentShader = `
       varying vec2 vUv;
       uniform sampler2D uTexture;
-      uniform float uIsVideo;
+      uniform float uPlatform;
+      uniform float uIsShort;
 
       float roundedBox(vec2 p, vec2 b, float r) {
         vec2 q = abs(p) - b + r;
         return min(max(q.x, q.y), 0.0) + length(max(q, 0.0)) - r;
       }
 
+      float sdTriangle(in vec2 p, in vec2 p0, in vec2 p1, in vec2 p2) {
+        vec2 e0 = p1 - p0, e1 = p2 - p1, e2 = p0 - p2;
+        vec2 v0 = p - p0, v1 = p - p1, v2 = p - p2;
+        vec2 pq0 = v0 - e0 * clamp(dot(v0, e0) / dot(e0, e0), 0.0, 1.0);
+        vec2 pq1 = v1 - e1 * clamp(dot(v1, e1) / dot(e1, e1), 0.0, 1.0);
+        vec2 pq2 = v2 - e2 * clamp(dot(v2, e2) / dot(e2, e2), 0.0, 1.0);
+        float s = sign(e0.x * e2.y - e0.y * e2.x);
+        vec2 d = min(min(vec2(dot(pq0, pq0), s * (v0.x * e0.y - v0.y * e0.x)),
+                         vec2(dot(pq1, pq1), s * (v1.x * e1.y - v1.y * e1.x))),
+                     vec2(dot(pq2, pq2), s * (v2.x * e2.y - v2.y * e2.x)));
+        return -sqrt(d.x) * sign(d.y);
+      }
+
       void main() {
         vec4 color = texture2D(uTexture, vUv);
-        
-        // Correct for plane aspect ratio (1.55 / 2.2 = 0.705)
-        vec2 p = (vUv - 0.5) * vec2(0.705, 1.0) * 2.0;
-        float d = roundedBox(p, vec2(0.705 - 0.075, 1.0 - 0.075), 0.075);
-        if (d > 0.0) discard;
 
-        // Subtle gradient vignette on bottom for reel aesthetic
-        float bottomGrad = smoothstep(0.35, 0.0, vUv.y) * 0.40;
-        color.rgb = mix(color.rgb, color.rgb * 0.4, bottomGrad);
+        // 1. Plane aspect ratio (1.55 / 2.2 = 0.705) rounded border
+        vec2 p = (vUv - 0.5) * vec2(0.705, 1.0) * 2.0;
+        float dBox = roundedBox(p, vec2(0.705 - 0.075, 1.0 - 0.075), 0.075);
+        if (dBox > 0.0) discard;
+
+        // 2. Subtle top shadow & bottom vignette for cinematic depth
+        float topGrad = smoothstep(0.82, 1.0, vUv.y) * 0.45;
+        float bottomGrad = smoothstep(0.38, 0.0, vUv.y) * 0.65;
+        color.rgb = mix(color.rgb, color.rgb * 0.3, max(topGrad, bottomGrad));
+
+        // 3. Top-Left Badge:
+        vec2 pillCenter = vec2(-0.705 + 0.22, 1.0 - 0.12);
+        vec2 pPill = p - pillCenter;
+        float pillW = uIsShort > 0.5 ? 0.16 : 0.18;
+        float dPill = roundedBox(pPill, vec2(pillW, 0.045), 0.045);
+        
+        if (dPill <= 0.0) {
+          vec3 badgeColor;
+          if (uPlatform < 1.5) {
+            float t = clamp((pPill.x + pillW) / (2.0 * pillW), 0.0, 1.0);
+            badgeColor = mix(vec3(0.96, 0.45, 0.15), vec3(0.85, 0.12, 0.55), t);
+          } else {
+            badgeColor = vec3(0.90, 0.13, 0.09);
+          }
+          float badgeAlpha = 1.0 - smoothstep(-0.005, 0.0, dPill);
+          color.rgb = mix(color.rgb, badgeColor, badgeAlpha);
+
+          vec2 iconPos = pPill - vec2(-pillW + 0.045, 0.0);
+          float dIcon = sdTriangle(iconPos, vec2(-0.015, -0.018), vec2(0.020, 0.0), vec2(-0.015, 0.018));
+          if (dIcon <= 0.0) {
+            color.rgb = vec3(1.0, 1.0, 1.0);
+          }
+        }
+
+        // 4. Center Frosted Play Icon
+        vec2 cCenter = vec2(0.0, 0.0);
+        float dCircle = length(p - cCenter) - 0.13;
+        if (dCircle <= 0.0) {
+          color.rgb = mix(color.rgb, vec3(0.0, 0.0, 0.0), 0.38);
+          if (dCircle > -0.012) {
+            color.rgb = mix(color.rgb, vec3(1.0, 1.0, 1.0), 0.85);
+          }
+          float dTri = sdTriangle(p - vec2(0.012, 0.0), vec2(-0.045, -0.055), vec2(0.055, 0.0), vec2(-0.045, 0.055));
+          if (dTri <= 0.0) {
+            color.rgb = vec3(1.0, 1.0, 1.0);
+          }
+        }
 
         gl_FragColor = color;
       }
@@ -518,11 +430,13 @@ export const InstagramCurvedSection = () => {
 
     for (let i = 0; i < numMeshes; i++) {
       const itemIdx = i % CURVED_MEDIA_ITEMS.length;
+      const item = CURVED_MEDIA_ITEMS[itemIdx];
       const material = new THREE.ShaderMaterial({
         uniforms: {
           uTexture: { value: textures[itemIdx] },
           uRadius: { value: radius },
-          uIsVideo: { value: 1.0 },
+          uPlatform: { value: item.platform === 'instagram' ? 1.0 : 2.0 },
+          uIsShort: { value: item.type === 'short' ? 1.0 : 0.0 },
         },
         vertexShader,
         fragmentShader,
@@ -718,6 +632,12 @@ export const InstagramCurvedSection = () => {
       el.removeEventListener('touchmove', onTouchMove);
       el.removeEventListener('touchend', onTouchEnd);
 
+      videoElements.forEach((v) => {
+        v.pause();
+        v.removeAttribute('src');
+        v.load();
+      });
+
       meshes.forEach((m) => {
         m.geometry.dispose();
         if (m.material.uniforms?.uTexture?.value) {
@@ -773,7 +693,7 @@ export const InstagramCurvedSection = () => {
         </div>
       </div>
 
-      {/* 2. Interactive 3D Cylindrical Perspective Carousel Slider (Edge-to-Edge Bleed) */}
+      {/* 2. Interactive 3D Cylindrical Perspective Carousel Slider with Autoplaying Video Loops (Edge-to-Edge Bleed) */}
       <div className="relative w-full overflow-hidden">
         <div 
           ref={containerRef} 
@@ -788,7 +708,7 @@ export const InstagramCurvedSection = () => {
         </div>
       </div>
 
-      {/* 3. Cinema Video / Reel Player Modal with Autoplay */}
+      {/* 3. Cinema Video / Reel Player Modal with Autoplay (Muted / Without Music by Default) */}
       <AnimatePresence>
         {selectedMedia && (
           <motion.div
@@ -835,7 +755,7 @@ export const InstagramCurvedSection = () => {
                 <HiChevronRight className="w-6 h-6" />
               </button>
 
-              {/* Player Media Container with Autoplay */}
+              {/* Player Media Container with Autoplay Without Music */}
               <div
                 className={`relative w-full bg-black flex items-center justify-center overflow-hidden ${
                   selectedMedia.type === 'short' || selectedMedia.platform === 'instagram'
@@ -846,7 +766,7 @@ export const InstagramCurvedSection = () => {
                 {selectedMedia.platform === 'youtube' ? (
                   <iframe
                     key={selectedMedia.videoId}
-                    src={`https://www.youtube.com/embed/${selectedMedia.videoId}?autoplay=1&mute=0&controls=1&rel=0&playsinline=1&modestbranding=1`}
+                    src={`https://www.youtube.com/embed/${selectedMedia.videoId}?autoplay=1&mute=1&controls=1&rel=0&playsinline=1&modestbranding=1`}
                     title={selectedMedia.title}
                     className="w-full h-full border-0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
