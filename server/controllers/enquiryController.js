@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Enquiry = require('../models/Enquiry');
+const { sendToGoogleSheets } = require('../utils/googleSheets');
 
 // In-memory fallback for local development/offline testing
 const memoryEnquiries = [
@@ -77,6 +78,11 @@ exports.getEnquiries = async (req, res, next) => {
 // @access  Public
 exports.createEnquiry = async (req, res, next) => {
   try {
+    // Forward to Google Sheets asynchronously if configured
+    sendToGoogleSheets(req.body).catch(err => {
+      console.warn('[GoogleSheets] Server forward error:', err);
+    });
+
     if (mongoose.connection.readyState === 1) {
       const enquiry = await Enquiry.create(req.body);
       return res.status(201).json({ success: true, data: enquiry });

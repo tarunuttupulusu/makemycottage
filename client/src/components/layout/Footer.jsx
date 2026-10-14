@@ -15,6 +15,8 @@ import {
 } from 'react-icons/fa6';
 
 const Footer = () => {
+  const location = useLocation();
+  const isContactPage = location.pathname === '/contact' || location.pathname.startsWith('/contact');
   const footerRef = useRef(null);
   const location = useLocation();
   const [isGameOpen, setIsGameOpen] = useState(false);
@@ -62,12 +64,13 @@ const Footer = () => {
     return () => observer.disconnect();
   }, [isHomePage]);
 
-  // Also support custom event triggers from buttons elsewhere on the site
+  // Also support custom event triggers from buttons elsewhere on the site (BLOCKED on Contact page)
   useEffect(() => {
+    if (isContactPage) return;
     const handleCustomOpen = () => setIsGameOpen(true);
     window.addEventListener('open-construct-space', handleCustomOpen);
     return () => window.removeEventListener('open-construct-space', handleCustomOpen);
-  }, []);
+  }, [isContactPage]);
 
   const handleRewardClaimed = (code) => {
     navigator.clipboard?.writeText(code);
