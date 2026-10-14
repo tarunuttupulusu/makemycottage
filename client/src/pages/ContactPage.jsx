@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Helmet } from 'react-helmet-async';
 import { Mail, Phone, MapPin, ArrowRight, CheckCircle2, Plus, Minus } from 'lucide-react';
 import api from '../utils/api';
+import { submitToGoogleSheets } from '../utils/googleSheets';
 import { BUSINESS_INFO } from '../utils/constants';
 
 const nextSteps = [
@@ -90,6 +91,8 @@ const ContactPage = () => {
     setStatus('loading');
 
     const payload = {
+      firstName: formData.firstName,
+      lastName: formData.lastName,
       name: `${formData.firstName} ${formData.lastName}`.trim(),
       email: formData.email,
       phone: formData.phone,
@@ -98,6 +101,12 @@ const ContactPage = () => {
     };
 
     try {
+      // 1. Submit directly to Google Sheets (if VITE_GOOGLE_SHEETS_URL is configured)
+      submitToGoogleSheets(payload).catch((sheetErr) => {
+        console.warn('Google Sheets forward error:', sheetErr);
+      });
+
+      // 2. Submit to backend API
       await api.post('/enquiries', payload);
       setStatus('success');
       setFormData({
