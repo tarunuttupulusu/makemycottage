@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { BUSINESS_INFO } from '../../utils/constants';
 import ConstructSpaceModal from '../common/ConstructSpaceModal';
+import TechText from '../common/TechText';
 import {
   FaRegEnvelope,
   FaPhone,
@@ -17,12 +18,23 @@ const Footer = () => {
   const location = useLocation();
   const isContactPage = location.pathname === '/contact' || location.pathname.startsWith('/contact');
   const footerRef = useRef(null);
+  const location = useLocation();
   const [isGameOpen, setIsGameOpen] = useState(false);
   const hasTriggeredRef = useRef(false);
 
-  // Trigger puzzle game EVERY TIME the user reaches the footer section (BLOCKED on Contact page)
+  const isHomePage = location.pathname === '/';
+
+  // Trigger puzzle game ONLY on the home page, and NEVER if already completed
   useEffect(() => {
-    if (isContactPage) return;
+    // 1. Only allow on the Home section
+    if (!isHomePage) return;
+
+    // 2. If already completed in the past, never trigger again
+    try {
+      if (localStorage.getItem('makemycottage_game_completed') === 'true') {
+        return;
+      }
+    } catch (e) {}
 
     const footerEl = footerRef.current;
     if (!footerEl) return;
@@ -30,6 +42,12 @@ const Footer = () => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
+          try {
+            if (localStorage.getItem('makemycottage_game_completed') === 'true') {
+              return;
+            }
+          } catch (e) {}
+
           if (!hasTriggeredRef.current) {
             hasTriggeredRef.current = true;
             // Short 400ms delay so user sees footer before popup animates in
@@ -37,9 +55,6 @@ const Footer = () => {
               setIsGameOpen(true);
             }, 400);
           }
-        } else {
-          // When user scrolls away from footer, reset so next time they reach footer it triggers again!
-          hasTriggeredRef.current = false;
         }
       },
       { threshold: 0.15 }
@@ -47,7 +62,7 @@ const Footer = () => {
 
     observer.observe(footerEl);
     return () => observer.disconnect();
-  }, [isContactPage]);
+  }, [isHomePage]);
 
   // Also support custom event triggers from buttons elsewhere on the site (BLOCKED on Contact page)
   useEffect(() => {
@@ -239,29 +254,46 @@ const Footer = () => {
             </div>
           </div>
         </div>
+      </div>
 
-        {/* Minimal Copyright Divider */}
-        <div className="pt-6 pb-2 border-t border-white/[0.06] flex flex-col sm:flex-row items-center justify-between text-xs text-white/40 gap-2">
+      {/* Giant TechText Interactive Brand Watermark */}
+      <div className="w-full select-none pt-6 sm:pt-8 pb-4 sm:pb-6 px-1 sm:px-3">
+        <div className="w-full h-[85px] sm:h-[120px] md:h-[155px] lg:h-[185px] xl:h-[210px] relative flex items-center justify-center">
+          <TechText
+            text="Make My Cottage"
+            fontWeight={800}
+            fontSize={240}
+            letterSpacing={-0.035}
+            color="#e84416"
+            gradient={['#e84416', '#d43d12', '#992508']}
+            accentColor="#e84416"
+            reveal="letter"
+            dashLength={4}
+            dashGap={2}
+            specks={15}
+            selection={true}
+            labels={true}
+            draggable={true}
+            sweep={true}
+            speed={1}
+          />
+        </div>
+      </div>
+
+      {/* Minimal Copyright Divider (Positioned below the company name) */}
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 md:px-12">
+        <div className="pt-6 pb-2 border-t border-white/[0.08] flex flex-col sm:flex-row items-center justify-between text-xs text-white/50 gap-2">
           <p>&copy; {new Date().getFullYear()} Make My Cottage Infra Pvt. Ltd. All rights reserved.</p>
           <p className="font-light">Shamshabad, Hyderabad &ndash; Wooden Homes &amp; Resort Cottages</p>
         </div>
       </div>
 
-      {/* Giant Bildora-Style Brand Watermark across the Bottom */}
-      <div className="w-full select-none pointer-events-none pt-4 sm:pt-6 pb-6 sm:pb-10 md:pb-14">
-        <h2 className="w-full text-center font-extrabold tracking-[-0.035em] whitespace-nowrap text-[7.5vw] sm:text-[8.5vw] md:text-[9.4vw] lg:text-[10vw] leading-[1.05] bg-gradient-to-b from-[#e84416] via-[#d43d12] to-[#992508] bg-clip-text text-transparent px-1 sm:px-3">
-          Make My Cottage
-        </h2>
-      </div>
-
-      {/* Interactive Construct Your Space Game Modal (Blocked on Contact page) */}
-      {!isContactPage && (
-        <ConstructSpaceModal
-          isOpen={isGameOpen}
-          onClose={() => setIsGameOpen(false)}
-          onRewardClaimed={handleRewardClaimed}
-        />
-      )}
+      {/* Interactive Construct Your Space Game Modal */}
+      <ConstructSpaceModal
+        isOpen={isGameOpen}
+        onClose={() => setIsGameOpen(false)}
+        onRewardClaimed={handleRewardClaimed}
+      />
     </footer>
   );
 };

@@ -157,6 +157,8 @@ const FoldText = ({
       play(true);
     } else {
       play(false);
+      hoverHandler = () => play(false);
+      root.addEventListener('mouseenter', hoverHandler);
     }
 
     return () => {

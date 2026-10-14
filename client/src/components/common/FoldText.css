@@ -4,7 +4,8 @@
   font-size: var(--fold-text-font-size, inherit);
   font-weight: var(--fold-text-font-weight, inherit);
   line-height: inherit;
-  letter-spacing: -0.02em;
+  letter-spacing: inherit;
+  text-align: center;
   white-space: pre-wrap;
   user-select: text;
 }
@@ -22,7 +23,8 @@
 }
 
 .fold-text-visual {
-  display: inline;
+  display: block;
+  text-align: center;
 }
 
 .fold-text-line {
