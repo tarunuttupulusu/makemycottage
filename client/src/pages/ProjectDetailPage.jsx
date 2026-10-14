@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import React, { useEffect, useState } from 'react';
+import { useParams, Link, useNavigate } from 'react-router-dom';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { Helmet } from 'react-helmet-async';
 import { 
   MapPin, 
@@ -14,14 +14,46 @@ import {
   Ruler
 } from 'lucide-react';
 import { PROJECTS_DATA, BUSINESS_INFO } from '../utils/constants';
+import FoldText from '../components/ui/FoldText';
+import SlingButton from '../components/ui/SlingButton';
 
 const ProjectDetailPage = () => {
   const { slug } = useParams();
+  const navigate = useNavigate();
   const project = PROJECTS_DATA.find((p) => p.slug === slug) || PROJECTS_DATA[0];
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [slug]);
+
+  // Responsive hero dimensions: 95% of full screen (viewport height) for base height
+  const getHeroDims = () => {
+    if (typeof window === 'undefined') return { base: 850, shrunk: 360 };
+    const vh = window.innerHeight;
+    const base = Math.round(vh * 0.95);
+    const shrunk = Math.max(300, Math.min(380, Math.round(base * 0.45)));
+    return { base, shrunk };
+  };
+
+  const [heroDims, setHeroDims] = useState(getHeroDims);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setHeroDims(getHeroDims());
+    };
+    window.addEventListener('resize', handleResize, { passive: true });
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const { scrollY } = useScroll();
+  const cardHeight = useTransform(scrollY, (value) => {
+    const distance = heroDims.base - heroDims.shrunk;
+    if (value <= 0) return `${heroDims.base}px`;
+    if (value >= distance) return `${heroDims.shrunk}px`;
+    const progress = value / distance;
+    const h = heroDims.base - progress * (heroDims.base - heroDims.shrunk);
+    return `${h}px`;
+  });
 
   if (!project) {
     return (
@@ -66,75 +98,139 @@ const ProjectDetailPage = () => {
       </Helmet>
 
       {/* =========================================================================
-          1. TOP PROJECT TITLE & HERO COVER SECTION (Resentii Style)
+          1. HERO SECTION (95vw & 95% Width Scale matching Projects Page)
       ========================================================================= */}
-      <section className="relative w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 pt-24 sm:pt-28 pb-8 sm:pb-12">
-        {/* Minimal Navigation Breadcrumb */}
-        <div className="mb-6">
-          <Link
-            to="/projects"
-            className="inline-flex items-center gap-2 text-xs font-sans font-medium text-[#555866] hover:text-[#141517] transition-colors group"
-          >
-            <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
-            <span>Back to Projects</span>
-          </Link>
-        </div>
-
-        {/* Title & Metadata Wrapper */}
-        <div className="max-w-4xl mb-8 sm:mb-10">
-          {/* Category Pill Badge */}
-          <div className="inline-flex items-center mb-4">
-            <span className="px-3.5 py-1.5 rounded-full text-xs font-sans font-medium bg-[#28282c] text-white shadow-sm">
-              {project.category}
-            </span>
-          </div>
-
-          {/* Editorial Project Title Heading */}
-          <h1 className="font-serif text-4xl sm:text-6xl md:text-7xl font-normal text-[#141517] tracking-tight leading-[1.05] mb-5">
-            {project.name}
-          </h1>
-
-          {/* Location & Project Specs Meta Row */}
-          <div className="flex flex-wrap items-center gap-6 text-sm font-sans text-[#555866]">
-            <div className="flex items-center gap-2">
-              <MapPin className="w-4 h-4 text-[#8C6544]" />
-              <span>{project.location}</span>
-            </div>
-            {project.specs?.builtUpArea && (
-              <div className="flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#8C6544]" />
-                <span>{project.specs.builtUpArea}</span>
-              </div>
-            )}
-            {project.specs?.duration && (
-              <div className="flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#8C6544]" />
-                <span>{project.specs.duration} Execution</span>
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* Property Hero Cover Image */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          className="w-full h-[420px] sm:h-[540px] md:h-[620px] rounded-[28px] sm:rounded-[36px] overflow-hidden bg-[#1c1d21] relative shadow-sm"
+      <section className="relative w-[95%] mx-auto pt-3 sm:pt-4 md:pt-5 pb-0">
+        {/* Pinned Hero Track */}
+        <div 
+          className="relative w-full"
+          style={{ height: `${heroDims.base}px` }}
         >
-          <img
-            src={project.heroImage}
-            alt={project.name}
-            className="w-full h-full object-cover"
-            loading="eager"
-          />
-        </motion.div>
+          {/* Shrinking Hero Card (Sticky at top, bottom shrinks upward) */}
+          <motion.div
+            style={{ height: cardHeight }}
+            className="sticky top-3 sm:top-4 md:top-5 w-full rounded-t-[28px] sm:rounded-t-[32px] rounded-br-[28px] sm:rounded-br-[32px] rounded-bl-none overflow-hidden bg-[#1c1d21] flex flex-col justify-end shadow-sm"
+          >
+            {/* Background Architectural Photo (Constant base height so image remains fixed/constant at 95% full-screen) */}
+            <div
+              style={{ height: `${heroDims.base}px` }}
+              className="absolute top-0 left-0 w-full overflow-hidden pointer-events-none"
+            >
+              <motion.div
+                initial={{ scale: 1.08, opacity: 0.9 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+                className="w-full h-full relative"
+              >
+                <img
+                  src={project.heroImage}
+                  alt={project.name}
+                  className="w-full h-full object-cover"
+                  loading="eager"
+                />
+                {/* Multi-Stop Gradient Overlay: Dark at top for transparent navbar mixing, dark at bottom for notch contrast */}
+                <div className="absolute inset-0 bg-gradient-to-b from-black/75 via-black/20 to-black/70 pointer-events-none" />
+              </motion.div>
+            </div>
+
+            {/* Floating Top Elements: Back to Projects Button */}
+            <div className="absolute top-20 sm:top-24 left-6 sm:left-10 z-20 flex items-center">
+              <Link
+                to="/projects"
+                className="inline-flex items-center gap-2.5 px-5 sm:px-6 py-2.5 sm:py-3 rounded-full bg-black/50 backdrop-blur-md border border-white/25 text-white text-sm sm:text-base font-medium hover:bg-white hover:text-black transition-all group shadow-md"
+              >
+                <ArrowLeft className="w-4 h-4 sm:w-4.5 sm:h-4.5 transition-transform group-hover:-translate-x-1.5" />
+                <span>Back to Projects</span>
+              </Link>
+            </div>
+
+            {/* Signature Inverted Notch Button (Sitting at bottom-left, glides upwards over image as card shrinks) */}
+            <div className="relative z-10 flex items-end">
+              <div className="bg-white pt-3.5 sm:pt-4.5 pr-4 sm:pr-5 pb-0 pl-0 rounded-tr-[32px] sm:rounded-tr-[38px] relative w-fit max-w-[95vw]">
+                {/* Top Concave Fillet Curve */}
+                <div className="absolute -top-[20px] left-0 w-5 h-5 pointer-events-none">
+                  <svg viewBox="0 0 20 20" fill="none" className="w-5 h-5 block">
+                    <path d="M0 20L0 0C0 11.0457 8.9543 20 20 20L0 20Z" fill="#ffffff" />
+                  </svg>
+                </div>
+
+                {/* Right Concave Fillet Curve */}
+                <div className="absolute bottom-0 -right-[20px] w-5 h-5 pointer-events-none">
+                  <svg viewBox="0 0 20 20" fill="none" className="w-5 h-5 block">
+                    <path d="M0 20H20C8.9543 20 0 11.0457 0 0V20Z" fill="#ffffff" />
+                  </svg>
+                </div>
+
+                {/* The Dark Pill Badge with Clean Sans-Serif Title - Auto-adjusts to text, all in one row */}
+                <motion.div
+                  initial={{ opacity: 0, x: -20, y: 15 }}
+                  animate={{ opacity: 1, x: 0, y: 0 }}
+                  transition={{ type: 'spring', bounce: 0.25, duration: 0.7, delay: 0.15 }}
+                  className="bg-[#28282c] text-white px-6 sm:px-9 md:px-11 py-4 sm:py-5 md:py-6 min-h-[76px] sm:min-h-[92px] md:min-h-[105px] rounded-[20px] sm:rounded-[26px] flex items-center justify-center shadow-sm w-fit whitespace-nowrap shrink-0"
+                >
+                  <h1 className="font-sans text-2xl sm:text-3xl md:text-4xl lg:text-[46px] font-normal tracking-tight text-white leading-none whitespace-nowrap flex items-center">
+                    <FoldText
+                      key={project.id || project.slug}
+                      text={project.name}
+                      splitBy="char"
+                      hinge="top"
+                      trigger="mount"
+                      duration={0.65}
+                      stagger={0.035}
+                      ease="power3.out"
+                      fontSize="inherit"
+                      fontWeight={400}
+                      color="#ffffff"
+                      className="whitespace-nowrap"
+                      noWrap={true}
+                    />
+                  </h1>
+                </motion.div>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+
+        {/* White Background Wrapper for the Downward Content */}
+        <div className="bg-white pt-8 sm:pt-10 px-2 sm:px-4">
+          {/* Metadata Row: Location, Area, Duration, Contact CTA */}
+          <div className="flex flex-wrap items-center justify-between gap-4 pb-8 mb-6 border-b border-black/[0.08]">
+            <div className="flex flex-wrap items-center gap-6 text-sm font-sans text-[#555866]">
+              {project.location && (
+                <div className="flex items-center gap-2">
+                  <MapPin className="w-4 h-4 text-[#8C6544]" />
+                  <span>{project.location}</span>
+                </div>
+              )}
+              {project.specs?.builtUpArea && (
+                <div className="flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#8C6544]" />
+                  <span>{project.specs.builtUpArea}</span>
+                </div>
+              )}
+              {project.specs?.duration && (
+                <div className="flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#8C6544]" />
+                  <span>{project.specs.duration} Execution</span>
+                </div>
+              )}
+            </div>
+
+            <Link
+              to="/contact"
+              className="inline-flex items-center gap-2 text-xs uppercase tracking-widest font-semibold text-[#8C6544] hover:text-[#6e4e33] transition-colors"
+            >
+              <span>Enquire About This Project</span>
+              <ArrowUpRight className="w-4 h-4" />
+            </Link>
+          </div>
+        </div>
       </section>
 
       {/* =========================================================================
           2. PROJECT DETAILS SECTION (Two-Column Layout: Story on Left, Specs on Right)
       ========================================================================= */}
-      <section className="relative w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
+      <section className="relative w-[95%] mx-auto px-2 sm:px-4 py-12 sm:py-20">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
           {/* LEFT COLUMN: Architectural Concept, Visual Stat Badges, Craftsmanship Pillars & Highlights */}
           <div className="lg:col-span-7 space-y-10">
@@ -144,7 +240,17 @@ const ProjectDetailPage = () => {
                 Architectural Concept
               </span>
               <h3 className="font-serif text-3xl sm:text-4xl font-normal text-[#141517] tracking-tight leading-tight mb-4">
-                Spatial Harmony &amp; Living Experience
+                <FoldText
+                  text="Spatial Harmony & Living Experience"
+                  splitBy="word"
+                  hinge="top"
+                  trigger="scroll"
+                  duration={0.6}
+                  stagger={0.05}
+                  fontSize="inherit"
+                  fontWeight={400}
+                  color="#141517"
+                />
               </h3>
               
               <blockquote className="border-l-2 border-[#8C6544] pl-5 my-5 text-base sm:text-lg font-serif italic text-[#141517] leading-relaxed bg-[#fbfbfe] py-2.5 rounded-r-xl">
@@ -187,7 +293,17 @@ const ProjectDetailPage = () => {
             {/* 2.3 Craftsmanship & Architectural Pillars (4 Editorial Architectural Cards) */}
             <div>
               <h4 className="font-serif text-2xl font-normal text-[#141517] tracking-tight mb-5">
-                Craftsmanship &amp; Architectural Pillars
+                <FoldText
+                  text="Craftsmanship & Architectural Pillars"
+                  splitBy="word"
+                  hinge="top"
+                  trigger="scroll"
+                  duration={0.6}
+                  stagger={0.05}
+                  fontSize="inherit"
+                  fontWeight={400}
+                  color="#141517"
+                />
               </h4>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {/* 01: Timber */}
@@ -353,13 +469,23 @@ const ProjectDetailPage = () => {
       {/* =========================================================================
           3. GALLERY (5-6 Images Limit) & RELATED PROJECTS (Resentii Section 2)
       ========================================================================= */}
-      <section className="relative w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 border-t border-black/[0.06]">
+      <section className="relative w-[95%] mx-auto px-2 sm:px-4 py-16 sm:py-24 border-t border-black/[0.06]">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
           {/* LEFT: 2-Column Gallery Grid (Strictly Limited to 5-6 Images) */}
           <div className="lg:col-span-7">
             <div className="flex items-center justify-between mb-6">
               <h3 className="font-serif text-2xl sm:text-3xl font-normal text-[#141517] tracking-tight">
-                Gallery
+                <FoldText
+                  text="Gallery"
+                  splitBy="char"
+                  hinge="top"
+                  trigger="scroll"
+                  duration={0.6}
+                  stagger={0.045}
+                  fontSize="inherit"
+                  fontWeight={400}
+                  color="#141517"
+                />
               </h3>
               <span className="text-xs font-sans text-[#555866] font-medium">
                 {galleryImages.length} Visuals
@@ -389,7 +515,17 @@ const ProjectDetailPage = () => {
               <div className="flex items-center justify-between mb-5">
                 <div>
                   <h3 className="font-serif text-2xl sm:text-3xl font-normal text-[#141517] tracking-tight">
-                    Project Location
+                    <FoldText
+                      text="Project Location"
+                      splitBy="word"
+                      hinge="top"
+                      trigger="scroll"
+                      duration={0.6}
+                      stagger={0.05}
+                      fontSize="inherit"
+                      fontWeight={400}
+                      color="#141517"
+                    />
                   </h3>
                   <p className="font-sans text-xs sm:text-sm text-[#555866] font-light mt-1">
                     {project.location}
@@ -424,7 +560,17 @@ const ProjectDetailPage = () => {
           {/* RIGHT: Related Projects */}
           <div className="lg:col-span-5">
             <h4 className="font-serif text-2xl font-normal text-[#141517] mb-6">
-              Related Projects
+              <FoldText
+                text="Related Projects"
+                splitBy="word"
+                hinge="top"
+                trigger="scroll"
+                duration={0.6}
+                stagger={0.05}
+                fontSize="inherit"
+                fontWeight={400}
+                color="#141517"
+              />
             </h4>
 
             <div className="flex flex-col gap-6">
@@ -496,7 +642,17 @@ const ProjectDetailPage = () => {
         <div className="relative z-10 max-w-4xl mx-auto px-6 sm:px-8 text-center flex flex-col items-center">
           {/* Editorial Heading */}
           <h2 className="font-heading text-4xl sm:text-6xl md:text-7xl text-white font-normal tracking-tight leading-[1.06] mb-6">
-            Ready to Transform Your Space?
+            <FoldText
+              text="Ready to Transform Your Space?"
+              splitBy="word"
+              hinge="top"
+              trigger="scroll"
+              duration={0.65}
+              stagger={0.05}
+              fontSize="inherit"
+              fontWeight={400}
+              color="#ffffff"
+            />
           </h2>
 
           {/* Subtext */}
@@ -504,19 +660,40 @@ const ProjectDetailPage = () => {
             Every great space starts with a single conversation. Let's talk about your vision and bring it to life together.
           </p>
 
-          {/* Action Button: Signature White Pill with Brown Arrow Badge */}
-          <div className="flex items-center justify-center">
-            <Link
-              to="/contact"
-              className="group inline-flex items-center gap-4 pl-8 pr-2.5 py-2.5 rounded-full bg-white text-[#141517] hover:bg-white font-sans font-medium text-base tracking-normal transition-all duration-300 shadow-[0_12px_36px_rgba(0,0,0,0.35)] hover:shadow-[0_16px_45px_rgba(0,0,0,0.45)] hover:scale-105 active:scale-95"
-            >
-              <span className="font-semibold text-black tracking-tight">
+          {/* Action Button: Interactive SlingButton from React Bits */}
+          <div className="flex flex-col items-center justify-center gap-4">
+            <div className="inline-flex items-center gap-4 pl-7 sm:pl-8 pr-2.5 py-2.5 rounded-full bg-white text-[#141517] shadow-[0_16px_40px_rgba(0,0,0,0.35)] hover:shadow-[0_20px_50px_rgba(0,0,0,0.45)] transition-all">
+              <button
+                type="button"
+                onClick={() => navigate('/contact')}
+                className="font-sans font-semibold text-black tracking-tight text-base sm:text-lg cursor-pointer bg-transparent border-0 p-0 hover:opacity-80 transition-opacity"
+              >
                 Let's Talk
-              </span>
-              <span className="w-12 h-12 rounded-full bg-[#855836] text-white flex items-center justify-center transition-transform duration-300 group-hover:translate-x-1 shadow-sm">
-                <ArrowRight className="w-5 h-5 text-white" />
-              </span>
-            </Link>
+              </button>
+              <SlingButton
+                onSend={() => navigate('/contact')}
+                padColor="#855836"
+                iconColor="#ffffff"
+                accentColor="#855836"
+                wellColor="#27272a"
+                bandColor="#855836"
+                size={52}
+                strokeWidth={3}
+                armAt={46}
+                maxPull={150}
+                launchSpeed={2600}
+                recoil={0.2}
+                flight={120}
+                particles={16}
+                spread={60}
+                axis="any"
+                tapSends={true}
+                ariaLabel="Let's Talk - Pull to send"
+              />
+            </div>
+            <p className="text-white/40 text-[11px] sm:text-xs uppercase tracking-[0.2em] font-medium select-none">
+              Press Enter, drag &amp; release, or tap to connect
+            </p>
           </div>
         </div>
       </section>

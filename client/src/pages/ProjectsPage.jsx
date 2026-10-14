@@ -9,6 +9,7 @@ import {
 } from 'lucide-react';
 import { PROJECTS_DATA, BUSINESS_INFO } from '../utils/constants';
 import SlingButton from '../components/ui/SlingButton';
+import FoldText from '../components/ui/FoldText';
 
 // Minimal Vintage Timber Project Card Component
 const VintageProjectCard = ({ project, isExpanded, onMouseEnter, onMouseLeave }) => {
@@ -127,11 +128,11 @@ const ProjectsPage = () => {
   const [selectedCategory, setSelectedCategory] = useState('All Projects');
   const [activeCardId, setActiveCardId] = useState(null);
 
-  // Responsive hero dimensions: 88% of full screen (viewport height) for base height
+  // Responsive hero dimensions: 95% of full screen (viewport height) for base height
   const getHeroDims = () => {
-    if (typeof window === 'undefined') return { base: 780, shrunk: 360 };
+    if (typeof window === 'undefined') return { base: 850, shrunk: 360 };
     const vh = window.innerHeight;
-    const base = Math.round(vh * 0.88);
+    const base = Math.round(vh * 0.95);
     // Keep shrunk height compact and proportional
     const shrunk = Math.max(300, Math.min(380, Math.round(base * 0.45)));
     return { base, shrunk };
@@ -183,9 +184,9 @@ const ProjectsPage = () => {
       </Helmet>
 
       {/* =========================================================================
-          1. HERO SECTION (Classic Handcrafted Timber Cottage Hero with Scroll Animation - 88vh Full Screen Scale)
+          1. HERO SECTION (Classic Handcrafted Timber Cottage Hero with Scroll Animation - 95vh & 95% Width Scale)
       ========================================================================= */}
-      <section className="relative w-full max-w-[1440px] mx-auto p-3 sm:p-4 md:p-5">
+      <section className="relative w-[95%] mx-auto pt-3 sm:pt-4 md:pt-5 pb-0">
         {/* Pinned Hero Track */}
         <div 
           className="relative w-full"
@@ -220,7 +221,7 @@ const ProjectsPage = () => {
 
             {/* Signature Inverted Notch Button (Sitting at bottom-left, glides upwards over image as card shrinks) */}
             <div className="relative z-10 flex items-end">
-              <div className="bg-white pt-3 sm:pt-4 pr-3.5 sm:pr-4 pb-0 pl-0 rounded-tr-[28px] sm:rounded-tr-[32px] relative">
+              <div className="bg-white pt-3.5 sm:pt-4.5 pr-4 sm:pr-5 pb-0 pl-0 rounded-tr-[32px] sm:rounded-tr-[38px] relative w-fit max-w-[95vw]">
                 {/* Top Concave Fillet Curve */}
                 <div className="absolute -top-[20px] left-0 w-5 h-5 pointer-events-none">
                   <svg viewBox="0 0 20 20" fill="none" className="w-5 h-5 block">
@@ -235,15 +236,28 @@ const ProjectsPage = () => {
                   </svg>
                 </div>
 
-                {/* The Dark Pill Badge with Clean Sans-Serif Title Case */}
+                {/* The Dark Pill Badge with Clean Sans-Serif Title Case - Auto-adjusts to text, all in one row */}
                 <motion.div
                   initial={{ opacity: 0, x: -20, y: 15 }}
                   animate={{ opacity: 1, x: 0, y: 0 }}
                   transition={{ type: 'spring', bounce: 0.25, duration: 0.7, delay: 0.15 }}
-                  className="bg-[#28282c] text-white px-8 sm:px-12 py-4 sm:py-5 rounded-[20px] sm:rounded-[24px] flex items-center shadow-sm"
+                  className="bg-[#28282c] text-white px-6 sm:px-9 md:px-11 py-4 sm:py-5 md:py-6 min-h-[76px] sm:min-h-[92px] md:min-h-[105px] rounded-[20px] sm:rounded-[26px] flex items-center justify-center shadow-sm w-fit whitespace-nowrap shrink-0"
                 >
-                  <h1 className="font-sans text-3xl sm:text-5xl md:text-[54px] font-normal tracking-tight text-white leading-none">
-                    Our Projects
+                  <h1 className="font-sans text-2xl sm:text-4xl md:text-[46px] lg:text-[52px] font-normal tracking-tight text-white leading-none whitespace-nowrap flex items-center">
+                    <FoldText
+                      text="Our Projects"
+                      splitBy="char"
+                      hinge="top"
+                      trigger="mount"
+                      duration={0.65}
+                      stagger={0.045}
+                      ease="power3.out"
+                      fontSize="inherit"
+                      fontWeight={400}
+                      color="#ffffff"
+                      className="whitespace-nowrap"
+                      noWrap={true}
+                    />
                   </h1>
                 </motion.div>
               </div>
@@ -344,7 +358,17 @@ const ProjectsPage = () => {
         <div className="relative z-10 max-w-4xl mx-auto px-6 sm:px-8 text-center flex flex-col items-center">
           {/* Editorial Heading */}
           <h2 className="font-heading text-4xl sm:text-6xl md:text-7xl text-white font-normal tracking-tight leading-[1.06] mb-6">
-            Ready to Transform Your Space?
+            <FoldText
+              text="Ready to Transform Your Space?"
+              splitBy="word"
+              hinge="top"
+              trigger="scroll"
+              duration={0.65}
+              stagger={0.05}
+              fontSize="inherit"
+              fontWeight={400}
+              color="#ffffff"
+            />
           </h2>
 
           {/* Subtext */}
