@@ -90,65 +90,76 @@ const HomePage = () => {
       {/* =========================================================================
           01 — HERO SECTION (Exact Bildora Screenshot Clone)
       ========================================================================= */}
-      <section className="relative min-h-screen w-full flex flex-col justify-center items-center text-center px-4 sm:px-6 overflow-hidden">
-        {/* Native 1080p Full-HD Video Background: Autoplays instantly, infinite seamless loop, zero player controls, zero buffering */}
-        <div className="absolute inset-0 w-full h-full overflow-hidden z-0 pointer-events-none select-none bg-stone-900">
-          <video
-            ref={videoRef}
-            autoPlay
-            loop
-            muted
-            playsInline
-            preload="auto"
-            className="absolute inset-0 w-full h-full object-cover scale-[1.12] origin-center pointer-events-none select-none"
-            poster="https://img.youtube.com/vi/Ii5h19NsZw0/maxresdefault.jpg"
-          >
-            <source src="/videos/hero.mp4" type="video/mp4" />
-          </video>
-        </div>
-        
-        {/* Dark Vignette / Overlay to guarantee crystal-clear text contrast */}
-        <div className="absolute inset-0 z-0 bg-black/40 bg-gradient-to-b from-black/55 via-black/20 to-black/60 pointer-events-none" />
-
-        {/* Centered Content Container */}
-        <div className="relative z-10 max-w-4xl mx-auto flex flex-col items-center pt-24 pb-16 px-4">
-          
-
-
-          {/* Main Headline (Exact text and typography scale from Screenshot) */}
-          <motion.h1
-            initial={{ opacity: 0, y: 25 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.1 }}
-            className="font-sans text-5xl sm:text-7xl md:text-8xl lg:text-[5.8rem] font-medium text-white tracking-tight leading-[1.05] mb-6 drop-shadow-md"
-          >
-            We Build What<br />Moves You Forward.
-          </motion.h1>
-
-          {/* Supporting Text (Exact paragraph from Screenshot) */}
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.2 }}
-            className="text-base sm:text-lg md:text-xl text-white/90 font-light max-w-2xl leading-relaxed mb-10 drop-shadow-sm"
-          >
-            Make My Cottage brings together expert craftsmanship, thoughtful planning, and reliable execution to create spaces made to perform, endure, and inspire.
-          </motion.p>
-
-          {/* CTA Button (Exact White Pill Button from Screenshot: Build With Us →) */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-          >
-            <a
-              href="#contact"
-              className="inline-flex items-center gap-3 px-8 py-3.5 rounded-full bg-white text-black font-semibold text-sm sm:text-base hover:bg-white/95 hover:scale-105 transition-all duration-300 shadow-xl group cursor-pointer"
+      <section className="relative w-full p-3 sm:p-4 md:p-5">
+        <div className="relative min-h-[calc(100vh-1.5rem)] sm:min-h-[calc(100vh-2rem)] md:min-h-[calc(100vh-2.5rem)] w-full rounded-[28px] sm:rounded-[32px] overflow-hidden flex flex-col justify-center items-center text-center px-4 sm:px-6 shadow-sm bg-stone-900">
+          {/* Native 1080p Full-HD Video Background: Autoplays instantly, infinite seamless loop, zero player controls, zero buffering */}
+          <div className="absolute inset-0 w-full h-full overflow-hidden z-0 pointer-events-none select-none bg-stone-900">
+            <video
+              ref={videoRef}
+              autoPlay
+              loop
+              muted
+              playsInline
+              preload="auto"
+              className="absolute inset-0 w-full h-full object-cover scale-[1.12] origin-center pointer-events-none select-none brightness-[1.15] contrast-[1.05]"
             >
-              <span>Build With Us</span>
-              <HiArrowNarrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
-            </a>
-          </motion.div>
+              <source src="https://res.cloudinary.com/h5vyav19/video/upload/v1791962110/11841270-hd_1920_1080_60fps.mp4" type="video/mp4" />
+            </video>
+          </div>
+          
+          {/* Soft Vignette Overlay to maintain bright visuals while keeping text legible */}
+          <div className="absolute inset-0 z-0 bg-gradient-to-b from-black/30 via-transparent to-black/35 pointer-events-none" />
+
+          {/* Centered Content Container */}
+          <div className="relative z-10 max-w-4xl mx-auto flex flex-col items-center pt-24 pb-16 px-4">
+            
+
+
+
+            {/* Main Headline (FoldText 3D Unfolding Animation) */}
+            <h1 className="font-sans text-5xl sm:text-7xl md:text-8xl lg:text-[5.8rem] font-medium text-white tracking-tight leading-[1.05] mb-6 drop-shadow-md text-center">
+              <FoldText
+                text={"We Build What\nMoves You\nForward."}
+                splitBy="char"
+                hinge="top"
+                trigger="mount"
+                duration={0.7}
+                stagger={0.035}
+                ease="power3.out"
+                perspective={700}
+                creaseShading={0.55}
+                color="#ffffff"
+                fontSize="inherit"
+                fontWeight="inherit"
+                className="text-center"
+              />
+            </h1>
+
+            {/* Supporting Text (Exact paragraph from Screenshot) */}
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.2 }}
+              className="text-base sm:text-lg md:text-xl text-white/90 font-light max-w-2xl leading-relaxed mb-10 drop-shadow-sm"
+            >
+              Make My Cottage brings together expert craftsmanship, thoughtful planning, and reliable execution to create spaces made to perform, endure, and inspire.
+            </motion.p>
+
+            {/* CTA Button (Exact White Pill Button from Screenshot: Build With Us →) */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+            >
+              <a
+                href="#contact"
+                className="inline-flex items-center gap-3 px-8 py-3.5 rounded-full bg-white text-black font-semibold text-sm sm:text-base hover:bg-white/95 hover:scale-105 transition-all duration-300 shadow-xl group cursor-pointer"
+              >
+                <span>Build With Us</span>
+                <HiArrowNarrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+              </a>
+            </motion.div>
+          </div>
         </div>
       </section>
 

@@ -77,6 +77,9 @@ const ConstructSpaceModal = ({ isOpen, onClose, onRewardClaimed }) => {
     const placedCount = boardSlots.filter(Boolean).length;
     if (placedCount === TOTAL_TILES) {
       setIsCompleted(true);
+      try {
+        localStorage.setItem('makemycottage_game_completed', 'true');
+      } catch (e) {}
     }
   }, [boardSlots]);
 
@@ -182,6 +185,9 @@ const ConstructSpaceModal = ({ isOpen, onClose, onRewardClaimed }) => {
   };
 
   const handleClaim = () => {
+    try {
+      localStorage.setItem('makemycottage_game_completed', 'true');
+    } catch (e) {}
     if (onRewardClaimed) {
       onRewardClaimed('COTTAGEVIP10');
     }
