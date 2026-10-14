@@ -18,7 +18,6 @@ const Footer = () => {
   const location = useLocation();
   const isContactPage = location.pathname === '/contact' || location.pathname.startsWith('/contact');
   const footerRef = useRef(null);
-  const location = useLocation();
   const [isGameOpen, setIsGameOpen] = useState(false);
   const hasTriggeredRef = useRef(false);
 
