@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { BUSINESS_INFO } from '../../utils/constants';
 import ConstructSpaceModal from '../common/ConstructSpaceModal';
 import {
@@ -14,12 +14,16 @@ import {
 } from 'react-icons/fa6';
 
 const Footer = () => {
+  const location = useLocation();
+  const isContactPage = location.pathname === '/contact' || location.pathname.startsWith('/contact');
   const footerRef = useRef(null);
   const [isGameOpen, setIsGameOpen] = useState(false);
   const hasTriggeredRef = useRef(false);
 
-  // Trigger puzzle game EVERY TIME the user reaches the footer section
+  // Trigger puzzle game EVERY TIME the user reaches the footer section (BLOCKED on Contact page)
   useEffect(() => {
+    if (isContactPage) return;
+
     const footerEl = footerRef.current;
     if (!footerEl) return;
 
@@ -43,14 +47,15 @@ const Footer = () => {
 
     observer.observe(footerEl);
     return () => observer.disconnect();
-  }, []);
+  }, [isContactPage]);
 
-  // Also support custom event triggers from buttons elsewhere on the site
+  // Also support custom event triggers from buttons elsewhere on the site (BLOCKED on Contact page)
   useEffect(() => {
+    if (isContactPage) return;
     const handleCustomOpen = () => setIsGameOpen(true);
     window.addEventListener('open-construct-space', handleCustomOpen);
     return () => window.removeEventListener('open-construct-space', handleCustomOpen);
-  }, []);
+  }, [isContactPage]);
 
   const handleRewardClaimed = (code) => {
     navigator.clipboard?.writeText(code);
@@ -249,12 +254,14 @@ const Footer = () => {
         </h2>
       </div>
 
-      {/* Interactive Construct Your Space Game Modal */}
-      <ConstructSpaceModal
-        isOpen={isGameOpen}
-        onClose={() => setIsGameOpen(false)}
-        onRewardClaimed={handleRewardClaimed}
-      />
+      {/* Interactive Construct Your Space Game Modal (Blocked on Contact page) */}
+      {!isContactPage && (
+        <ConstructSpaceModal
+          isOpen={isGameOpen}
+          onClose={() => setIsGameOpen(false)}
+          onRewardClaimed={handleRewardClaimed}
+        />
+      )}
     </footer>
   );
 };
