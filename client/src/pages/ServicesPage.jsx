@@ -2,10 +2,10 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
-import { 
-  HiArrowNarrowRight, 
-  HiX, 
-  HiOutlineCheck, 
+import {
+  HiArrowNarrowRight,
+  HiX,
+  HiOutlineCheck,
   HiOutlineInformationCircle
 } from 'react-icons/hi';
 import SectionLabel from '../components/common/SectionLabel';
@@ -130,8 +130,8 @@ const DETAILED_SERVICES = [
     description: 'From the architectural bones of a space to the finishing details that make it feel like home, our custom-designed wooden houses are built around your lifestyle with natural warmth, timeless aesthetics, and enduring structural strength.',
     subTitle: 'Bespoke Timber Architecture',
     subDescription: 'We handle every phase from custom 3D architectural elevations to pressure-treated timber selection, foundation bolting, and luxury turnkey interior finishes so you can move straight into your handcrafted sanctuary.',
-    notchTitle: 'Curated Engineering',
-    notchDescription: '100% vacuum pressure-treated teak and Canadian cedar with double-glazed weather sealing, ensuring lifetime termite resistance and passive thermal insulation in any climate.',
+    notchTitle: 'Wooden Home Craftsmanship',
+    notchDescription: 'Engineered for generational living using vacuum pressure-treated Canadian cedar and seasoned teak, precision timber joinery, and passive thermal insulation in any climate.',
     primaryImage: '/images/wooden-homes-showcase.jpg',
     imagePosition: '38% 15%',
     cardBaseHeight: 620,
@@ -146,14 +146,14 @@ const DETAILED_SERVICES = [
     description: 'Every estate we create is born from a conversation shaped by your taste, your land, and your vision. Relaxed, natural spaces designed for weekend living, organic farm retreats, and countryside estates that blend indoor and outdoor living seamlessly.',
     subTitle: 'Heritage Craftsmanship',
     subDescription: 'Our master carpenters bring together traditional timber framing and natural stone masonry to create expansive high-ceiling estates that transcend the ordinary and stand as works of art that endure through time.',
-    notchTitle: 'Estate Engineering',
-    notchDescription: 'Natural stone foundations paired with seasoned Sal wood and treated teak, passive cooling roof overhangs, and complete turnkey interior woodwork built for generations.',
+    notchTitle: 'Country Farm House Living',
+    notchDescription: 'Crafted for countryside retreats and weekend estates, combining heavy timber framing, natural stone foundations, wide breezy verandas, and timeless indoor-outdoor warmth.',
     primaryImage: '/images/farm-houses-showcase.jpg',
     imagePosition: 'center 45%',
     cardBaseHeight: 620,
     cardShrunkHeight: 520,
     secondaryImage: '/images/farm-houses-interior.jpg',
-    type: 'A' // Bottom-Right Notch
+    type: 'B' // Left Showcase Card / Right Story
   },
   {
     id: 'cottage-homes',
@@ -162,14 +162,14 @@ const DETAILED_SERVICES = [
     description: 'Your sanctuary has a story worth preserving and a future worth investing in. Compact, high-thermal efficiency cottages engineered for resorts, hill retreats, farms, and private scenic properties maximizing every square foot.',
     subTitle: 'Scenic Hillside Living',
     subDescription: 'From compact floor plans to high-end architectural roof shingles, we handle every layer of complexity with precision. Our focus is always on structural integrity and spatial efficiency creating cozy environments that work beautifully for the way you live.',
-    notchTitle: 'Turnkey Compact Comfort',
-    notchDescription: 'Pre-fitted ready-to-live bathrooms, kitchenette options, and weather-sealed log profiles with heavy-duty waterproof membranes ready for occupancy in 60 to 75 days with zero hassle.',
+    notchTitle: 'Cozy Cottage Home Sanctuaries',
+    notchDescription: 'Scenic, thermally efficient cottage retreats engineered with weatherproof tongue-and-groove logs, premium architectural shingles, and move-in ready turnkey luxury in 60 days.',
     primaryImage: '/images/cottage-homes-showcase.jpg',
     imagePosition: 'center 45%',
     cardBaseHeight: 620,
     cardShrunkHeight: 520,
     secondaryImage: '/images/cottage-homes-interior.jpg',
-    type: 'A' // Bottom-Right Notch
+    type: 'A' // Right Showcase Card / Left Story
   },
   {
     id: 'prefabricated-homes',
@@ -178,14 +178,14 @@ const DETAILED_SERVICES = [
     description: 'A beautiful home is nothing without smart engineering behind it. Efficient precision construction with modern modular prefabricated timber systems for rapid delivery without ever compromising on aesthetics or structural permanence.',
     subTitle: 'Precision Factory Assembly',
     subDescription: 'We go beyond the blueprint with millimeter-accurate off-site CNC factory engineering that eliminates on-site mess, accelerates foundation bolting, and erects fully livable modular homes in just 45 days.',
-    notchTitle: 'Modular Performance',
-    notchDescription: 'Precision Glulam and Cross-Laminated Timber (CLT) wall assemblies certified for acoustic dampening, fire retardance, and maximum earthquake resilience.',
+    notchTitle: 'Precision Prefabricated Architecture',
+    notchDescription: 'Factory-engineered Glulam and CLT modular timber systems delivering millimeter-level precision, rapid on-site assembly, seismic durability, and move-in readiness in just 45 days.',
     primaryImage: '/images/prefabricated-homes-showcase.jpg',
     imagePosition: 'center 45%',
     cardBaseHeight: 620,
     cardShrunkHeight: 520,
     secondaryImage: '/images/prefabricated-homes-interior.jpg',
-    type: 'A' // Bottom-Right Notch
+    type: 'B' // Left Showcase Card / Right Story
   },
   {
     id: 'resort-cottages',
@@ -194,14 +194,14 @@ const DETAILED_SERVICES = [
     description: 'Distinctive wooden accommodation spaces engineered for hospitality luxury and guest escapism. We design environments that flow effortlessly, offering guests an immersive natural retreat with all modern luxury comforts.',
     subTitle: 'Luxury Hospitality Suites',
     subDescription: 'Repeatable cluster layouts designed for high turnover commercial resort environments, featuring panoramic balcony decks, spa ensuites, and bespoke timber interior fitments ready for guest check-in.',
-    notchTitle: 'Commercial Durability',
-    notchDescription: 'Built with commercial-grade treated teak and bamboo composites, heavy-duty weather seals, and rapid multi-unit construction schedules backed by a 10-year warranty.',
-    primaryImage: '/images/resort-cottages-showcase.jpg',
+    notchTitle: 'Luxury Resort Cottage Suites',
+    notchDescription: 'High-turnover hospitality cottages designed with panoramic private decks, commercial-grade weatherproofing, and repeatable cluster layouts built for ultimate guest escapism.',
+    primaryImage: '/images/resort-cottages-showcase.jpg?v=2',
     imagePosition: 'center 45%',
     cardBaseHeight: 620,
     cardShrunkHeight: 520,
     secondaryImage: '/images/resort-cottages-interior.jpg',
-    type: 'A' // Bottom-Right Notch
+    type: 'A' // Right Showcase Card / Left Story
   },
   {
     id: 'custom-structures',
@@ -210,40 +210,40 @@ const DETAILED_SERVICES = [
     description: 'Unique architectural wooden pergolas, pavilions, gazebos, rooftop lounges, and bespoke timber extensions made to your exact property specifications, bringing warmth, character, and outdoor elegance to your lifestyle.',
     subTitle: 'Artisanal Architectural Joinery',
     subDescription: 'Every custom structure concludes with a comprehensive design roadmap and artisanal joinery that flawlessly blends into your existing grounds, providing shade, beauty, and relaxation for decades.',
-    notchTitle: 'Bespoke Joinery',
-    notchDescription: 'Artisanal mortise and tenon joinery with hidden metal anchors and UV-resistant polycarbonates, engineered to elevate poolside cabanas, lakeside decks, and garden pavilions.',
+    notchTitle: 'Architectural Custom Structures',
+    notchDescription: 'Artisanal wooden pergolas, poolside cabanas, rooftop gazebos, and garden pavilions hand-carved with concealed structural joinery and UV-shielded timber framing.',
     primaryImage: '/images/custom-structures-showcase.jpg',
     imagePosition: 'center 45%',
     cardBaseHeight: 620,
     cardShrunkHeight: 520,
     secondaryImage: '/images/custom-structures-interior.jpg',
-    type: 'A' // Bottom-Right Notch
+    type: 'B' // Left Showcase Card / Right Story
   }
 ];
 
 const HERO_SLIDES = [
   {
-    src: '/images/services-hero-1.png',
+    src: '/images/services-hero-1-hd.jpg',
     alt: 'Make My Cottage - Scandinavian Handcrafted Wooden Home'
   },
   {
-    src: '/images/services-hero-2.jpg',
+    src: '/images/services-hero-2-hd.jpg',
     alt: 'Make My Cottage - Modern Timber Chalet & Architecture'
   },
   {
-    src: '/images/services-hero-3.jpg',
+    src: '/images/services-hero-3-hd.jpg',
     alt: 'Make My Cottage - Bespoke Wood House & Artisanal Gazebo'
   },
   {
-    src: '/images/services-hero-4.png',
+    src: '/images/services-hero-4-hd.jpg',
     alt: 'Make My Cottage - Handcrafted Resort Cottages & Villas'
   },
   {
-    src: '/images/services-hero-5.jpg',
+    src: '/images/services-hero-5-hd.jpg',
     alt: 'Make My Cottage - Luxury Forest Wooden Chalets'
   },
   {
-    src: '/images/services-hero-6.jpg',
+    src: '/images/services-hero-6-hd.jpg',
     alt: 'Make My Cottage - Modern Sloping Timber Villa & Pool'
   }
 ];
@@ -253,10 +253,10 @@ const ServiceSectionRow = ({ srv, rawService, isTypeA, setSelectedServiceModal }
   const sectionRef = useRef(null);
 
   return (
-    <section 
+    <section
       ref={sectionRef}
-      key={srv.id} 
-      id={srv.id} 
+      key={srv.id}
+      id={srv.id}
       className="max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-14 py-16 sm:py-24 lg:py-28 border-b border-black/5 last:border-b-0 scroll-mt-24 relative"
     >
       {isTypeA ? (
@@ -264,12 +264,12 @@ const ServiceSectionRow = ({ srv, rawService, isTypeA, setSelectedServiceModal }
            MODEL TYPE A: Left Scrolling Story / Right Sticky Showcase Card
         ==================================================================== */
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start relative">
-          
+
           {/* Left Column: Headline, Description, Secondary Image & Action (Scrolls naturally) */}
           <div className="lg:col-span-5 flex flex-col justify-start pt-2 pb-6 order-1 space-y-10 sm:space-y-12 lg:space-y-14 lg:min-h-[880px]">
             {/* Top Headline Block */}
             <div>
-              <h2 
+              <h2
                 className="font-playfair text-3xl sm:text-4xl md:text-5xl text-[#101014] font-normal tracking-tight leading-[1.15] mb-5"
                 style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
               >
@@ -282,13 +282,13 @@ const ServiceSectionRow = ({ srv, rawService, isTypeA, setSelectedServiceModal }
 
             {/* Middle Secondary Showcase Image */}
             {srv.secondaryImage && (
-              <div 
+              <div
                 onClick={() => setSelectedServiceModal(rawService)}
                 className="rounded-[22px] sm:rounded-[28px] overflow-hidden aspect-[16/9] w-full shadow-md border border-black/5 group cursor-pointer bg-black/5"
               >
-                <img 
-                  src={srv.secondaryImage} 
-                  alt={`${srv.title} Showcase`} 
+                <img
+                  src={srv.secondaryImage}
+                  alt={`${srv.title} Showcase`}
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
               </div>
@@ -302,7 +302,7 @@ const ServiceSectionRow = ({ srv, rawService, isTypeA, setSelectedServiceModal }
               <p className="font-sans text-sm sm:text-base text-[#555] font-light leading-relaxed max-w-xl">
                 {srv.subDescription}
               </p>
-              
+
               <div className="flex flex-wrap items-center gap-4 pt-3">
                 <Link
                   to="/contact"
@@ -331,9 +331,9 @@ const ServiceSectionRow = ({ srv, rawService, isTypeA, setSelectedServiceModal }
             <div className="relative w-full h-[520px] sm:h-[560px] lg:h-[580px] xl:h-[600px] rounded-[32px] sm:rounded-[38px] rounded-br-none overflow-hidden bg-black/5 shadow-xl flex flex-col justify-end group">
               {/* Architectural Showcase Image */}
               <div className="absolute inset-0 w-full h-full z-0 overflow-hidden pointer-events-none">
-                <img 
-                  src={srv.primaryImage} 
-                  alt={srv.title} 
+                <img
+                  src={srv.primaryImage}
+                  alt={srv.title}
                   style={{ objectPosition: srv.imagePosition || 'center' }}
                   className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
                 />
@@ -382,9 +382,9 @@ const ServiceSectionRow = ({ srv, rawService, isTypeA, setSelectedServiceModal }
             <div className="relative w-full h-[520px] sm:h-[560px] lg:h-[580px] xl:h-[600px] rounded-[32px] sm:rounded-[38px] rounded-bl-none overflow-hidden bg-black/5 shadow-xl flex flex-col justify-end group">
               {/* Architectural Showcase Image */}
               <div className="absolute inset-0 w-full h-full z-0 overflow-hidden pointer-events-none">
-                <img 
-                  src={srv.primaryImage} 
-                  alt={srv.title} 
+                <img
+                  src={srv.primaryImage}
+                  alt={srv.title}
                   style={{ objectPosition: srv.imagePosition || 'center' }}
                   className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
                 />
@@ -426,7 +426,7 @@ const ServiceSectionRow = ({ srv, rawService, isTypeA, setSelectedServiceModal }
           <div className="lg:col-span-5 flex flex-col justify-start pt-2 pb-6 order-1 lg:order-2 space-y-10 sm:space-y-12 lg:space-y-14 lg:min-h-[880px]">
             {/* Top Headline Block */}
             <div>
-              <h2 
+              <h2
                 className="font-playfair text-3xl sm:text-4xl md:text-5xl text-[#101014] font-normal tracking-tight leading-[1.15] mb-5"
                 style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
               >
@@ -439,13 +439,13 @@ const ServiceSectionRow = ({ srv, rawService, isTypeA, setSelectedServiceModal }
 
             {/* Middle Secondary Showcase Image */}
             {srv.secondaryImage && (
-              <div 
+              <div
                 onClick={() => setSelectedServiceModal(rawService)}
                 className="rounded-[22px] sm:rounded-[28px] overflow-hidden aspect-[16/9] w-full shadow-md border border-black/5 group cursor-pointer bg-black/5"
               >
-                <img 
-                  src={srv.secondaryImage} 
-                  alt={`${srv.title} Showcase`} 
+                <img
+                  src={srv.secondaryImage}
+                  alt={`${srv.title} Showcase`}
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
               </div>
@@ -463,7 +463,7 @@ const ServiceSectionRow = ({ srv, rawService, isTypeA, setSelectedServiceModal }
               <div className="flex flex-wrap items-center gap-4 pt-3">
                 <Link
                   to="/contact"
-                  className="inline-flex items-center gap-2.5 px-8 py-3.5 rounded-full bg-[#101014] hover:bg-black text-white text-xs sm:text-sm font-semibold tracking-wide transition-all duration-300 shadow-md hover:scale-105 active:scale-95 group"
+                  className="inline-flex items-center gap-2.5 px-8 py-3.5 rounded-full bg-[#141517] hover:bg-black text-white text-xs sm:text-sm font-semibold tracking-wide transition-all duration-300 shadow-md hover:scale-105 active:scale-95 group"
                 >
                   <span>Request Consultation</span>
                   <span className="text-sm font-bold transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
@@ -547,9 +547,9 @@ const ServicesPage = () => {
     <div className="bg-[#f5f2f2] min-h-screen w-full text-[#141517] selection:bg-black selection:text-white">
       <Helmet>
         <title>Services | Make My Cottage - Premium Handcrafted Wooden Home Construction</title>
-        <meta 
-          name="description" 
-          content="Explore our complete range of turnkey timber construction services: custom wooden homes, farmhouses, cottages, prefabricated modular villas, resort accommodations, and bespoke timber structures." 
+        <meta
+          name="description"
+          content="Explore our complete range of turnkey timber construction services: custom wooden homes, farmhouses, cottages, prefabricated modular villas, resort accommodations, and bespoke timber structures."
         />
       </Helmet>
 
@@ -558,7 +558,7 @@ const ServicesPage = () => {
       ========================================================================= */}
       <section className="relative w-full p-3 sm:p-4 md:p-5">
         {/* Pinned Hero Track */}
-        <div 
+        <div
           className="relative w-full"
           style={{ height: `${heroDims.base}px` }}
         >
@@ -578,16 +578,14 @@ const ServicesPage = () => {
                   return (
                     <div
                       key={idx}
-                      className={`absolute inset-0 transition-opacity duration-1000 ease-in-out will-change-[opacity,transform] ${
-                        isActive ? 'opacity-100 z-10' : 'opacity-0 z-0'
-                      }`}
+                      className={`absolute inset-0 transition-opacity duration-1000 ease-in-out will-change-[opacity,transform] ${isActive ? 'opacity-100 z-10' : 'opacity-0 z-0'
+                        }`}
                     >
                       <img
                         src={slide.src}
                         alt={slide.alt}
-                        className={`w-full h-full object-cover object-center transition-transform duration-[6000ms] ease-out ${
-                          isActive ? 'scale-100' : 'scale-105'
-                        }`}
+                        className={`w-full h-full object-cover object-center transition-transform duration-[6000ms] ease-out ${isActive ? 'scale-100' : 'scale-105'
+                          }`}
                         onError={(e) => {
                           if (slide.fallback) e.currentTarget.src = slide.fallback;
                         }}
@@ -624,9 +622,9 @@ const ServicesPage = () => {
                   initial={{ opacity: 0, x: -20, y: 15 }}
                   animate={{ opacity: 1, x: 0, y: 0 }}
                   transition={{ type: 'spring', bounce: 0.25, duration: 0.7, delay: 0.15 }}
-                  className="bg-[#28282c] text-white px-8 sm:px-12 py-4 sm:py-5 rounded-[20px] sm:rounded-[24px] flex items-center shadow-sm"
+                  className="bg-[#28282c] text-white px-4 sm:px-6 py-[20px] sm:py-[26px] rounded-[20px] sm:rounded-[24px] flex items-center justify-center text-center shadow-sm w-[30vw] min-w-fit"
                 >
-                  <h1 className="font-sans text-3xl sm:text-5xl md:text-[54px] font-normal tracking-tight !text-white leading-none">
+                  <h1 className="font-sans text-2xl sm:text-4xl md:text-[40px] lg:text-[44px] font-normal tracking-tight !text-white leading-none whitespace-nowrap">
                     Our Services
                   </h1>
                 </motion.div>
