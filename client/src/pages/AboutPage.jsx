@@ -1,88 +1,193 @@
-import React, { useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
-import { ArrowRight } from 'lucide-react';
+import { 
+  ArrowRight,
+  Home,
+  Building2,
+  Activity,
+  Trees,
+  GraduationCap,
+  Store,
+  Hotel,
+  PlusCircle,
+  HardHat,
+  Utensils,
+  PhoneCall
+} from 'lucide-react';
+import { BUSINESS_INFO } from '../utils/constants';
 import LogoLoop from '../components/common/LogoLoop';
+import FoldText from '../components/common/FoldText';
+
+const ABOUT_HERO_SLIDES = [
+  {
+    src: '/images/projects/country-hills/hero.jpg',
+    alt: 'Make My Cottage - Handcrafted Timber Architecture & Hilltop Chalet'
+  },
+  {
+    src: '/images/about/history-sunset.jpg',
+    alt: 'Make My Cottage - Panoramic Sunset Wooden Cottage Sanctuary'
+  },
+  {
+    src: '/images/projects/shathakshi-resort/hero.jpg',
+    alt: 'Make My Cottage - Shathakshi Resort Overwater Chalets'
+  },
+  {
+    src: '/images/projects/ecobliss-shamirpet/image-2.jpg',
+    alt: 'Make My Cottage - Artisanal Craftsmanship & Architectural Planning'
+  },
+  {
+    src: '/images/services-hero-2.jpg',
+    alt: 'Make My Cottage - Modern Timber Chalet & Natural Living'
+  },
+  {
+    src: '/images/slider/slide-8.jpg',
+    alt: 'Make My Cottage - Handcrafted Timber Chalets by the Water'
+  }
+];
 
 const groundRules = [
   {
     number: '01',
-    badge: 'Quality Materials',
-    title: 'Built with lasting quality',
-    description: 'We choose durable, high-quality materials to create cottages that stay beautiful, comfortable, and reliable for years to come.'
+    badge: 'Eco & Healthier',
+    title: 'Healthier, eco-friendly living',
+    description: 'Wooden houses are 100% eco-friendly and significantly healthier to live in. Natural timber breathes, constantly purifying indoor air and maintaining balanced humidity without toxic synthetic materials.'
   },
   {
     number: '02',
-    badge: 'Thoughtful Design',
-    title: 'Every detail matters',
-    description: 'From smart layouts to natural finishes, every detail is planned to create a welcoming space that feels just right.'
+    badge: '15-Day Completion',
+    title: 'Fast to build, low maintenance',
+    description: 'We construct your dream wooden home in just 15 days through precision off-site prefabrication. Swift, clean on-site assembly eliminates construction hassle and requires minimal lifelong maintenance.'
   },
   {
     number: '03',
-    badge: 'Faster Construction',
-    title: 'From plans to reality',
-    description: 'Our streamlined construction process helps bring your dream cottage to life efficiently, with attention to every detail.'
+    badge: 'Natural Thermo-Protector',
+    title: 'Warm in winter, cool in summer',
+    description: 'Wood is nature’s supreme thermo-protector material. Cellular thermal barriers keep your interiors naturally warm in chilly winters and refreshingly cool in hot summers, drastically lowering electricity costs.'
   },
   {
     number: '04',
-    badge: 'Complete Transparency',
-    title: 'Confidence at every step',
-    description: 'From the initial design to the final handover, we keep you informed about the process, costs, and progress.'
+    badge: 'Canadian Timber',
+    title: 'Durable for centuries',
+    description: 'Constructed with premium Canadian imported wood and master interlocking notched joinery. Highly resistant to moisture, pests, and weathering, properly notched and maintained houses stand for centuries.'
+  }
+];
+
+const whatWeBuildCategories = [
+  {
+    title: 'Farm Houses & Guest Houses',
+    category: 'Residential',
+    icon: Home,
+    description: 'Private countryside sanctuaries, weekend retreats, and luxury timber farm estates tailored to your land.'
+  },
+  {
+    title: 'Resort Cottages',
+    category: 'Hospitality',
+    icon: Trees,
+    description: 'Eco-resort wooden cabins, luxury lakefront chalets, and holiday cottages that elevate guest experiences.'
+  },
+  {
+    title: 'Hospitality & Wellness',
+    category: 'Commercial',
+    icon: Hotel,
+    description: 'Destination boutique villas, wellness spa retreats, yoga shalas, and resort clubhouses.'
+  },
+  {
+    title: 'Restaurants & Cafes',
+    category: 'Dining',
+    icon: Utensils,
+    description: 'Rustic wooden cafes, scenic open-air dining pavilions, and warm timber bistros with timeless ambiance.'
+  },
+  {
+    title: 'Office Spaces',
+    category: 'Workplace',
+    icon: Building2,
+    description: 'Biophilic executive offices, eco-friendly corporate headquarters, and serene garden studios.'
+  },
+  {
+    title: 'Home Extensions',
+    category: 'Residential',
+    icon: PlusCircle,
+    description: 'Rooftop wooden chalets, terrace penthouses, garden guest suites, and mezzanine extensions.'
+  },
+  {
+    title: 'Retail Stores & Supermarkets',
+    category: 'Retail',
+    icon: Store,
+    description: 'Distinctive timber retail pavilions, organic markets, lifestyle outlets, and display showrooms.'
+  },
+  {
+    title: 'Schools & Kindergartens',
+    category: 'Education',
+    icon: GraduationCap,
+    description: 'Healthier, toxin-free wooden classrooms and early learning centers that nurture children in natural light.'
+  },
+  {
+    title: 'Medical & Sports Facilities',
+    category: 'Wellness & Sports',
+    icon: Activity,
+    description: 'Ayurvedic & holistic health clinics, fitness clubhouses, sports complexes, and therapy pavilions.'
+  },
+  {
+    title: 'Site Accommodation',
+    category: 'Turnkey Infrastructure',
+    icon: HardHat,
+    description: 'Rapidly deployable executive site offices, mining lodges, and rugged modular staff quarters.'
   }
 ];
 
 const timelineMilestones = [
   {
     year: '2009',
-    badge: 'Growth',
-    title: 'First crew',
-    description: 'Make My Cottage started with dedicated timber artisan crews managing challenging wooden cottages and custom retreat builds.'
+    badge: 'Inception',
+    title: 'Handcrafted timber roots',
+    description: 'MakeMyCottage began with dedicated master timber artisans building custom wooden farm retreats, guest houses, and private sanctuaries.'
   },
   {
     year: '2012',
-    badge: 'Challenge',
-    title: 'Missed deadline',
-    description: 'A delayed fit-out required Make My Cottage to completely overhaul scheduling, modular prefabrication, and supplier coordination.'
+    badge: 'Canadian Timber',
+    title: 'Certified imported wood',
+    description: 'Established sustainable direct sourcing of certified Canadian imported wood — chosen for its superior density, natural thermo-protection, and enduring beauty.'
   },
   {
     year: '2015',
-    badge: 'Commitment',
-    title: 'Walked away',
-    description: 'Make My Cottage rejected a lucrative contract due to unrealistic timelines that would have compromised wood seasoning and structural joinery.'
+    badge: 'Craftsmanship',
+    title: 'Notched joinery standards',
+    description: 'Refined master interlocking notched joints and natural preservative treatments, guaranteeing timber structures engineered to stand for centuries.'
   },
   {
     year: '2018',
-    badge: 'Milestone',
-    title: 'Structural pivot',
-    description: 'Transitioned to 100% precision CNC engineered timber, certified kiln-dried woods, and European-standard thermal insulation systems.'
+    badge: 'Innovation',
+    title: 'The 15-day build system',
+    description: 'Pioneered precision modular off-site pre-engineering, slashing on-site construction to just 15 days without compromising luxury finish or structural integrity.'
   },
   {
     year: '2021',
-    badge: 'Innovation',
-    title: 'Live tracking',
-    description: 'Pioneered direct client portal access with daily photo journals and milestone sign-offs, eliminating communication vacuums.'
+    badge: 'Expansion',
+    title: 'Resorts & farm villas',
+    description: 'Delivered landmark overwater chalets, luxury resort cottages, and eco-friendly farm villa communities across South India.'
   },
   {
     year: '2024',
-    badge: 'Scale',
+    badge: 'Leadership',
     title: 'Nationwide presence',
-    description: 'Over 50+ luxury wooden cottages, eco-resorts, and farmhouses delivered turnkey across Telangana, Andhra, Karnataka, and Pan-India.'
+    description: 'Over 50+ delivered turnkey timber projects spanning resorts, residential farmhouses, commercial spaces, and educational facilities nationwide.'
   }
 ];
 
 const teamMembers = [
   {
-    name: 'Manjunath',
+    name: 'MANJUNATH REDDY',
     role: 'Founder & Visionary Leader',
     image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80',
-    bio: 'With a passion for traditional craftsmanship and timeless architecture, Manjunath leads the vision behind Make My Cottage. He is dedicated to creating thoughtfully designed spaces while preserving the beauty of natural materials and traditional wooden artistry through Manuvalogillu, a collection of vintage wooden treasures.'
+    bio: 'With an unyielding passion for authentic timber craftsmanship and sustainable architecture, Manjunath Reddy leads MakeMyCottage. He pioneered the adoption of Canadian imported wood and 15-day rapid wooden home construction in India, empowering clients to build eco-friendly dream homes that stand for centuries while celebrating traditional wooden artistry through Manuvalogillu.'
   },
   {
-    name: 'Madhuri',
+    name: 'MADHURI',
     role: 'Co-Founder & Creative Director',
     image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&q=80',
-    bio: 'Madhuri brings creativity, elegance, and a deep appreciation for traditional Indian heritage to Make My Cottage. Alongside Manjunath, she helps celebrate the charm of vintage wooden pieces through Manuvalogillu, bringing character, culture, and timeless beauty into modern homes.'
+    bio: 'Madhuri shapes the spatial elegance, interior serenity, and natural ambiance of every MakeMyCottage project. She specializes in crafting warm, cozy resort chalets and farm villas that harmonize Canadian timber textures with contemporary luxury living, celebrating cultural authenticity through Manuvalogillu vintage wooden treasures.'
   }
 ];
 
@@ -216,6 +321,46 @@ const TimelineMilestoneItem = ({ item, idx, historyProgress }) => {
 };
 
 const AboutPage = () => {
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  // Automatic hero slideshow matching ServicesPage (4.5s cycle)
+  useEffect(() => {
+    const slideTimer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % ABOUT_HERO_SLIDES.length);
+    }, 4500);
+    return () => clearInterval(slideTimer);
+  }, []);
+
+  // Responsive hero dimensions: matching target image ratio (~88.5% of viewport height)
+  const getHeroDims = () => {
+    if (typeof window === 'undefined') return { base: 660, shrunk: 390 };
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+    const baseH = Math.max(w < 640 ? 520 : 580, Math.round(h * 0.885));
+    const shrunkH = w < 640 ? 330 : w < 1024 ? 360 : 390;
+    return { base: baseH, shrunk: shrunkH };
+  };
+
+  const [heroDims, setHeroDims] = useState(getHeroDims);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setHeroDims(getHeroDims());
+    };
+    window.addEventListener('resize', handleResize, { passive: true });
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const { scrollY } = useScroll();
+  const cardHeight = useTransform(scrollY, (value) => {
+    const distance = heroDims.base - heroDims.shrunk;
+    if (value <= 0) return `${heroDims.base}px`;
+    if (value >= distance) return `${heroDims.shrunk}px`;
+    const progress = value / distance;
+    const h = heroDims.base - progress * (heroDims.base - heroDims.shrunk);
+    return `${h}px`;
+  });
+
   // Sticky Stacking Cards Section Scroll Controller
   const stackedSectionRef = useRef(null);
   const { scrollYProgress: stackProgress } = useScroll({
@@ -282,62 +427,189 @@ const AboutPage = () => {
   const historyLineHeight = useTransform(historyProgress, [0, 1], ['0%', '100%']);
 
   return (
-    <div className="bg-white min-h-screen w-full pt-32 pb-0 text-[#141517]">
+    <div className="bg-[#f5f2f2] min-h-screen w-full text-[#141517] selection:bg-black selection:text-white">
       <Helmet>
-        <title>About Us | Make My Cottage - Handcrafted Wooden Homes & Cottages</title>
+        <title>About Us | Make My Cottage - Luxurious Wooden Homes & Resort Chalets</title>
         <meta
           name="description"
-          content="Discover Make My Cottage. We blend master timber craftsmanship with modern engineering to design and construct handcrafted wooden homes, luxury cottages, and nature retreats."
+          content="MakeMyCottage builds dream wooden homes in just 15 days using premium Canadian imported wood. Eco-friendly, low-maintenance resort chalets, farm villas, and bespoke wooden structures designed to endure for centuries."
         />
       </Helmet>
 
-      {/* ========================================================================= */}
-      {/* 1. HERO SECTION (Screenshot 1) */}
-      {/* ========================================================================= */}
-      <section className="pt-32 sm:pt-40 md:pt-44 pb-12 md:pb-16 px-6 md:px-12 lg:px-16 max-w-7xl mx-auto">
-        {/* Main Display Headline */}
-        <motion.h1
-          initial={{ opacity: 0, y: 35 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-          className="text-5xl sm:text-7xl md:text-8xl lg:text-[6.2rem] font-medium tracking-[-0.035em] leading-[0.96] text-[#1B1915] mb-8 max-w-5xl"
+      {/* =========================================================================
+          01 — ABOUT US HERO SECTION (Matching Services Hero Page Design & Scroll Physics)
+      ========================================================================= */}
+      <section className="relative w-full p-3 sm:p-4 md:p-5">
+        {/* Pinned Hero Track */}
+        <div 
+          className="relative w-full"
+          style={{ height: `${heroDims.base}px` }}
         >
-          Crafting timeless<br />
-          wooden homes rooted<br />
-          in nature.
-        </motion.h1>
-
-        {/* Subtitle & Book a Call CTA */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-12 md:mb-16">
-          <motion.p
-            initial={{ opacity: 0, y: 25 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-            className="text-lg sm:text-xl text-[#504732] max-w-xl font-normal leading-relaxed"
-          >
-            From handcrafted wooden cottages to luxury timber farmhouses, we blend master craftsmanship and precision engineering to build timeless sanctuaries in harmony with nature.
-          </motion.p>
-
+          {/* Shrinking Hero Card (Sticky at top, bottom shrinks upward) */}
           <motion.div
-            initial={{ opacity: 0, y: 25 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
+            style={{ height: cardHeight }}
+            className="sticky top-3 sm:top-4 md:top-5 w-full rounded-t-[28px] sm:rounded-t-[32px] rounded-br-[28px] sm:rounded-br-[32px] rounded-bl-none overflow-hidden bg-[#1c1d21] flex flex-col justify-end shadow-sm"
           >
-            <Link
-              to="/contact"
-              className="inline-flex items-center gap-3 bg-[#1B1915] hover:bg-black text-[#FAF7F0] px-7 py-3.5 rounded-full font-medium text-sm md:text-base transition-all duration-300 hover:scale-[1.03] shadow-md group"
+            {/* Background Architectural Photo Slideshow (Crossfade + Subtle Scale matching Services) */}
+            <div
+              style={{ height: `${heroDims.base}px` }}
+              className="absolute top-0 left-0 w-full z-0 overflow-hidden pointer-events-none"
             >
-              <span>Book a call</span>
-              <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
-            </Link>
+              <div className="w-full h-full relative">
+                {ABOUT_HERO_SLIDES.map((slide, idx) => {
+                  const isActive = currentSlide === idx;
+                  return (
+                    <div
+                      key={idx}
+                      className={`absolute inset-0 transition-opacity duration-1000 ease-in-out will-change-[opacity,transform] ${
+                        isActive ? 'opacity-100 z-10' : 'opacity-0 z-0'
+                      }`}
+                    >
+                      <img
+                        src={slide.src}
+                        alt={slide.alt}
+                        className={`w-full h-full object-cover object-center transition-transform duration-[6000ms] ease-out ${
+                          isActive ? 'scale-100' : 'scale-105'
+                        }`}
+                        loading={idx === 0 ? 'eager' : 'lazy'}
+                      />
+                    </div>
+                  );
+                })}
+
+                {/* Multi-Stop Gradient Overlay: Dark at top for navbar legibility, dark at bottom for notch contrast */}
+                <div className="absolute inset-0 z-20 bg-gradient-to-b from-black/65 via-black/15 to-black/60 pointer-events-none" />
+              </div>
+            </div>
+
+            {/* Signature Inverted Notch Button (Sitting at bottom-left, glides upwards over image as card shrinks) */}
+            <div className="relative z-30 flex items-end">
+              <div className="bg-[#f5f2f2] pt-4 sm:pt-5 pr-5 sm:pr-6 pb-0 pl-0 rounded-tr-[36px] sm:rounded-tr-[44px] relative">
+                {/* Top Concave Fillet Curve */}
+                <div className="absolute -top-[28px] left-0 w-7 h-7 pointer-events-none">
+                  <svg viewBox="0 0 20 20" fill="none" className="w-full h-full block">
+                    <path d="M0 20L0 0C0 11.0457 8.9543 20 20 20L0 20Z" fill="#f5f2f2" />
+                  </svg>
+                </div>
+
+                {/* Right Concave Fillet Curve */}
+                <div className="absolute bottom-0 -right-[28px] w-7 h-7 pointer-events-none">
+                  <svg viewBox="0 0 20 20" fill="none" className="w-full h-full block">
+                    <path d="M0 20H20C8.9543 20 0 11.0457 0 0V20Z" fill="#f5f2f2" />
+                  </svg>
+                </div>
+
+                {/* The Dark Pill Badge with Clean Sans-Serif Title Case (40% Increased Size with FoldText Animation) */}
+                <motion.div
+                  initial={{ opacity: 0, x: -20, y: 15 }}
+                  animate={{ opacity: 1, x: 0, y: 0 }}
+                  transition={{ type: 'spring', bounce: 0.25, duration: 0.7, delay: 0.15 }}
+                  className="bg-[#28282c] text-white px-11 sm:px-16 py-5 sm:py-7 rounded-[28px] sm:rounded-[34px] flex items-center shadow-md"
+                >
+                  <h1 className="font-sans text-[40px] sm:text-[64px] md:text-[76px] font-normal tracking-tight !text-white leading-none">
+                    <FoldText
+                      text="About Us"
+                      splitBy="char"
+                      hinge="top"
+                      trigger="mount"
+                      duration={0.65}
+                      stagger={0.045}
+                      ease="power3.out"
+                      perspective={700}
+                      creaseShading={0.45}
+                      fontSize="inherit"
+                      fontWeight="inherit"
+                      color="#ffffff"
+                    />
+                  </h1>
+                </motion.div>
+              </div>
+            </div>
           </motion.div>
         </div>
       </section>
 
-      {/* ========================================================================= */}
-      {/* 2. STICKY BLURRED HERO BANNER + STACKING FEATURE CARDS (Screenshot 1 & 2) */}
-      {/* ========================================================================= */}
-      <section ref={stackedSectionRef} className="relative h-[300vh] w-full">
+      {/* =========================================================================
+          02 — SCROLLING CONTENT LAYER
+      ========================================================================= */}
+      <div className="relative z-20 w-full bg-[#f5f2f2]">
+        {/* Introductory Narrative Section */}
+        <section className="pt-12 sm:pt-16 pb-12 sm:pb-16 px-6 md:px-12 lg:px-16 max-w-7xl mx-auto">
+          {/* Main Display Headline */}
+          <motion.h2
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="text-4xl sm:text-6xl md:text-7xl lg:text-[5.25rem] font-medium tracking-[-0.035em] leading-[1.0] text-[#1B1915] mb-8 max-w-5xl"
+          >
+            Luxurious wooden homes & resort chalets — built in just 15 days.
+          </motion.h2>
+
+          {/* Subtitle & Book a Call CTA */}
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-10">
+            <motion.p
+              initial={{ opacity: 0, y: 25 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+              className="text-lg sm:text-xl text-[#504732] max-w-2xl font-normal leading-relaxed"
+            >
+              MakeMyCottage is the premier builder of luxurious wooden houses, resort chalets, and farm villas. Sourcing certified Canadian imported wood, we engineer eco-friendly, healthier living spaces that are naturally warm in winter, cool in summer, and built to stand for centuries.
+            </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, y: 25 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+              className="flex flex-wrap sm:flex-nowrap gap-4 shrink-0"
+            >
+              <Link
+                to="/contact"
+                className="inline-flex items-center gap-3 bg-[#1B1915] hover:bg-black text-[#FAF7F0] px-7 py-3.5 rounded-full font-medium text-sm md:text-base transition-all duration-300 hover:scale-[1.03] shadow-md group"
+              >
+                <span>Call us to build today</span>
+                <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+              </Link>
+            </motion.div>
+          </div>
+
+          {/* Quick Highlight Feature Pills */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, delay: 0.25 }}
+            className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 pt-6 border-t border-[#E0D7C4]"
+          >
+            <div className="flex items-center gap-2.5 text-xs sm:text-sm font-medium text-[#1B1915]">
+              <span className="w-2 h-2 rounded-full bg-[#DE5533]" />
+              <span>15-Day Rapid Build</span>
+            </div>
+            <div className="flex items-center gap-2.5 text-xs sm:text-sm font-medium text-[#1B1915]">
+              <span className="w-2 h-2 rounded-full bg-[#DE5533]" />
+              <span>Canadian Imported Wood</span>
+            </div>
+            <div className="flex items-center gap-2.5 text-xs sm:text-sm font-medium text-[#1B1915]">
+              <span className="w-2 h-2 rounded-full bg-[#DE5533]" />
+              <span>Natural Thermo-Protector</span>
+            </div>
+            <div className="flex items-center gap-2.5 text-xs sm:text-sm font-medium text-[#1B1915]">
+              <span className="w-2 h-2 rounded-full bg-[#DE5533]" />
+              <span>Eco-Friendly & Healthier</span>
+            </div>
+            <div className="flex items-center gap-2.5 text-xs sm:text-sm font-medium text-[#1B1915] col-span-2 sm:col-span-1">
+              <span className="w-2 h-2 rounded-full bg-[#DE5533]" />
+              <span>Stands for Centuries</span>
+            </div>
+          </motion.div>
+        </section>
+
+        {/* ========================================================================= */}
+        {/* 2. STICKY BLURRED HERO BANNER + STACKING FEATURE CARDS (Screenshot 1 & 2) */}
+        {/* ========================================================================= */}
+        <section ref={stackedSectionRef} className="relative h-[300vh] w-full">
         {/* Unified Sticky Viewport */}
         <div className="sticky top-0 h-screen w-full overflow-hidden flex items-center justify-center px-4 sm:px-8">
           {/* Panoramic Foundation Background Image */}
@@ -347,11 +619,11 @@ const AboutPage = () => {
               WebkitFilter: useTransform(bgBlur, b => `blur(${b}px)`),
               scale: useTransform(bgBlur, [0, 14], [1, 1.05])
             }}
-            src="/images/about/hero-foundation.jpg"
+            src="/images/projects/country-hills/hero.jpg"
             onError={(e) => {
-              e.currentTarget.src = "https://framerusercontent.com/images/J9MqEXKjA7McbiNo1TApI5zUMQQ.jpg";
+              e.currentTarget.src = "/images/projects/shathakshi-resort/hero.jpg";
             }}
-            alt="Handcrafted lakeside wooden cottage foundation and framework construction"
+            alt="Make My Cottage - Handcrafted timber chalet and wooden home retreat"
             className="absolute inset-0 w-full h-full object-cover z-0 transition-[transform,filter] duration-200"
             loading="eager"
           />
@@ -380,30 +652,36 @@ const AboutPage = () => {
               className="absolute w-full bg-[#F9F0DA] border border-[#E0D5BD] rounded-3xl p-6 sm:p-10 lg:p-12 shadow-2xl"
             >
               <div className="flex flex-col md:flex-row items-center gap-6 sm:gap-8 lg:gap-10">
-                {/* Left Image: Engineers and timber cottage construction */}
+                {/* Left Image: Authentic MakeMyCottage timber cottage in nature */}
                 <div className="w-full md:w-[260px] lg:w-[280px] h-[220px] sm:h-[260px] md:h-[290px] shrink-0 rounded-2xl overflow-hidden shadow-sm bg-[#E8DFC8]">
                   <img
-                    src="/images/about/card1-vision.jpg"
-                    alt="Engineers planning wooden cottage construction in nature"
+                    src="/images/projects/ecobliss-shamirpet/image-2.jpg"
+                    onError={(e) => {
+                      e.currentTarget.src = "/images/projects/myron-dynasty/image-1.jpg";
+                    }}
+                    alt="Authentic MakeMyCottage handcrafted timber cottage in nature"
                     className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
                   />
                 </div>
                 {/* Right Text Content */}
                 <div className="flex-1 space-y-4">
+                  <div className="inline-flex items-center gap-2 bg-[#FAE1A6] text-[#271E07] px-3 py-1 rounded-[4px] text-xs font-medium uppercase tracking-wider">
+                    Why Wooden House?
+                  </div>
                   <h2 className="text-3xl sm:text-4xl lg:text-[2.6rem] font-medium tracking-tight text-[#1B1915]">
-                    Our Vision for Better Living
+                    Eco-Friendly, Healthier Living & Built in Just 15 Days
                   </h2>
                   <p className="text-sm sm:text-base lg:text-lg text-[#504732] leading-relaxed font-normal">
-                    Make My Cottage aims to transform the way people experience cottage design and construction by bringing together thoughtful architecture, natural materials, and quality craftsmanship. We focus on creating beautiful, comfortable, and functional cottages that blend seamlessly with nature while reflecting each client's unique vision.
+                    Wooden houses are naturally eco-friendly and significantly healthier to live in. As nature's supreme thermo-protector material, wood acts as a natural climate buffer — staying comfortably warm in winter and pleasantly cool in summer, while filtering air and regulating humidity for your family's daily wellness.
                   </p>
                   <p className="text-sm sm:text-base lg:text-lg text-[#504732] leading-relaxed font-normal">
-                    Our goal is to make every step—from initial planning and design to construction and final handover—smooth, transparent, and reliable, so our clients can turn their dream cottage into reality with confidence.
+                    Through advanced modular pre-engineering, we build your complete dream wooden home in just 15 days. Easy and fast to construct, clean on-site, and remarkably low on maintenance, we deliver effortless luxury living ready for you to move in.
                   </p>
                 </div>
               </div>
             </motion.div>
 
-            {/* ---------------- CARD 2: Working standard ---------------- */}
+            {/* ---------------- CARD 2: Canadian Wood & Resort Chalets ---------------- */}
             <motion.div
               style={{
                 y: card2Y,
@@ -414,24 +692,30 @@ const AboutPage = () => {
               className="absolute w-full bg-[#F9F0DA] border border-[#E0D5BD] rounded-3xl p-6 sm:p-10 lg:p-12 shadow-2xl z-20"
             >
               <div className="flex flex-col md:flex-row items-center gap-6 sm:gap-8 lg:gap-10">
-                {/* Left Image: Architectural planning & luxury sunset cottage */}
+                {/* Left Image: Authentic MakeMyCottage architectural woodwork */}
                 <div className="w-full md:w-[260px] lg:w-[280px] h-[220px] sm:h-[260px] md:h-[290px] shrink-0 rounded-2xl overflow-hidden shadow-sm bg-[#E8DFC8]">
                   <img
-                    src="/images/about/card2-working.jpg"
-                    alt="Architectural design and finished sunset timber retreat"
+                    src="/images/services-hero-2.jpg"
+                    onError={(e) => {
+                      e.currentTarget.src = "/images/slider/slide-8.jpg";
+                    }}
+                    alt="Authentic MakeMyCottage handcrafted timber craftsmanship"
                     className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
                   />
                 </div>
                 {/* Right Text Content */}
                 <div className="flex-1 space-y-4">
+                  <div className="inline-flex items-center gap-2 bg-[#FAE1A6] text-[#271E07] px-3 py-1 rounded-[4px] text-xs font-medium uppercase tracking-wider">
+                    Resort & Farm Villas
+                  </div>
                   <h2 className="text-3xl sm:text-4xl lg:text-[2.6rem] font-medium tracking-tight text-[#1B1915]">
-                    Our Way of Working
+                    Canadian Wood & Durability That Stands for Centuries
                   </h2>
                   <p className="text-sm sm:text-base lg:text-lg text-[#504732] leading-relaxed font-normal">
-                    At Make My Cottage, every project begins with understanding your vision and turning it into a well-planned reality. From design and material selection to construction and final handover, we focus on quality, clear communication, and careful attention to every detail.
+                    Canadian imported wood is renowned worldwide for its durability, aesthetic appeal, and sustainable sourcing, making it the ideal choice for constructing wooden chalets in resort and farm villa developments. Its natural strength creates cozy, eco-friendly environments that blend seamlessly with rustic and luxurious settings.
                   </p>
                   <p className="text-sm sm:text-base lg:text-lg text-[#504732] leading-relaxed font-normal">
-                    Our organized approach keeps you informed about project progress, timelines, and important decisions, ensuring a smooth and reliable experience from the first step to the finished cottage.
+                    Wood is one of the most durable building materials known to humankind. Built with precision interlocking notched joinery and weather-resistant finishes, properly notched and maintained MakeMyCottage homes can stand strong for centuries.
                   </p>
                 </div>
               </div>
@@ -453,13 +737,13 @@ const AboutPage = () => {
           <div className="flex items-center gap-2 mb-3">
             <span className="w-2.5 h-2.5 bg-[#DE5533] rounded-[2px]" />
             <span className="text-xs sm:text-sm font-medium tracking-wider text-[#6B6149] uppercase">
-              Why Choose Us
+              Why Wooden House?
             </span>
           </div>
 
           {/* Section Heading */}
           <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.25rem] font-medium tracking-[-0.03em] leading-[1.08] text-[#1B1915] max-w-3xl mb-8 md:mb-12">
-            Thoughtfully designed cottages, made for better living
+            Why choose a wooden house? Built for health, rapid living, and eternity.
           </h2>
 
           {/* 4 Animated Columns whose timeline lines shrink one by one along with scroll */}
@@ -500,10 +784,89 @@ const AboutPage = () => {
 
                 {/* Description */}
                 <p className="text-sm text-[#504732] leading-relaxed font-normal">
-                  {rule.description}
+                   {rule.description}
                 </p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ========================================================================= */}
+      {/* 3.5 WE BUILD YOU - 10 SECTORS ARCHITECTURAL SHOWCASE (Screenshot 3) */}
+      {/* ========================================================================= */}
+      <section className="py-24 md:py-32 bg-[#FAF7F0] border-t border-[#EAE3D2]">
+        <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-16">
+          {/* Section Header */}
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
+            <div>
+              <div className="flex items-center gap-2 mb-3">
+                <span className="w-2.5 h-2.5 bg-[#DE5533] rounded-[2px]" />
+                <span className="text-xs sm:text-sm font-medium tracking-wider text-[#6B6149] uppercase">
+                  Comprehensive Capabilities
+                </span>
+              </div>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.25rem] font-medium tracking-[-0.03em] leading-[1.08] text-[#1B1915] max-w-2xl">
+                We Build For You:
+              </h2>
+            </div>
+            <p className="text-base text-[#504732] max-w-md font-normal leading-relaxed">
+              From private residential sanctuaries and luxury resort chalets to commercial developments and community institutions, our Canadian timber architecture adapts effortlessly to your vision.
+            </p>
+          </div>
+
+          {/* 10 Sectors Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 md:gap-5">
+            {whatWeBuildCategories.map((item, idx) => {
+              const IconComponent = item.icon;
+              return (
+                <motion.div
+                  key={idx}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.15 }}
+                  transition={{ duration: 0.5, delay: idx * 0.04 }}
+                  className="bg-[#F9F0DA] border border-[#E0D5BD] rounded-2xl p-5 hover:border-[#1B1915] hover:shadow-lg transition-all duration-300 flex flex-col justify-between group"
+                >
+                  <div>
+                    <div className="w-12 h-12 rounded-xl bg-[#FAF7F0] border border-[#E0D5BD] flex items-center justify-center mb-4 group-hover:bg-[#1B1915] group-hover:text-white transition-colors duration-300 text-[#1B1915]">
+                      <IconComponent className="w-6 h-6" />
+                    </div>
+                    <span className="text-[11px] font-mono uppercase tracking-wider text-[#8A7D63] block mb-1.5">
+                      {item.category}
+                    </span>
+                    <h3 className="text-base sm:text-lg font-medium text-[#1B1915] tracking-tight mb-2 leading-snug">
+                      {item.title}
+                    </h3>
+                    <p className="text-xs text-[#504732] leading-relaxed font-normal">
+                      {item.description}
+                    </p>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
+
+          {/* Call-out Banner at bottom of We Build You */}
+          <div className="mt-12 bg-[#1B1915] text-[#FAF7F0] rounded-3xl p-8 sm:p-10 flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl">
+            <div className="space-y-2 text-center md:text-left">
+              <span className="text-xs font-mono uppercase tracking-widest text-[#FAE1A6]">
+                Turnkey Rapid Delivery
+              </span>
+              <h3 className="text-2xl sm:text-3xl font-medium tracking-tight text-white">
+                Have a unique development or property in mind?
+              </h3>
+              <p className="text-sm text-[#BAB3A2] max-w-xl">
+                We build your dream wooden homes in just 15 days using premium Canadian imported wood — fully customized, certified, and turnkey.
+              </p>
+            </div>
+            <Link
+              to="/contact"
+              className="inline-flex items-center gap-3 bg-[#FAE1A6] hover:bg-[#F2D48B] text-[#1B1915] px-7 py-3.5 rounded-full font-medium text-sm md:text-base transition-all duration-300 hover:scale-[1.03] shadow-md shrink-0"
+            >
+              <span>Call us to build today</span>
+              <ArrowRight className="w-4 h-4" />
+            </Link>
           </div>
         </div>
       </section>
@@ -528,7 +891,7 @@ const AboutPage = () => {
           transition={{ duration: 0.8 }}
           className="text-4xl sm:text-5xl md:text-6xl font-medium tracking-[-0.03em] leading-[1.05] text-[#1B1915] max-w-3xl mb-16 md:mb-20"
         >
-          What Make My Cottage learned along the way
+          Our journey in timber craftsmanship & rapid innovation
         </motion.h2>
 
         {/* 2-Column Layout with Sticky Sunset Image */}
@@ -627,7 +990,7 @@ const AboutPage = () => {
                   />
                 </div>
                 <div className="mb-1">
-                  <h3 className="text-xl font-medium text-[#1B1915] tracking-tight">
+                  <h3 className="text-xl font-medium text-[#1B1915] tracking-tight uppercase">
                     {member.name}
                   </h3>
                 </div>
@@ -755,7 +1118,7 @@ const AboutPage = () => {
 
         {/* Content Container */}
         <div className="relative z-10 max-w-[1320px] mx-auto px-6 sm:px-12 md:px-16 lg:px-20 w-full">
-          <div className="max-w-[490px]">
+          <div className="max-w-[540px]">
             <motion.h2
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -763,7 +1126,7 @@ const AboutPage = () => {
               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
               className="text-4xl sm:text-5xl lg:text-[54px] font-medium tracking-[-0.025em] leading-[1.08] text-[#FCF6E9] mb-6"
             >
-              Bring your dream wooden sanctuary to life.
+              We build your dream wooden homes in just 15 days.
             </motion.h2>
 
             <motion.p
@@ -773,7 +1136,7 @@ const AboutPage = () => {
               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
               className="text-base sm:text-lg text-[#BAB3A2] leading-relaxed font-normal mb-10"
             >
-              Connect directly with our master timber architects. Gain clear insight into custom 3D blueprints, transparent turnkey pricing, and rapid prefabricated construction timelines tailored to your land.
+              Call MakeMyCottage to build your wooden house today. Sourced with Canadian imported wood, our eco-friendly, naturally climate-regulated chalets and farm villas are fast to build, low on maintenance, and engineered to endure for centuries.
             </motion.p>
 
             <motion.div
@@ -781,18 +1144,27 @@ const AboutPage = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
+              className="flex flex-wrap gap-4"
             >
               <Link
                 to="/contact"
                 className="inline-flex items-center gap-2.5 bg-[#FCF6E9] hover:bg-white text-[#1B1915] px-7 py-3.5 rounded-full font-medium text-sm md:text-base transition-all duration-300 hover:scale-[1.02] shadow-lg group"
               >
-                <span>Schedule a consultation</span>
+                <span>Call us to build today</span>
                 <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
               </Link>
+              <a
+                href={`tel:${BUSINESS_INFO.phone}`}
+                className="inline-flex items-center gap-2.5 bg-white/10 hover:bg-white/20 text-white border border-white/20 px-6 py-3.5 rounded-full font-medium text-sm md:text-base backdrop-blur-sm transition-all duration-300"
+              >
+                <PhoneCall className="w-4 h-4 text-[#FAE1A6]" />
+                <span>{BUSINESS_INFO.displayPhone}</span>
+              </a>
             </motion.div>
           </div>
         </div>
       </section>
+      </div>
     </div>
   );
 };
